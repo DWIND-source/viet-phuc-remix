@@ -1258,7 +1258,7 @@ class Component extends DCLogic {
     if (question.length < 3 || st.gq.status === 'loading') return;
     this.setState({ gq:{ q: question, status:'loading', gid: g.id, data:null, err:'', asked: question } }); this.track('gemini_ask', { garment: g.id });
     try { const data = await window.VPRCloud.gemini('ask', { lang: st.lang, garment: this.gemGarment(g), sources: this.gemSources(g) }, question);
-      this.setState(s => ({ gq:{ ...s.gq, status:'done', data } })); }
+      this.setState(s => ({ gq:{ ...s.gq, status:'done', data } })); this.track('gemini_answer', { garment: g.id, grounded: !!data.grounded }); }
     catch (e) { this.setState(s => ({ gq:{ ...s.gq, status:'error', err: this.gemErrText(e) } })); }
   }
   setConsent(granted) {
