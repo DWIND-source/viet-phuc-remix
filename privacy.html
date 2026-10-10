@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quyền riêng tư · Việt Phục Remix</title>
+<meta name="description" content="Việt Phục Remix thu thập dữ liệu gì, dùng để làm gì và bạn kiểm soát nó thế nào.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237C2837'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-style='italic' fill='%23F2ECE1'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #F2ECE1; --surface: #F8F4EC; --ink: #181715; --ink-2: #4A463F; --muted: #6B665E; --line: rgba(24,23,21,.12); --accent: #7C2837; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 'Be Vietnam Pro', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid #B79A65; outline-offset: 2px; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 80px; }
+header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 40px; }
+.brand { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); text-decoration: none; }
+.brand i { color: var(--accent); }
+nav { margin-left: auto; display: flex; gap: 6px; }
+nav a { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; text-decoration: none; color: var(--ink); }
+nav a[aria-current] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+h1 { font-family: 'Playfair Display', serif; font-weight: 400; font-size: clamp(36px, 6vw, 56px); line-height: 1.05; margin: 0 0 12px; }
+h2 { font-size: 19px; font-weight: 600; margin: 36px 0 8px; }
+p, li { color: var(--ink-2); }
+ul { padding-left: 20px; }
+li { margin: 4px 0; }
+.meta { color: var(--muted); font-size: 14px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px; margin: 20px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0; }
+th, td { text-align: left; vertical-align: top; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; }
+.scroll { overflow-x: auto; }
+section[lang="en"] { border-top: 1px solid var(--line); margin-top: 64px; padding-top: 24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="./">Việt Phục <i>Remix</i></a>
+    <nav aria-label="Ngôn ngữ / Language"><a href="#vi" aria-current="true">VI</a><a href="#en">EN</a></nav>
+  </header>
+
+  <section id="vi" lang="vi">
+    <h1>Chính sách quyền riêng tư</h1>
+    <p class="meta">Cập nhật lần cuối: 10/10/2026</p>
+    <div class="box">
+      <strong>Tóm tắt:</strong> bạn dùng được toàn bộ ứng dụng mà không cần tài khoản. Chúng tôi chỉ ghi nhận dữ liệu sử dụng ẩn danh khi bạn bấm <em>Đồng ý</em>. Nếu bạn tạo tài khoản, chúng tôi lưu email, tên hiển thị và Lookbook của bạn để đồng bộ giữa các thiết bị. Chúng tôi không lưu ảnh bạn tải lên và không bán dữ liệu.
+    </div>
+
+    <h2>1. Dữ liệu chúng tôi thu thập</h2>
+    <div class="scroll"><table>
+      <tr><th>Loại</th><th>Gồm những gì</th><th>Khi nào</th><th>Mục đích</th></tr>
+      <tr><td>Tài khoản</td><td>Email, tên hiển thị, mật khẩu (đã mã hóa, do Supabase Auth quản lý), thời điểm đăng ký và đăng nhập, ngôn ngữ</td><td>Khi bạn tạo tài khoản</td><td>Đăng nhập và đồng bộ Lookbook</td></tr>
+      <tr><td>Lookbook</td><td>Các look bạn lưu: trang phục, dịp, phong cách, bảng màu, phụ kiện, mức remix, tên look, ngày lưu và đường dẫn ảnh kết quả Try-On (nếu có)</td><td>Khi bạn đã đăng nhập và lưu look</td><td>Hiển thị Lookbook trên mọi thiết bị</td></tr>
+      <tr><td>Dữ liệu sử dụng</td><td>Tên thao tác (ví dụ “lưu look”, “chọn trang phục”), chi tiết ngắn đi kèm (ví dụ mã trang phục), ngôn ngữ, trang đang xem, loại thiết bị (điện thoại, máy tính bảng hay máy tính), mã khách và mã phiên ngẫu nhiên, thời gian, tên miền trang giới thiệu</td><td><strong>Chỉ khi bạn bấm Đồng ý</strong></td><td>Hiểu tính năng nào hữu ích để cải thiện sản phẩm</td></tr>
+    </table></div>
+    <p>Nếu bạn đã đăng nhập và đồng ý chia sẻ dữ liệu sử dụng, các thao tác sẽ được gắn với tài khoản của bạn.</p>
+
+    <h2>2. Dữ liệu chúng tôi không thu thập</h2>
+    <ul>
+      <li><strong>Ảnh của bạn.</strong> Ảnh dùng cho AI Try-On được gửi thẳng từ trình duyệt tới nhà cung cấp AI mà bạn chọn (Hugging Face Spaces hoặc FASHN). Chúng tôi không lưu các ảnh này.</li>
+      <li><strong>Khóa API của bạn.</strong> HF token và FASHN key chỉ nằm trong trình duyệt của bạn, không bao giờ được gửi lên máy chủ của chúng tôi.</li>
+      <li>Bảng dữ liệu sử dụng không có cột địa chỉ IP, vị trí chính xác, danh bạ hay thông tin thanh toán.</li>
+    </ul>
+
+    <h2>3. Dữ liệu lưu trên thiết bị của bạn</h2>
+    <p>Trình duyệt của bạn lưu (qua localStorage) ngôn ngữ, lựa chọn trong Studio, Lookbook, cài đặt Try-On, lựa chọn về dữ liệu sử dụng, phiên đăng nhập, cùng mã khách và mã phiên ngẫu nhiên. Bạn có thể xóa các dữ liệu này bất cứ lúc nào bằng cách xóa dữ liệu trang web trong trình duyệt.</p>
+
+    <h2>4. Bên thứ ba</h2>
+    <ul>
+      <li><strong>Supabase</strong> lưu trữ cơ sở dữ liệu và xử lý đăng nhập. Hạ tầng của Supabase có thể ghi nhật ký kỹ thuật (bao gồm IP) để bảo mật.</li>
+      <li><strong>GitHub Pages</strong> lưu trữ trang web và có thể ghi nhật ký truy cập.</li>
+      <li><strong>Google Fonts, jsDelivr, unpkg</strong> cung cấp phông chữ và thư viện.</li>
+      <li><strong>Wikimedia Commons</strong> cung cấp ảnh tham khảo.</li>
+      <li><strong>Open-Meteo</strong> nhận tên thành phố bạn tìm, hoặc tọa độ nếu bạn bấm “Dùng vị trí hiện tại”, để trả về thời tiết.</li>
+      <li><strong>Hugging Face, FASHN</strong> nhận ảnh khi bạn chủ động chạy AI Try-On.</li>
+    </ul>
+    <p>Mỗi dịch vụ trên có chính sách riêng. Chúng tôi không bán hay cho thuê dữ liệu của bạn.</p>
+
+    <h2>5. Quyền của bạn</h2>
+    <p>Theo Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân, bạn có quyền:</p>
+    <ul>
+      <li><strong>Rút lại đồng ý:</strong> bấm <em>Cài đặt dữ liệu</em> ở cuối trang chủ, hoặc tắt “Chia sẻ dữ liệu sử dụng” trong mục Tài khoản.</li>
+      <li><strong>Xóa tài khoản:</strong> vào Tài khoản → <em>Xóa tài khoản</em>. Tài khoản, hồ sơ và Lookbook đã đồng bộ sẽ bị xóa ngay. Dữ liệu sử dụng trước đó được giữ lại nhưng không còn liên kết với bạn.</li>
+      <li><strong>Truy cập, chỉnh sửa hoặc yêu cầu xóa</strong> dữ liệu khác: liên hệ với chúng tôi theo mục 7.</li>
+    </ul>
+
+    <h2>6. Lưu trữ và bảo mật</h2>
+    <p>Mọi kết nối đều dùng HTTPS. Quyền truy cập cơ sở dữ liệu được giới hạn bằng Row Level Security: mỗi người chỉ đọc được Lookbook của chính mình, và chỉ quản trị viên mới xem được thống kê tổng hợp. Dữ liệu tài khoản được giữ đến khi bạn xóa tài khoản. Dữ liệu sử dụng được giữ trong thời gian cần thiết để phân tích sản phẩm, hoặc đến khi bạn yêu cầu xóa.</p>
+
+    <h2>7. Liên hệ</h2>
+    <p>Đây là một prototype. Mọi câu hỏi hoặc yêu cầu về dữ liệu, vui lòng mở issue tại <a href="https://github.com/DWIND-source/viet-phuc-remix/issues">github.com/DWIND-source/viet-phuc-remix/issues</a>. Đừng đăng thông tin cá nhân công khai trong issue, chúng tôi sẽ phản hồi để trao đổi riêng.</p>
+  </section>
+
+  <section id="en" lang="en">
+    <h1>Privacy policy</h1>
+    <p class="meta">Last updated: 10 October 2026</p>
+    <div class="box">
+      <strong>In short:</strong> you can use the whole app without an account. We only record anonymous usage data after you click <em>Accept</em>. If you create an account, we store your email, display name and Lookbook so they sync across devices. We do not store the photos you upload, and we do not sell data.
+    </div>
+
+    <h2>1. What we collect</h2>
+    <ul>
+      <li><strong>Account</strong> (when you sign up): email, display name, a password hashed and managed by Supabase Auth, sign-up and sign-in times, and language. We use it for sign-in and Lookbook sync.</li>
+      <li><strong>Lookbook</strong> (when you are signed in and save a look): garment, occasion, style, palette, accessories, remix level, look name, save date and the Try-On result link, if any.</li>
+      <li><strong>Usage data</strong> (<strong>only if you click Accept</strong>): action names (e.g. “look saved”), short details (e.g. a garment id), language, current view, device type, random visitor and session ids, time, and the referring domain. If you are signed in and accepted, actions are linked to your account.</li>
+    </ul>
+
+    <h2>2. What we do not collect</h2>
+    <ul>
+      <li>Your Try-On photos go straight from your browser to the AI provider you choose (Hugging Face Spaces or FASHN). We do not store them.</li>
+      <li>Your HF token and FASHN key stay in your browser and never reach our servers.</li>
+      <li>The usage table has no IP address, precise location, contacts or payment data.</li>
+    </ul>
+
+    <h2>3. On your device</h2>
+    <p>Your browser keeps your language, Studio choices, Lookbook, Try-On settings, consent choice, sign-in session, and random visitor and session ids in localStorage. Clear the site data in your browser to remove them.</p>
+
+    <h2>4. Third parties</h2>
+    <p>Supabase hosts the database and sign-in, and its infrastructure may keep technical logs, including IPs, for security. GitHub Pages hosts the site. Google Fonts, jsDelivr and unpkg serve fonts and libraries. Wikimedia Commons serves reference images. Open-Meteo receives the city you search for, or coordinates if you use your location. Hugging Face and FASHN receive photos only when you run Try-On. We never sell or rent your data.</p>
+
+    <h2>5. Your rights</h2>
+    <p>You can withdraw consent at any time (<em>Data settings</em> in the home page footer, or the toggle under Account). You can delete your account (Account → <em>Delete account</em>), which immediately removes your account, profile and synced Lookbook; earlier usage events are kept but no longer linked to you. For access, correction or other deletion requests, contact us as described below.</p>
+
+    <h2>6. Storage and security</h2>
+    <p>All traffic uses HTTPS. Database access is restricted with Row Level Security: each person can read only their own Lookbook, and only administrators can see aggregate statistics. Account data is kept until you delete your account. Usage data is kept for as long as it is needed for product analysis, or until you ask us to delete it.</p>
+
+    <h2>7. Contact</h2>
+    <p>This is a prototype. For questions or data requests, open an issue at <a href="https://github.com/DWIND-source/viet-phuc-remix/issues">github.com/DWIND-source/viet-phuc-remix/issues</a>. Please don't post personal details publicly there; we will reply so we can talk privately.</p>
+  </section>
+</div>
+</body>
+</html>

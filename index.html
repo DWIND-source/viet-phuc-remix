@@ -10,6 +10,8 @@
 <meta property="og:description" content="Phối chất riêng – hiểu chất Việt. Interactive cultural-fashion styling for Vietnamese traditional clothing.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237C2837'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-style='italic' fill='%23F2ECE1'%3EV%3C/text%3E%3C/svg%3E">
+<script src="./config.js"></script>
+<script src="./cloud.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -49,6 +51,17 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
       <button onClick="{{ setVi }}" aria-pressed="{{ isVi }}" style="border:0;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;letter-spacing:.06em;cursor:pointer;background:{{ viBg }};color:{{ viFg }}">VI</button>
       <button onClick="{{ setEn }}" aria-pressed="{{ isEn }}" style="border:0;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;letter-spacing:.06em;cursor:pointer;background:{{ enBg }};color:{{ enFg }}">EN</button>
     </div>
+    <sc-if value="{{ cloudOn }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ acct.out }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ openAccount }}" style="background:#181715;color:#F2ECE1;border:1px solid #181715;border-radius:999px;padding:7px 16px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap" style-hover="background:#7C2837;border-color:#7C2837">{{ t.signIn }}</button>
+      </sc-if>
+      <sc-if value="{{ acct.in }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ openAccount }}" aria-label="{{ acct.aria }}" style="display:flex;align-items:center;gap:8px;background:transparent;color:#181715;border:1px solid rgba(24,23,21,.25);border-radius:999px;padding:3px 14px 3px 3px;font-size:13px;cursor:pointer;white-space:nowrap;max-width:200px" style-hover="border-color:#181715">
+          <span style="width:26px;height:26px;border-radius:50%;background:#7C2837;color:#F2ECE1;display:grid;place-items:center;font-size:12px;font-weight:600;flex:none">{{ acct.initial }}</span>
+          <span style="overflow:hidden;text-overflow:ellipsis">{{ acct.name }}</span>
+        </button>
+      </sc-if>
+    </sc-if>
   </div>
 </header>
 
@@ -116,7 +129,11 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
   </section>
   <footer style="max-width:1440px;margin:0 auto;padding:28px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#5E5A53">
     <span>{{ t.footer1 }}</span>
-    <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ t.footer2 }}</span>
+    <span style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+      <a href="./privacy.html" style="color:#5E5A53">{{ t.privacy }}</a>
+      <sc-if value="{{ cloudOn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openConsent }}" style="background:none;border:0;padding:0;color:#5E5A53;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px">{{ t.dataSettings }}</button></sc-if>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ t.footer2 }}</span>
+    </span>
   </footer>
 </main>
 </sc-if>
@@ -484,7 +501,12 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
 <main style="max-width:1440px;margin:0 auto;padding:48px 24px 96px;display:flex;flex-direction:column;gap:36px">
   <div style="display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap">
     <h1 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(44px,6vw,84px);line-height:.95">My Việt Phục<br><span style="font-style:italic;color:#7C2837">Lookbook</span></h1>
-    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53">{{ lookCountText }}</span>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53">{{ lookCountText }}</span>
+      <sc-if value="{{ showSyncCta }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ openSignin }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:9px 16px;font-size:13px;cursor:pointer;white-space:nowrap" style-hover="background:#7C2837">{{ t.syncHint }}</button>
+      </sc-if>
+    </div>
   </div>
   <sc-if value="{{ lookbookEmpty }}" hint-placeholder-val="{{ false }}">
     <div style="border:1.5px dashed rgba(24,23,21,.25);border-radius:22px;padding:56px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
@@ -590,6 +612,82 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
   </div>
 </sc-if>
 
+<sc-if value="{{ authOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;overflow:auto">
+  <div onClick="{{ closeAuth }}" style="position:fixed;inset:0;background:rgba(24,23,21,.5);animation:vprFade .2s ease both"></div>
+  <div role="dialog" aria-modal="true" aria-label="{{ auth.title }}" style="position:relative;width:min(440px,100%);background:#F2ECE1;border-radius:22px;padding:28px 28px 24px;box-shadow:0 40px 80px -30px rgba(24,23,21,.6);display:flex;flex-direction:column;gap:18px;animation:vprFade .3s ease both">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#7C2837">{{ t.authEyebrow }}</span>
+        <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:32px;line-height:1.05">{{ auth.title }}</h2>
+        <p style="margin:0;color:#4A463F;font-size:14px">{{ auth.sub }}</p>
+      </div>
+      <button onClick="{{ closeAuth }}" aria-label="{{ t.close }}" style="width:36px;height:36px;flex:none;border-radius:50%;border:1px solid rgba(24,23,21,.25);background:none;cursor:pointer;font-size:14px;color:#181715" style-hover="border-color:#181715">✕</button>
+    </div>
+
+    <sc-if value="{{ auth.isForm }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ onAuthSubmit }}" novalidate style="display:flex;flex-direction:column;gap:12px">
+        <sc-if value="{{ auth.showName }}" hint-placeholder-val="{{ false }}">
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;color:#4A463F">{{ t.fName }}<input type="text" value="{{ authForm.name }}" onChange="{{ onAuthName }}" autocomplete="nickname" maxlength="80" style="width:100%;border:1px solid rgba(24,23,21,.22);border-radius:12px;padding:11px 14px;font-size:15px;background:#F8F4EC;color:#181715"></label>
+        </sc-if>
+        <sc-if value="{{ auth.showEmail }}" hint-placeholder-val="{{ true }}">
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;color:#4A463F">{{ t.fEmail }}<input type="email" value="{{ authForm.email }}" onChange="{{ onAuthEmail }}" autocomplete="email" inputmode="email" spellcheck="false" style="width:100%;border:1px solid rgba(24,23,21,.22);border-radius:12px;padding:11px 14px;font-size:15px;background:#F8F4EC;color:#181715"></label>
+        </sc-if>
+        <sc-if value="{{ auth.showPw }}" hint-placeholder-val="{{ true }}">
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;color:#4A463F">{{ auth.pwLabel }}<input type="password" value="{{ authForm.password }}" onChange="{{ onAuthPw }}" autocomplete="{{ auth.pwAuto }}" style="width:100%;border:1px solid rgba(24,23,21,.22);border-radius:12px;padding:11px 14px;font-size:15px;background:#F8F4EC;color:#181715"></label>
+        </sc-if>
+        <sc-if value="{{ auth.err }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin:0;background:rgba(124,40,55,.08);border:1px solid rgba(124,40,55,.3);color:#5E1C29;border-radius:10px;padding:10px 12px;font-size:13px">{{ auth.err }}</p></sc-if>
+        <sc-if value="{{ auth.msg }}" hint-placeholder-val="{{ false }}"><p role="status" style="margin:0;background:rgba(91,117,104,.12);border:1px solid rgba(91,117,104,.45);color:#2F4238;border-radius:10px;padding:10px 12px;font-size:13px">{{ auth.msg }}</p></sc-if>
+        <button type="submit" disabled="{{ authBusy }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:13px 22px;font-size:15px;font-weight:500;cursor:pointer;opacity:{{ auth.busyOp }}" style-hover="background:#7C2837">{{ auth.submit }}</button>
+      </form>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start">
+        <sc-for list="{{ auth.links }}" as="k" hint-placeholder-count="2">
+          <button type="button" onClick="{{ k.onClick }}" style="background:none;border:0;padding:2px 0;color:#7C2837;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px">{{ k.label }}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ auth.showAgree }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:12px;color:#5E5A53">{{ t.signupAgree }} <a href="./privacy.html" target="_blank" rel="noopener">{{ t.privacy }}</a>.</p></sc-if>
+    </sc-if>
+
+    <sc-if value="{{ auth.isAccount }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:14px;background:#F8F4EC;border:1px solid rgba(24,23,21,.1);border-radius:16px;padding:14px">
+        <span style="width:48px;height:48px;border-radius:50%;background:#7C2837;color:#F2ECE1;display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:22px;flex:none">{{ acct.initial }}</span>
+        <div style="display:flex;flex-direction:column;min-width:0">
+          <strong style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ acct.name }}</strong>
+          <span style="font-size:13px;color:#5E5A53;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ acct.email }}</span>
+        </div>
+      </div>
+      <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px">
+        <dt style="color:#5E5A53">{{ t.memberSince }}</dt><dd style="margin:0">{{ acct.since }}</dd>
+        <dt style="color:#5E5A53">{{ t.syncedLooks }}</dt><dd style="margin:0">{{ savedCount }}</dd>
+      </dl>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer">
+        <input type="checkbox" checked="{{ consentOn }}" onChange="{{ onConsentToggle }}" style="margin-top:3px;accent-color:#7C2837;width:16px;height:16px;flex:none">
+        <span style="display:flex;flex-direction:column;gap:2px">{{ t.analyticsLabel }}<span style="font-size:12px;color:#5E5A53">{{ t.analyticsHint }}</span></span>
+      </label>
+      <sc-if value="{{ acct.isAdmin }}" hint-placeholder-val="{{ false }}"><a href="./admin.html" style="font-size:14px">{{ t.adminLink }}</a></sc-if>
+      <sc-if value="{{ acct.delArm }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin:0;font-size:13px;color:#5E1C29">{{ t.deleteWarn }}</p></sc-if>
+      <sc-if value="{{ auth.err }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin:0;background:rgba(124,40,55,.08);border:1px solid rgba(124,40,55,.3);color:#5E1C29;border-radius:10px;padding:10px 12px;font-size:13px">{{ auth.err }}</p></sc-if>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center">
+        <button onClick="{{ doSignOut }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:10px 20px;font-size:14px;cursor:pointer" style-hover="background:#7C2837">{{ t.signOut }}</button>
+        <button onClick="{{ doDelete }}" disabled="{{ authBusy }}" style="background:{{ acct.delBg }};color:{{ acct.delFg }};border:1px solid rgba(124,40,55,.5);border-radius:999px;padding:10px 16px;font-size:13px;cursor:pointer">{{ acct.delLabel }}</button>
+      </div>
+      <a href="./privacy.html" target="_blank" rel="noopener" style="font-size:12px;color:#5E5A53">{{ t.privacy }}</a>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showConsent }}" hint-placeholder-val="{{ false }}">
+  <div role="region" aria-label="{{ t.consentTitle }}" style="position:fixed;left:16px;bottom:16px;width:min(460px,calc(100vw - 32px));z-index:75;background:#181715;color:#F2ECE1;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 30px 60px -20px rgba(24,23,21,.6);animation:vprFade .35s ease both">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#B79A65">{{ t.consentTitle }}</span>
+    <p style="margin:0;font-size:14px;line-height:1.5">{{ t.consentBody }} <a href="./privacy.html" target="_blank" rel="noopener" style="color:#F2ECE1" style-hover="color:#B79A65">{{ t.privacy }}</a></p>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button onClick="{{ consentNo }}" style="background:none;color:#F2ECE1;border:1px solid rgba(242,236,225,.45);border-radius:999px;padding:9px 20px;cursor:pointer;font-size:14px" style-hover="border-color:#F2ECE1">{{ t.consentNo }}</button>
+      <button onClick="{{ consentYes }}" style="background:#F2ECE1;color:#181715;border:1px solid #F2ECE1;border-radius:999px;padding:9px 20px;cursor:pointer;font-size:14px;font-weight:500" style-hover="background:#B79A65;border-color:#B79A65">{{ t.consentYes }}</button>
+    </div>
+  </div>
+</sc-if>
+
 <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
   <div role="status" aria-live="polite" style="position:fixed;left:50%;bottom:{{ toastBottom }};transform:translateX(-50%);background:#181715;color:#F2ECE1;padding:12px 20px;border-radius:999px;font-size:14px;z-index:70;animation:vprFade .25s ease both;white-space:nowrap">{{ toast }}</div>
 </sc-if>
@@ -643,7 +741,26 @@ const T = {
   modernTitle:['Styling & diễn giải hiện đại','Styling & modern interpretation'], mythTitle:['Hiểu lầm thường gặp','Common misconceptions'],
   variants:['Có nhiều cách diễn giải / biến thể theo thời kỳ hoặc khu vực.','Interpretations and variants differ by period and region.'], sources:['Nguồn','Sources'],
   noWinner:['Không có “người thắng” — chỉ là thông tin để bạn tự quyết định.','There is no “winner” — just information to help you decide.'],
-  tryOutfit:['Thử outfit','Try outfit']
+  tryOutfit:['Thử outfit','Try outfit'],
+  signIn:['Đăng nhập','Sign in'], signUp:['Tạo tài khoản','Create account'], account:['Tài khoản','Account'], close:['Đóng','Close'],
+  authEyebrow:['TÀI KHOẢN','ACCOUNT'],
+  authSigninTitle:['Chào mừng trở lại','Welcome back'], authSigninSub:['Đăng nhập để đồng bộ Lookbook trên mọi thiết bị.','Sign in to sync your Lookbook across devices.'],
+  authSignupTitle:['Tạo tài khoản','Create your account'], authSignupSub:['Lưu look lên tài khoản và mở lại trên điện thoại hay máy tính.','Save looks to your account and open them on any device.'],
+  authResetTitle:['Quên mật khẩu','Reset password'], authResetSub:['Nhập email, chúng tôi sẽ gửi liên kết đặt lại mật khẩu.','Enter your email and we will send you a reset link.'],
+  authNewpwTitle:['Đặt mật khẩu mới','Set a new password'], authNewpwSub:['Chọn mật khẩu mới cho tài khoản của bạn.','Choose a new password for your account.'],
+  accountSub:['Lookbook của bạn được đồng bộ với tài khoản này.','Your Lookbook is synced with this account.'],
+  fName:['Tên hiển thị','Display name'], fEmail:['Email','Email'], fPassword:['Mật khẩu','Password'], fNewPassword:['Mật khẩu (tối thiểu 8 ký tự)','Password (at least 8 characters)'],
+  toSignup:['Chưa có tài khoản? Tạo tài khoản','No account yet? Create one'], toSignin:['Đã có tài khoản? Đăng nhập','Already have an account? Sign in'],
+  toReset:['Quên mật khẩu?','Forgot password?'], backSignin:['← Quay lại đăng nhập','← Back to sign in'], sendReset:['Gửi liên kết','Send link'], savePw:['Lưu mật khẩu','Save password'],
+  signupAgree:['Khi tạo tài khoản, bạn đồng ý với','By creating an account you agree to the'], privacy:['Chính sách quyền riêng tư','Privacy policy'],
+  signOut:['Đăng xuất','Sign out'], memberSince:['Thành viên từ','Member since'], syncedLooks:['Look đã đồng bộ','Synced looks'], adminLink:['Mở trang quản trị →','Open admin dashboard →'],
+  analyticsLabel:['Chia sẻ dữ liệu sử dụng ẩn danh','Share anonymous usage data'], analyticsHint:['Giúp chúng tôi biết tính năng nào hữu ích. Không bao gồm ảnh của bạn.','Helps us learn which features are useful. Never includes your photos.'],
+  deleteAcct:['Xóa tài khoản','Delete account'], deleteConfirm:['Xác nhận xóa vĩnh viễn','Confirm permanent deletion'],
+  deleteWarn:['Tài khoản và Lookbook đã đồng bộ sẽ bị xóa vĩnh viễn, không thể hoàn tác.','Your account and synced Lookbook will be permanently deleted. This cannot be undone.'],
+  consentTitle:['DỮ LIỆU SỬ DỤNG','USAGE DATA'],
+  consentBody:['Chúng tôi muốn ghi nhận ẩn danh cách bạn dùng ứng dụng (ví dụ trang phục bạn chọn, look bạn lưu) để cải thiện sản phẩm. Không thu ảnh của bạn, không bán dữ liệu.','We would like to record, anonymously, how you use the app (for example which garments you pick and which looks you save) to improve it. We never collect your photos or sell data.'],
+  consentYes:['Đồng ý','Accept'], consentNo:['Từ chối','Decline'], dataSettings:['Cài đặt dữ liệu','Data settings'],
+  syncHint:['Đăng nhập để lưu Lookbook lên tài khoản','Sign in to save your Lookbook to your account']
 };
 
 const LEVELS = [
@@ -909,7 +1026,8 @@ class Component extends DCLogic {
     this.state = { view:'landing', ...s, saved: load('vpr_lookbook_v1', []), lang: load('vpr_lang_v1', 'vi'), storyOpen:false, storyId:null, compare:null, toast:'', showOutput:true, settingsOpen:false,
       tryon:{ status:'idle', preview:null, dataUri:null, fileName:'', warnings:[], error:'', outputUrl:null },
       wx:{ query:'', suggestions:[], status:'idle', msg:'', data:null }, vw: typeof window !== 'undefined' ? window.innerWidth : 1440,
-      cfg:{ provider:'hf', engine:'auto', quality:'std', hfToken:'', fashnKey:'', server: props.tryOnApiBase || '', ...load('vpr_tryon_cfg_v1', {}) }, garmentImg:null, baMode:false, baPos:50, lib:{}, libStatus:'idle', libFilter:'match', refSel:{} };
+      cfg:{ provider:'hf', engine:'auto', quality:'std', hfToken:'', fashnKey:'', server: props.tryOnApiBase || '', ...load('vpr_tryon_cfg_v1', {}) }, garmentImg:null, baMode:false, baPos:50, lib:{}, libStatus:'idle', libFilter:'match', refSel:{},
+      cloudOn:false, user:null, isAdmin:false, consent:null, authOpen:false, authMode:'signin', authBusy:false, authErr:'', authMsg:'', authForm:{ name:'', email:'', password:'' }, delArm:false };
     this.exploreRef = React.createRef(); this.tryonRef = React.createRef();
   }
   async loadLibrary() {
@@ -943,16 +1061,129 @@ class Component extends DCLogic {
   componentDidMount() {
     this.loadLibrary();
     this.onResize = () => this.setState({ vw: window.innerWidth });
-    this.onKey = e => { if (e.key === 'Escape') this.setState({ storyOpen:false, compare:null }); };
+    this.onKey = e => { if (e.key === 'Escape') this.setState({ storyOpen:false, compare:null, authOpen:false, delArm:false }); };
     window.addEventListener('resize', this.onResize); window.addEventListener('keydown', this.onKey);
+    this.initCloud();
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.onResize); window.removeEventListener('keydown', this.onKey); clearTimeout(this.wxT); clearTimeout(this.pollT); clearTimeout(this.toastT); }
-  track(name, data) { (window.vprAnalytics = window.vprAnalytics || []).push({ name, data, t: Date.now() }); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); window.removeEventListener('keydown', this.onKey); clearTimeout(this.wxT); clearTimeout(this.pollT); clearTimeout(this.toastT); if (this.offAuth) this.offAuth(); }
+  track(name, data) {
+    (window.vprAnalytics = window.vprAnalytics || []).push({ name, data, t: Date.now() });
+    if (window.VPRCloud) window.VPRCloud.track(name, data, { lang: this.state.lang, view: this.state.view });
+  }
+
+  // ── Accounts, Lookbook sync and analytics consent (Supabase via cloud.js) ──
+  initCloud() {
+    const cloud = window.VPRCloud; if (!cloud || !cloud.enabled) return;
+    this.offAuth = cloud.onAuth((evt, u) => this.onAuthEvt(evt, u));
+    cloud.ready.then(() => {
+      if (!cloud.enabled) return;
+      this.setState({ cloudOn:true, consent: cloud.consent() });
+      // The SDK may report the stored session before this component subscribed.
+      if (cloud.user()) this.onAuthEvt('INITIAL_SESSION', cloud.user());
+      const e = cloud.urlError(); if (e) this.setState({ authOpen:true, authMode:'signin', authErr: this.authErrText(e) });
+      this.trackOpen();
+    });
+  }
+  trackOpen() {
+    if (this.opened || window.VPRCloud.consent() !== 'granted') return; this.opened = true;
+    let ref = ''; try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+    this.track('app_opened', { ref });
+  }
+  onAuthEvt(evt, u) {
+    const prev = this.state.user;
+    if (evt === 'PASSWORD_RECOVERY') { this.setState({ user:u, authOpen:true, authMode:'newpw', authErr:'', authMsg:'' }); return; }
+    if (u && (!prev || prev.id !== u.id)) {
+      this.setState({ user:u, isAdmin:false });
+      this.syncLooks();
+      window.VPRCloud.isAdmin().then(isAdmin => this.setState({ isAdmin }));
+      if (evt === 'SIGNED_IN') { if (this.state.authMode !== 'newpw') this.setState({ authOpen:false }); this.flash(V(`Xin chào, ${u.name}!`,`Welcome, ${u.name}!`)); }
+    } else if (u) this.setState({ user:{ ...prev, ...u } });
+    else if (prev) { this.setState({ user:null, isAdmin:false }); this.writeSaved([], { local:true }); }
+  }
+  async syncLooks() {
+    const cloud = window.VPRCloud;
+    try {
+      const remote = await cloud.listLooks(), ids = new Set(remote.map(l => l.id));
+      const local = this.state.saved.filter(l => !ids.has(l.id));
+      if (local.length) await cloud.saveLooks(local);
+      const merged = [...local, ...remote].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+      this.writeSaved(merged, { local:true });
+      if (local.length) this.flash(V(`Đã đồng bộ ${local.length} look lên tài khoản`,`Synced ${local.length} look${local.length===1?'':'s'} to your account`));
+    } catch (e) { this.flash(V('Chưa đồng bộ được Lookbook — kiểm tra kết nối','Could not sync your Lookbook — check your connection')); }
+  }
+  openAuth(mode) { this.setState(s => ({ authOpen:true, authMode: mode || (s.user ? 'account' : 'signin'), authErr:'', authMsg:'', delArm:false })); }
+  setAuthField(k, v) { this.setState(s => ({ authForm:{ ...s.authForm, [k]:v }, authErr:'' })); }
+  authErrText(e) {
+    const c = (e && (e.code || e.error_code)) || '', m = (e && e.message) || '';
+    const M = {
+      invalid_credentials: V('Email hoặc mật khẩu không đúng.','Wrong email or password.'),
+      email_not_confirmed: V('Email chưa được xác nhận — hãy mở liên kết trong email chúng tôi đã gửi.','Your email is not confirmed yet — open the link we sent you.'),
+      user_already_exists: V('Email này đã có tài khoản — hãy đăng nhập.','This email already has an account — sign in instead.'),
+      weak_password: V('Mật khẩu quá yếu — dùng ít nhất 8 ký tự, có cả chữ và số.','Password is too weak — use at least 8 characters with letters and numbers.'),
+      over_email_send_rate_limit: V('Đã gửi quá nhiều email — vui lòng thử lại sau ít phút.','Too many emails sent — please try again in a few minutes.'),
+      over_request_rate_limit: V('Bạn thao tác quá nhanh — vui lòng thử lại sau ít phút.','Too many attempts — please try again in a few minutes.'),
+      email_address_invalid: V('Email không hợp lệ.','Invalid email address.'),
+      otp_expired: V('Liên kết đã hết hạn hoặc đã được dùng — hãy yêu cầu liên kết mới.','The link has expired or was already used — request a new one.'),
+      same_password: V('Mật khẩu mới phải khác mật khẩu cũ.','The new password must be different from the old one.'),
+      signup_disabled: V('Hiện chưa mở đăng ký tài khoản mới.','Sign-ups are currently closed.')
+    };
+    if (M[c]) return M[c];
+    if (/invalid login credentials/i.test(m)) return M.invalid_credentials;
+    if (/already registered/i.test(m)) return M.user_already_exists;
+    if (/failed to fetch|networkerror|load failed/i.test(m)) return V('Không kết nối được máy chủ — kiểm tra mạng.','Could not reach the server — check your connection.');
+    return m || V('Đã có lỗi xảy ra, vui lòng thử lại.','Something went wrong, please try again.');
+  }
+  async submitAuth(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const st = this.state, f = st.authForm, mode = st.authMode, cloud = window.VPRCloud;
+    const email = f.email.trim(), pw = f.password;
+    if (st.authBusy) return;
+    if (mode !== 'newpw' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return this.setState({ authErr: V('Email không hợp lệ.','Invalid email address.') });
+    if ((mode === 'signup' || mode === 'newpw') && pw.length < 8) return this.setState({ authErr: V('Mật khẩu cần ít nhất 8 ký tự.','Password needs at least 8 characters.') });
+    if (mode === 'signin' && !pw) return this.setState({ authErr: V('Hãy nhập mật khẩu.','Enter your password.') });
+    this.setState({ authBusy:true, authErr:'', authMsg:'' });
+    try {
+      if (mode === 'signin') {
+        await cloud.signIn({ email, password:pw }); this.track('login');
+        this.setState({ authOpen:false, authForm:{ ...f, password:'' } });
+      } else if (mode === 'signup') {
+        const r = await cloud.signUp({ email, password:pw, name:f.name.trim(), lang:st.lang }); this.track('signup');
+        if (r.needsConfirm) this.setState({ authMode:'signin', authForm:{ ...f, password:'' }, authMsg: V(`Đã gửi email xác nhận tới ${email}. Mở liên kết trong email để kích hoạt tài khoản, rồi đăng nhập.`,`We sent a confirmation email to ${email}. Open the link in it to activate your account, then sign in.`) });
+        else this.setState({ authOpen:false, authForm:{ ...f, password:'' } });
+      } else if (mode === 'reset') {
+        await cloud.resetPassword(email);
+        this.setState({ authMsg: V(`Nếu ${email} đã có tài khoản, liên kết đặt lại mật khẩu đã được gửi.`,`If ${email} has an account, a reset link is on its way.`) });
+      } else if (mode === 'newpw') {
+        await cloud.updatePassword(pw);
+        this.setState({ authOpen:false, authForm:{ ...f, password:'' } }); this.flash(V('Đã đổi mật khẩu','Password updated'));
+      }
+    } catch (err) { this.setState({ authErr: this.authErrText(err) }); }
+    finally { this.setState({ authBusy:false }); }
+  }
+  async doSignOut() {
+    this.track('logout');
+    try { await window.VPRCloud.signOut(); this.setState({ authOpen:false }); this.flash(V('Đã đăng xuất','Signed out')); }
+    catch (e) { this.setState({ authErr: this.authErrText(e) }); }
+  }
+  async doDelete() {
+    if (!this.state.delArm) return this.setState({ delArm:true });
+    this.setState({ authBusy:true, authErr:'' });
+    try {
+      await window.VPRCloud.deleteAccount();
+      this.setState({ authOpen:false, delArm:false, user:null, isAdmin:false }); this.writeSaved([], { local:true });
+      this.flash(V('Đã xóa tài khoản và dữ liệu đồng bộ','Account and synced data deleted'));
+    } catch (e) { this.setState({ authErr: this.authErrText(e) }); }
+    finally { this.setState({ authBusy:false }); }
+  }
+  setConsent(granted) {
+    window.VPRCloud.setConsent(granted); this.setState({ consent: granted ? 'granted' : 'denied' });
+    if (granted) this.trackOpen();
+  }
   store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   persist(patch) { this.setState(patch, () => { const { garment, event, style, palette, acc, remix, look } = this.state; this.store('vpr_studio_v1', { garment, event, style, palette, acc, remix, look }); }); }
   setLang(l) { LANG = l; this.setState({ lang:l }); this.store('vpr_lang_v1', l); document.documentElement.lang = l; }
   flash(msg) { clearTimeout(this.toastT); this.setState({ toast: msg }); this.toastT = setTimeout(() => this.setState({ toast:'' }), 2400); }
-  go(view) { this.setState({ view, storyOpen:false, compare:null }); window.scrollTo(0,0); if (view==='studio') this.track('studio_started'); }
+  go(view) { this.setState({ view, storyOpen:false, compare:null }); window.scrollTo(0,0); this.track('page_view', { view }); if (view==='studio') this.track('studio_started'); }
   sel() { const { garment, event, style, palette, acc, remix } = this.state; return { garment, event, style, palette, acc, remix }; }
   applyPreset(p) { this.persist({ garment:p.garment, event:p.event, style:p.style, palette:p.palette, acc:p.acc.slice(), remix:p.remix, look:p.id }); }
   recs() { const { garment, event } = this.state; return PRESETS.filter(p => p.garment === garment).sort((a,b) => (b.event===event) - (a.event===event)); }
@@ -963,7 +1194,15 @@ class Component extends DCLogic {
       ...s, accessories:s.acc, remixIntensity:s.remix, interpretationLabel:a.label, tryOnResultUrl: t.status==='completed' ? t.outputUrl : null, createdAt:new Date().toISOString() };
     this.writeSaved([look, ...this.state.saved]); this.track('look_saved', { garment:s.garment }); this.flash(V('Đã lưu vào Lookbook','Saved to Lookbook'));
   }
-  writeSaved(saved) { this.setState({ saved }); try { localStorage.setItem('vpr_lookbook_v1', JSON.stringify(saved)); } catch (e) { this.flash(V('Không lưu được trên thiết bị này','Could not save on this device')); } }
+  writeSaved(saved, opt) {
+    const prev = this.state.saved; this.setState({ saved });
+    try { localStorage.setItem('vpr_lookbook_v1', JSON.stringify(saved)); } catch (e) { this.flash(V('Không lưu được trên thiết bị này','Could not save on this device')); }
+    if (!this.state.user || (opt && opt.local)) return;
+    const keep = new Set(saved.map(l => l.id)), before = new Map(prev.map(l => [l.id, l]));
+    const gone = prev.filter(l => !keep.has(l.id)).map(l => l.id), changed = saved.filter(l => before.get(l.id) !== l);
+    Promise.all([window.VPRCloud.saveLooks(changed), window.VPRCloud.deleteLooks(gone)])
+      .catch(() => this.flash(V('Chưa đồng bộ được lên tài khoản — look vẫn được lưu trên thiết bị này','Could not sync to your account — the look is still saved on this device')));
+  }
   lookName(l) { const p = l.presetId && PRESETS.find(x => x.id === l.presetId); return p ? tx(p,'title') : (l.customName || l.name || 'Look'); }
 
   coverOf(k) { const i = (this.state.lib || {})[COVER[k]]; return { img: i ? i.thumb : '', imgCredit: i ? i.credit : '', imgHref: i ? i.page : '' }; }
@@ -1255,13 +1494,29 @@ class Component extends DCLogic {
     const wx = st.wx, wc = wx.data && WCODE[wx.data.weatherCode];
     const warnText = w => w[0]==='small' ? V(`Ảnh hơi nhỏ (${w[1]}×${w[2]}) — kết quả có thể kém sắc nét.`,`Photo is small (${w[1]}×${w[2]}) — the result may be soft.`) : w[0]==='landscape' ? V('Ảnh ngang — ảnh dọc toàn thân cho kết quả tốt hơn.','Landscape photo — a portrait full-body shot works better.') : V('Ảnh có thể bị cắt hoặc chỉ có nửa người. Nên dùng ảnh toàn thân.','Photo may be cropped or half-body. A full-body shot is recommended.');
     const PROV = [ { id:'hf', name:'Open-source AI', sub:V('FitDiT · Leffa · IDM-VTON — miễn phí','FitDiT · Leffa · IDM-VTON — free') }, { id:'fashn', name:'FASHN Try-On Max', sub:V('Khóa cá nhân (dev)','Personal key (dev)') }, { id:'server', name:V('Máy chủ riêng','Own server'), sub:V('FASHN qua API route','FASHN via API route') } ];
-    const lookCount = st.saved.length;
+    const lookCount = st.saved.length, u = st.user, am = st.authMode;
+    const AM = { signin:[t.authSigninTitle, t.authSigninSub, t.signIn], signup:[t.authSignupTitle, t.authSignupSub, t.signUp], reset:[t.authResetTitle, t.authResetSub, t.sendReset],
+      newpw:[t.authNewpwTitle, t.authNewpwSub, t.savePw], account:[t.account, t.accountSub, ''] }[am] || [];
+    const authLinks = am === 'signin' ? [['toSignup','signup'],['toReset','reset']] : am === 'signup' ? [['toSignin','signin']] : am === 'reset' ? [['backSignin','signin']] : [];
     return {
+      cloudOn: st.cloudOn, openAccount: () => this.openAuth(), openSignin: () => this.openAuth('signin'), showSyncCta: st.cloudOn && !u,
+      acct: { in: !!u, out: !u, initial: u ? ((u.name || u.email || '?').trim()[0] || '?').toUpperCase() : '', label: u ? u.name : t.signIn, name: u ? u.name : '', aria: u ? `${t.account}: ${u.name}` : t.signIn, email: u ? u.email : '',
+        since: u && u.createdAt ? new Date(u.createdAt).toLocaleDateString(LANG==='en' ? 'en-GB' : 'vi-VN') : '—', isAdmin: st.isAdmin,
+        delLabel: st.delArm ? t.deleteConfirm : t.deleteAcct, delBg: st.delArm ? C.lacquer : 'transparent', delFg: st.delArm ? C.ivory : C.lacquer, delArm: st.delArm },
+      authOpen: st.authOpen, closeAuth: () => this.setState({ authOpen:false, delArm:false }), authForm: st.authForm, authBusy: st.authBusy,
+      auth: { title: AM[0], sub: AM[1], submit: st.authBusy ? '…' : AM[2], isForm: am !== 'account', isAccount: am === 'account',
+        showName: am === 'signup', showEmail: am !== 'newpw', showPw: am !== 'reset', pwLabel: am === 'signin' ? t.fPassword : t.fNewPassword, pwAuto: am === 'signin' ? 'current-password' : 'new-password',
+        err: st.authErr, msg: st.authMsg, busyOp: st.authBusy ? .6 : 1, showAgree: am === 'signup',
+        links: authLinks.map(([k, m]) => ({ label: t[k], onClick: () => this.setState({ authMode:m, authErr:'', authMsg:'' }) })) },
+      onAuthName: e => this.setAuthField('name', e.target.value), onAuthEmail: e => this.setAuthField('email', e.target.value), onAuthPw: e => this.setAuthField('password', e.target.value),
+      onAuthSubmit: e => this.submitAuth(e), doSignOut: () => this.doSignOut(), doDelete: () => this.doDelete(),
+      showConsent: st.cloudOn && !st.consent, consentOn: st.consent === 'granted', consentYes: () => this.setConsent(true), consentNo: () => this.setConsent(false),
+      onConsentToggle: e => this.setConsent(e.target.checked), openConsent: () => this.setState({ consent:null }),
       t, isVi: LANG==='vi', isEn: LANG==='en', setVi: () => this.setLang('vi'), setEn: () => this.setLang('en'),
       viBg: LANG==='vi' ? C.ink : 'transparent', viFg: LANG==='vi' ? C.ivory : C.ink, enBg: LANG==='en' ? C.ink : 'transparent', enFg: LANG==='en' ? C.ivory : C.ink,
       isLanding: st.view==='landing', isStudio: st.view==='studio', isLookbook: st.view==='lookbook',
       navLandingBd: st.view==='landing' ? C.lacquer : 'transparent', navStudioBd: st.view==='studio' ? C.lacquer : 'transparent', navLookBd: st.view==='lookbook' ? C.lacquer : 'transparent',
-      savedCount: lookCount, lookbookEmpty: lookCount === 0, lookCountText: V(`${lookCount} look · lưu trên thiết bị này`,`${lookCount} look${lookCount===1?'':'s'} · saved on this device`),
+      savedCount: lookCount, lookbookEmpty: lookCount === 0, lookCountText: u ? V(`${lookCount} look · đồng bộ với tài khoản`,`${lookCount} look${lookCount===1?'':'s'} · synced to your account`) : V(`${lookCount} look · lưu trên thiết bị này`,`${lookCount} look${lookCount===1?'':'s'} · saved on this device`),
       goLanding: () => this.go('landing'), goStudio: () => this.go('studio'), goLookbook: () => this.go('lookbook'),
       goExplore: () => { if (st.view !== 'landing') this.setState({ view:'landing', storyOpen:false, compare:null }, () => setTimeout(() => this.scrollTo(this.exploreRef), 60)); else this.scrollTo(this.exploreRef); },
       exploreRef: this.exploreRef, tryonRef: this.tryonRef,

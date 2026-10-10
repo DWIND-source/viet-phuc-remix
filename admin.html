@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Việt Phục Remix · Admin</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237C2837'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-style='italic' fill='%23F2ECE1'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./config.js"></script>
+<script src="./cloud.js"></script>
+<style>
+:root {
+  --bg: #F2ECE1; --surface: #F8F4EC; --ink: #181715; --ink-2: #4A463F; --muted: #6B665E; --line: rgba(24,23,21,.12);
+  --accent: #7C2837; --mark: #8F3646; --grid: rgba(24,23,21,.10); --bad-bg: rgba(124,40,55,.08); --bad: #5E1C29; --ok: #3F5549;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161412; --surface: #1F1C19; --ink: #F2ECE1; --ink-2: #CFC7BA; --muted: #A39B8E; --line: rgba(242,236,225,.14);
+    --accent: #D98292; --mark: #C96B7D; --grid: rgba(242,236,225,.10); --bad-bg: rgba(217,130,146,.12); --bad: #F0B4BF; --ok: #9CC1AD;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161412; --surface: #1F1C19; --ink: #F2ECE1; --ink-2: #CFC7BA; --muted: #A39B8E; --line: rgba(242,236,225,.14);
+  --accent: #D98292; --mark: #C96B7D; --grid: rgba(242,236,225,.10); --bad-bg: rgba(217,130,146,.12); --bad: #F0B4BF; --ok: #9CC1AD;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 'Be Vietnam Pro', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-underline-offset: 3px; }
+button, input { font: inherit; }
+:focus-visible { outline: 2px solid #B79A65; outline-offset: 2px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 24px 16px 64px; display: flex; flex-direction: column; gap: 24px; }
+header.top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+.brand { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); text-decoration: none; }
+.brand i { color: var(--accent); }
+.tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; color: var(--muted); }
+.spacer { flex: 1; }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 999px; padding: 8px 16px; cursor: pointer; font-size: 14px; white-space: nowrap; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--ink); }
+.btn:disabled { opacity: .6; cursor: default; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; min-width: 0; }
+.card h2 { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
+.card .sub { margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+h1 { margin: 0; font-family: 'Playfair Display', serif; font-weight: 400; font-size: clamp(32px, 5vw, 48px); line-height: 1.05; }
+.center { max-width: 420px; margin: 8vh auto 0; display: flex; flex-direction: column; gap: 14px; }
+label.f { display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: var(--ink-2); }
+label.f input { border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; background: var(--bg); color: var(--ink); font-size: 15px; }
+.err { background: var(--bad-bg); color: var(--bad); border-radius: 10px; padding: 10px 12px; font-size: 13px; margin: 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.tile .l { font-size: 13px; color: var(--muted); }
+.tile .v { font-size: 30px; font-weight: 600; line-height: 1.1; }
+.tile .d { font-size: 12px; color: var(--ink-2); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.chart { position: relative; }
+.chart svg { display: block; width: 100%; height: 240px; overflow: visible; }
+.chart .tick { font: 11px 'JetBrains Mono', monospace; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); border-radius: 8px; padding: 6px 10px; font-size: 12px; white-space: nowrap; transform: translate(-50%, calc(-100% - 8px)); opacity: 0; transition: opacity .12s; }
+.tip.on { opacity: 1; }
+.hbars { display: flex; flex-direction: column; gap: 10px; }
+.hb { display: grid; grid-template-columns: minmax(90px, 38%) 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+.hb .name { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb .track { height: 12px; }
+.hb .bar { height: 12px; background: var(--mark); border-radius: 0 4px 4px 0; min-width: 2px; }
+.hb .n { font-variant-numeric: tabular-nums; color: var(--ink); min-width: 3ch; text-align: right; }
+.empty { color: var(--muted); font-size: 13px; margin: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-weight: 500; color: var(--muted); font-size: 12px; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.scroll { overflow-x: auto; }
+details summary { cursor: pointer; font-size: 13px; color: var(--ink-2); margin-top: 10px; }
+.pill { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); }
+.pill.ok { color: var(--ok); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./">Việt Phục <i>Remix</i></a>
+    <span class="tag">ADMIN</span>
+    <span class="spacer"></span>
+    <span id="who" class="tag"></span>
+    <button id="signout" class="btn ghost" hidden>Đăng xuất</button>
+  </header>
+
+  <section id="v-msg" class="center" hidden>
+    <h1 id="msg-title"></h1>
+    <p id="msg-body" style="margin:0;color:var(--ink-2)"></p>
+  </section>
+
+  <section id="v-login" class="center" hidden>
+    <h1>Đăng nhập quản trị</h1>
+    <p style="margin:0;color:var(--ink-2)">Dùng tài khoản đã được thêm vào bảng <code>admins</code> trên Supabase.</p>
+    <form id="login" style="display:flex;flex-direction:column;gap:12px" novalidate>
+      <label class="f">Email<input id="email" type="email" autocomplete="email" required></label>
+      <label class="f">Mật khẩu<input id="pw" type="password" autocomplete="current-password" required></label>
+      <p id="login-err" class="err" role="alert" hidden></p>
+      <button class="btn" id="login-btn" type="submit">Đăng nhập</button>
+    </form>
+  </section>
+
+  <section id="v-dash" hidden style="display:flex;flex-direction:column;gap:20px">
+    <div class="toolbar">
+      <h1 style="font-size:clamp(28px,4vw,40px)">Tổng quan</h1>
+      <span class="spacer"></span>
+      <div class="seg" role="group" aria-label="Khoảng thời gian">
+        <button data-days="7" aria-pressed="false">7 ngày</button>
+        <button data-days="30" aria-pressed="true">30 ngày</button>
+        <button data-days="90" aria-pressed="false">90 ngày</button>
+      </div>
+      <button id="csv-events" class="btn ghost">Tải CSV sự kiện</button>
+      <button id="csv-users" class="btn ghost">Tải CSV người dùng</button>
+    </div>
+    <p id="dash-err" class="err" role="alert" hidden></p>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="card">
+      <h2>Lượt truy cập mỗi ngày</h2>
+      <p class="sub">Số phiên có sự kiện, theo giờ Việt Nam. Chỉ tính khách đã đồng ý chia sẻ dữ liệu sử dụng.</p>
+      <div class="chart" id="daily"><svg role="img" aria-label="Biểu đồ cột lượt truy cập mỗi ngày"></svg><div class="tip"></div></div>
+      <details><summary>Xem bảng số liệu</summary><div class="scroll"><table id="daily-table"></table></div></details>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><h2>Hành động người dùng</h2><p class="sub">Số sự kiện theo loại</p><div class="hbars" id="by-name"></div></div>
+      <div class="card"><h2>Thiết bị</h2><p class="sub">Số phiên theo loại màn hình</p><div class="hbars" id="by-device"></div></div>
+      <div class="card"><h2>Trang phục được lưu</h2><p class="sub">Look lưu vào tài khoản, theo trang phục</p><div class="hbars" id="top-garments"></div></div>
+      <div class="card"><h2>Dịp được chọn</h2><p class="sub">Look lưu vào tài khoản, theo dịp</p><div class="hbars" id="top-occasions"></div></div>
+    </div>
+
+    <div class="card">
+      <h2>Người dùng mới nhất</h2>
+      <p class="sub">100 tài khoản đăng ký gần nhất</p>
+      <div class="scroll"><table id="users"></table></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var cloud = window.VPRCloud;
+  var $ = function (id) { return document.getElementById(id); };
+  var state = { days: 30, data: null };
+  var NAMES = {
+    app_opened: 'Mở ứng dụng', page_view: 'Xem trang', studio_started: 'Vào Studio', garment_selected: 'Chọn trang phục',
+    event_selected: 'Chọn dịp', style_selected: 'Chọn phong cách', look_saved: 'Lưu look', look_compared: 'So sánh look',
+    culture_story_opened: 'Mở câu chuyện văn hóa', tryon_started: 'Bắt đầu Try-On', tryon_completed: 'Try-On thành công',
+    tryon_failed: 'Try-On lỗi', login: 'Đăng nhập', signup: 'Đăng ký', logout: 'Đăng xuất'
+  };
+  var GARMENTS = { aodai: 'Áo dài', nguthan: 'Áo ngũ thân', tuthan: 'Áo tứ thân' };
+  var OCCASIONS = { tet: 'Tết', festival: 'Lễ hội', photoshoot: 'Kỷ yếu / Photoshoot', formal: 'Sự kiện trang trọng', street: 'Dạo phố / Creative' };
+  var DEVICES = { mobile: 'Điện thoại', tablet: 'Máy tính bảng', desktop: 'Máy tính', '?': 'Không rõ' };
+  var nf = new Intl.NumberFormat('vi-VN');
+  var fmtDate = function (s) { return s ? new Date(s).toLocaleDateString('vi-VN') : '—'; };
+  var fmtDT = function (s) { return s ? new Date(s).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' }) : '—'; };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+
+  function show(view) { ['v-msg', 'v-login', 'v-dash'].forEach(function (v) { $(v).hidden = v !== view; }); }
+  function message(title, body) { $('msg-title').textContent = title; $('msg-body').innerHTML = body; show('v-msg'); }
+
+  // ── tiles ──
+  function tiles(d) {
+    var T = [
+      ['Lượt truy cập', d.sessions, state.days + ' ngày qua'],
+      ['Khách truy cập', d.visitors, 'thiết bị khác nhau'],
+      ['Sự kiện', d.events, state.days + ' ngày qua'],
+      ['Tài khoản', d.users_total, '+' + nf.format(d.users_new) + ' trong ' + state.days + ' ngày'],
+      ['Look đã lưu', d.looks_total, '+' + nf.format(d.looks_new) + ' trong ' + state.days + ' ngày']
+    ];
+    $('tiles').innerHTML = T.map(function (t) {
+      return '<div class="tile"><span class="l">' + esc(t[0]) + '</span><span class="v">' + nf.format(t[1] || 0) + '</span><span class="d">' + esc(t[2]) + '</span></div>';
+    }).join('');
+  }
+
+  // ── daily column chart (single series: no legend, the title names it) ──
+  function dailySeries(d) {
+    var map = {}; (d.daily || []).forEach(function (r) { map[r.day] = r; });
+    var out = [], end = new Date(), fmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh' });
+    for (var i = state.days - 1; i >= 0; i--) {
+      var key = fmt.format(new Date(end.getTime() - i * 864e5));
+      var r = map[key] || {}; out.push({ day: key, sessions: r.sessions || 0, events: r.events || 0 });
+    }
+    return out;
+  }
+  function niceMax(v) { if (v <= 4) return 4; var p = Math.pow(10, Math.floor(Math.log10(v))), n = v / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+  function daily(d) {
+    var rows = dailySeries(d), box = $('daily'), svg = box.querySelector('svg'), tip = box.querySelector('.tip');
+    var W = box.clientWidth || 600, H = 240, L = 36, R = 8, Tp = 10, B = 26, iw = W - L - R, ih = H - Tp - B;
+    var max = niceMax(Math.max.apply(null, rows.map(function (r) { return r.sessions; }).concat([1])));
+    var slot = iw / rows.length, bw = Math.max(2, Math.min(24, slot - 2));
+    var s = '';
+    [0, .5, 1].forEach(function (f) {
+      var y = Tp + ih - f * ih, v = Math.round(max * f);
+      s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--grid)" stroke-width="1"/>';
+      s += '<text class="tick" x="' + (L - 6) + '" y="' + (y + 4) + '" text-anchor="end">' + nf.format(v) + '</text>';
+    });
+    var every = Math.ceil(rows.length / 7);
+    rows.forEach(function (r, i) {
+      var x = L + i * slot + (slot - bw) / 2, h = r.sessions / max * ih, y = Tp + ih - h, rr = Math.min(4, bw / 2, h);
+      if (h > 0) s += '<path fill="var(--mark)" d="M' + x + ',' + (Tp + ih) + 'V' + (y + rr) + 'Q' + x + ',' + y + ' ' + (x + rr) + ',' + y + 'H' + (x + bw - rr) + 'Q' + (x + bw) + ',' + y + ' ' + (x + bw) + ',' + (y + rr) + 'V' + (Tp + ih) + 'Z"/>';
+      s += '<rect data-i="' + i + '" x="' + (L + i * slot) + '" y="' + Tp + '" width="' + slot + '" height="' + ih + '" fill="transparent"/>';
+      if (i % every === 0 || i === rows.length - 1) {
+        var lab = r.day.slice(8, 10) + '/' + r.day.slice(5, 7);
+        s += '<text class="tick" x="' + (L + i * slot + slot / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + lab + '</text>';
+      }
+    });
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.innerHTML = s;
+    svg.onmousemove = function (e) {
+      var i = e.target.getAttribute && e.target.getAttribute('data-i'); if (i == null) { tip.classList.remove('on'); return; }
+      var r = rows[+i], rect = box.getBoundingClientRect();
+      tip.innerHTML = '<b>' + r.day.split('-').reverse().join('/') + '</b> · ' + nf.format(r.sessions) + ' lượt · ' + nf.format(r.events) + ' sự kiện';
+      tip.style.left = (L + (+i + .5) * slot) / W * rect.width + 'px';
+      tip.style.top = (Tp + ih - r.sessions / max * ih) / H * rect.height + 'px';
+      tip.classList.add('on');
+    };
+    svg.onmouseleave = function () { tip.classList.remove('on'); };
+    $('daily-table').innerHTML = '<tr><th>Ngày</th><th class="num">Lượt truy cập</th><th class="num">Sự kiện</th></tr>' +
+      rows.slice().reverse().map(function (r) { return '<tr><td>' + r.day.split('-').reverse().join('/') + '</td><td class="num">' + nf.format(r.sessions) + '</td><td class="num">' + nf.format(r.events) + '</td></tr>'; }).join('');
+  }
+
+  // ── horizontal bar lists ──
+  function hbars(el, rows, key, labels) {
+    if (!rows || !rows.length) { $(el).innerHTML = '<p class="empty">Chưa có dữ liệu trong khoảng này.</p>'; return; }
+    var max = Math.max.apply(null, rows.map(function (r) { return r.n; }));
+    $(el).innerHTML = rows.slice(0, 12).map(function (r) {
+      var name = labels[r[key]] || r[key];
+      return '<div class="hb" title="' + esc(name) + ': ' + nf.format(r.n) + '"><span class="name">' + esc(name) + '</span><span class="track"><span class="bar" style="display:block;width:' + (r.n / max * 100) + '%"></span></span><span class="n">' + nf.format(r.n) + '</span></div>';
+    }).join('');
+  }
+
+  function users(d) {
+    var rows = d.recent_users || [];
+    $('users').innerHTML = '<tr><th>Tên</th><th>Email</th><th>Đăng ký</th><th>Đăng nhập gần nhất</th><th>Xác nhận</th><th class="num">Look</th></tr>' +
+      (rows.length ? rows.map(function (u) {
+        return '<tr><td>' + esc(u.display_name || '—') + '</td><td>' + esc(u.email) + '</td><td>' + fmtDate(u.created_at) + '</td><td>' + fmtDT(u.last_sign_in_at) + '</td><td>' +
+          (u.confirmed ? '<span class="pill ok">✓ Đã xác nhận</span>' : '<span class="pill">Chưa</span>') + '</td><td class="num">' + nf.format(u.looks || 0) + '</td></tr>';
+      }).join('') : '<tr><td colspan="6" class="empty">Chưa có tài khoản nào.</td></tr>');
+  }
+
+  function render() {
+    var d = state.data; if (!d) return;
+    tiles(d); daily(d);
+    hbars('by-name', d.by_name, 'name', NAMES); hbars('by-device', d.by_device, 'device', DEVICES);
+    hbars('top-garments', d.top_garments, 'id', GARMENTS); hbars('top-occasions', d.top_occasions, 'id', OCCASIONS);
+    users(d);
+  }
+
+  function load() {
+    $('dash-err').hidden = true;
+    return cloud.client().then(function (c) { return c.rpc('admin_overview', { days: state.days }); }).then(function (r) {
+      if (r.error) {
+        if (r.error.code === '42501' || /admin only/i.test(r.error.message)) return notAdmin();
+        throw r.error;
+      }
+      state.data = r.data; show('v-dash'); render();
+    }).catch(function (e) { show('v-dash'); $('dash-err').textContent = 'Không tải được số liệu: ' + (e.message || e); $('dash-err').hidden = false; });
+  }
+  function notAdmin() {
+    var u = cloud.user();
+    message('Không có quyền quản trị', 'Tài khoản <b>' + esc(u && u.email) + '</b> chưa được cấp quyền admin. Trong Supabase → SQL Editor, chạy:<br><code style="display:block;margin-top:10px;padding:10px;background:var(--surface);border-radius:8px;white-space:pre-wrap;font-size:12px">insert into public.admins (user_id) select id from auth.users where email = \'' + esc(u && u.email) + '\';</code>');
+  }
+
+  function csv(name, header, rows) {
+    var q = function (v) { v = v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    var text = '﻿' + [header.join(',')].concat(rows.map(function (r) { return header.map(function (h) { return q(r[h]); }).join(','); })).join('\n');
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
+    a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  }
+  $('csv-events').onclick = function () {
+    var btn = this; btn.disabled = true;
+    var since = new Date(Date.now() - state.days * 864e5).toISOString();
+    cloud.client().then(function (c) { return c.from('events').select('created_at,name,data,lang,view,device,session_id,visitor_id,user_id').gte('created_at', since).order('created_at', { ascending: false }).limit(10000); })
+      .then(function (r) { if (r.error) throw r.error; csv('vpr-events-' + state.days + 'd.csv', ['created_at', 'name', 'data', 'lang', 'view', 'device', 'session_id', 'visitor_id', 'user_id'], r.data); })
+      .catch(function (e) { $('dash-err').textContent = 'Không xuất được CSV: ' + e.message; $('dash-err').hidden = false; })
+      .then(function () { btn.disabled = false; });
+  };
+  $('csv-users').onclick = function () { csv('vpr-users.csv', ['display_name', 'email', 'created_at', 'last_sign_in_at', 'confirmed', 'looks'], (state.data && state.data.recent_users) || []); };
+
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.onclick = function () {
+      state.days = +b.getAttribute('data-days');
+      document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      load();
+    };
+  });
+  var rT; window.addEventListener('resize', function () { clearTimeout(rT); rT = setTimeout(function () { if (state.data) daily(state.data); }, 150); });
+
+  $('login').onsubmit = function (e) {
+    e.preventDefault();
+    var btn = $('login-btn'), err = $('login-err'); err.hidden = true; btn.disabled = true;
+    cloud.signIn({ email: $('email').value.trim(), password: $('pw').value })
+      .then(function () { $('pw').value = ''; })
+      .catch(function (e) { err.textContent = /invalid login credentials/i.test(e.message) ? 'Email hoặc mật khẩu không đúng.' : e.message; err.hidden = false; })
+      .then(function () { btn.disabled = false; });
+  };
+  $('signout').onclick = function () { cloud.signOut().catch(function () {}); };
+
+  function onUser(u) {
+    $('who').textContent = u ? u.email : '';
+    $('signout').hidden = !u;
+    if (!u) { state.data = null; show('v-login'); return; }
+    load();
+  }
+
+  if (!cloud || !cloud.enabled) {
+    message('Chưa kết nối Supabase', 'Điền <code>supabaseUrl</code> và <code>supabaseAnonKey</code> trong <code>config.js</code>, rồi tải lại trang. Xem hướng dẫn trong README.');
+    return;
+  }
+  var last, started = false;
+  cloud.onAuth(function (evt, u) { if (!started) return; var id = u && u.id; if (id !== last) { last = id; onUser(u); } });
+  cloud.ready.then(function (u) {
+    if (!cloud.enabled) return message('Không tải được Supabase', 'Kiểm tra kết nối mạng hoặc cấu hình trong config.js.');
+    started = true; last = u && u.id; onUser(u);
+  });
+})();
+</script>
+</body>
+</html>
