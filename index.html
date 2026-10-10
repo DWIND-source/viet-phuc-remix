@@ -130,7 +130,7 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
   <footer style="max-width:1440px;margin:0 auto;padding:28px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#5E5A53">
     <span>{{ t.footer1 }}</span>
     <span style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-      <a href="./privacy.html" style="color:#5E5A53">{{ t.privacy }}</a>
+      <a href="./privacy.html" style="color:#5E5A53">{{ t.privacyPolicy }}</a>
       <sc-if value="{{ cloudOn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openConsent }}" style="background:none;border:0;padding:0;color:#5E5A53;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px">{{ t.dataSettings }}</button></sc-if>
       <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ t.footer2 }}</span>
     </span>
@@ -449,6 +449,27 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
     <div style="background:#181715;color:#F2ECE1;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><h2 style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">AI STYLIST</h2><span style="font-size:11px;color:#B8AF9F">{{ t.stylistSub }}</span></div>
       <sc-for list="{{ stylistLines }}" as="x" hint-placeholder-count="3"><p style="margin:0;font-family:'Playfair Display',serif;font-size:18px;line-height:1.35;text-wrap:pretty">“{{ x }}”</p></sc-for>
+      <sc-if value="{{ gemOn }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top:1px solid rgba(242,236,225,.15);padding-top:12px;display:flex;flex-direction:column;gap:10px">
+          <sc-if value="{{ gem.has }}" hint-placeholder-val="{{ false }}">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:#B79A65">✦ {{ t.gemTag }}</span>
+            <span style="font-family:'Playfair Display',serif;font-size:22px;line-height:1.15">{{ gem.lookName }}</span>
+            <p style="margin:0;font-size:14px;color:#E4DCCD">{{ gem.summary }}</p>
+            <sc-for list="{{ gem.tips }}" as="x" hint-placeholder-count="3"><p style="margin:0;font-size:14px;display:flex;gap:8px"><span style="color:#B79A65">—</span>{{ x }}</p></sc-for>
+            <p style="margin:0;font-size:12px;color:#B8AF9F">ⓘ {{ gem.note }}</p>
+            <sc-if value="{{ gem.src }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;color:#B8AF9F">{{ gem.src }}</span></sc-if>
+            <div style="background:rgba(242,236,225,.08);border:1px solid rgba(242,236,225,.15);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:#B8AF9F">{{ t.gemCaption }}</span>
+              <span style="font-size:13px">{{ gem.caption }}</span>
+              <button onClick="{{ copyCaption }}" style="align-self:flex-start;background:none;border:1px solid rgba(242,236,225,.35);color:#F2ECE1;border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer">{{ t.gemCopy }}</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ gem.loading }}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size:13px;color:#B79A65">✦ {{ t.gemLoading }}</span></sc-if>
+          <sc-if value="{{ gem.err }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px;color:#F0B4BF">{{ gem.err }}</span></sc-if>
+          <sc-if value="{{ gem.idle }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#B8AF9F">{{ t.gemHint }}</span></sc-if>
+          <button onClick="{{ askStylist }}" disabled="{{ gem.loading }}" style="align-self:flex-start;background:#F2ECE1;color:#181715;border:0;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:#B79A65">✦ {{ gem.btn }}</button>
+        </div>
+      </sc-if>
       <div style="display:flex;align-items:center;gap:14px;border-top:1px solid rgba(242,236,225,.15);padding-top:12px" title="{{ t.harmonyTip }}">
         <span style="font-family:'Playfair Display',serif;font-size:40px;line-height:1">{{ harmony.score }}</span>
         <span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:500">{{ harmony.summary }}</span><span style="font-size:12px;color:#B8AF9F">{{ harmony.notesText }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#B79A65">Color harmony heuristic ⓘ</span></span>
@@ -562,6 +583,29 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
       <div style="display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:24px">{{ t.mythTitle }}</h3>
         <sc-for list="{{ story.misconceptions }}" as="x" hint-placeholder-count="2"><p style="margin:0;font-size:14px;display:flex;gap:10px"><span style="color:#7C2837">≠</span>{{ x }}</p></sc-for></div>
       <p style="margin:0;font-size:13px;color:#2B3A50">ⓘ {{ t.variants }}</p>
+      <sc-if value="{{ gemOn }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#181715;color:#F2ECE1;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:#B79A65">✦ {{ t.gemAskTitle }} {{ story.name }}</span>
+          <form onSubmit="{{ onGqSubmit }}" style="display:flex;gap:8px">
+            <input type="text" value="{{ gq.q }}" onChange="{{ onGq }}" placeholder="{{ t.gemAskPh }}" aria-label="{{ t.gemAskPh }}" maxlength="500" style="flex:1;min-width:0;border:1px solid rgba(242,236,225,.25);border-radius:12px;padding:10px 12px;font-size:14px;background:rgba(242,236,225,.06);color:#F2ECE1">
+            <button type="submit" disabled="{{ gq.loading }}" style="background:#F2ECE1;color:#181715;border:0;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;opacity:{{ gq.sendOp }}">{{ t.gemSend }}</button>
+          </form>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ gq.chips }}" as="c" hint-placeholder-count="3"><button type="button" onClick="{{ c.onClick }}" style="background:none;border:1px solid rgba(242,236,225,.3);color:#E4DCCD;border-radius:999px;padding:5px 11px;font-size:12px;cursor:pointer;text-align:left" style-hover="border-color:#F2ECE1">{{ c.q }}</button></sc-for>
+          </div>
+          <sc-if value="{{ gq.loading }}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size:13px;color:#B79A65">✦ {{ t.gemLoading }}</span></sc-if>
+          <sc-if value="{{ gq.err }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px;color:#F0B4BF">{{ gq.err }}</span></sc-if>
+          <sc-if value="{{ gq.has }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(242,236,225,.15);padding-top:12px">
+              <span style="font-size:13px;color:#B8AF9F">“{{ gq.asked }}”</span>
+              <p style="margin:0;font-size:14px;line-height:1.6">{{ gq.answer }}</p>
+              <span style="align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:11px;color:#F2ECE1;background:{{ gq.badgeFg }};border-radius:4px;padding:2px 7px">{{ gq.badge }}</span>
+              <sc-if value="{{ gq.src }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;color:#B8AF9F">{{ gq.src }}</span></sc-if>
+            </div>
+          </sc-if>
+          <span style="font-size:11px;color:#B8AF9F">{{ t.gemAskNote }}</span>
+        </div>
+      </sc-if>
       <div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(24,23,21,.15);padding-top:20px"><h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:24px">{{ t.sources }}</h3>
         <sc-for list="{{ story.sources }}" as="s" hint-placeholder-count="3">
           <div style="display:grid;grid-template-columns:24px 1fr;gap:8px;font-size:14px">
@@ -645,7 +689,7 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
           <button type="button" onClick="{{ k.onClick }}" style="background:none;border:0;padding:2px 0;color:#7C2837;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px">{{ k.label }}</button>
         </sc-for>
       </div>
-      <sc-if value="{{ auth.showAgree }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:12px;color:#5E5A53">{{ t.signupAgree }} <a href="./privacy.html" target="_blank" rel="noopener">{{ t.privacy }}</a>.</p></sc-if>
+      <sc-if value="{{ auth.showAgree }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:12px;color:#5E5A53">{{ t.signupAgree }} <a href="./privacy.html" target="_blank" rel="noopener">{{ t.privacyPolicy }}</a>.</p></sc-if>
     </sc-if>
 
     <sc-if value="{{ auth.isAccount }}" hint-placeholder-val="{{ false }}">
@@ -671,7 +715,7 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
         <button onClick="{{ doSignOut }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:10px 20px;font-size:14px;cursor:pointer" style-hover="background:#7C2837">{{ t.signOut }}</button>
         <button onClick="{{ doDelete }}" disabled="{{ authBusy }}" style="background:{{ acct.delBg }};color:{{ acct.delFg }};border:1px solid rgba(124,40,55,.5);border-radius:999px;padding:10px 16px;font-size:13px;cursor:pointer">{{ acct.delLabel }}</button>
       </div>
-      <a href="./privacy.html" target="_blank" rel="noopener" style="font-size:12px;color:#5E5A53">{{ t.privacy }}</a>
+      <a href="./privacy.html" target="_blank" rel="noopener" style="font-size:12px;color:#5E5A53">{{ t.privacyPolicy }}</a>
     </sc-if>
   </div>
 </div>
@@ -680,7 +724,7 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
 <sc-if value="{{ showConsent }}" hint-placeholder-val="{{ false }}">
   <div role="region" aria-label="{{ t.consentTitle }}" style="position:fixed;left:16px;bottom:16px;width:min(460px,calc(100vw - 32px));z-index:75;background:#181715;color:#F2ECE1;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 30px 60px -20px rgba(24,23,21,.6);animation:vprFade .35s ease both">
     <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#B79A65">{{ t.consentTitle }}</span>
-    <p style="margin:0;font-size:14px;line-height:1.5">{{ t.consentBody }} <a href="./privacy.html" target="_blank" rel="noopener" style="color:#F2ECE1" style-hover="color:#B79A65">{{ t.privacy }}</a></p>
+    <p style="margin:0;font-size:14px;line-height:1.5">{{ t.consentBody }} <a href="./privacy.html" target="_blank" rel="noopener" style="color:#F2ECE1" style-hover="color:#B79A65">{{ t.privacyPolicy }}</a></p>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button onClick="{{ consentNo }}" style="background:none;color:#F2ECE1;border:1px solid rgba(242,236,225,.45);border-radius:999px;padding:9px 20px;cursor:pointer;font-size:14px" style-hover="border-color:#F2ECE1">{{ t.consentNo }}</button>
       <button onClick="{{ consentYes }}" style="background:#F2ECE1;color:#181715;border:1px solid #F2ECE1;border-radius:999px;padding:9px 20px;cursor:pointer;font-size:14px;font-weight:500" style-hover="background:#B79A65;border-color:#B79A65">{{ t.consentYes }}</button>
@@ -742,7 +786,7 @@ const T = {
   variants:['Có nhiều cách diễn giải / biến thể theo thời kỳ hoặc khu vực.','Interpretations and variants differ by period and region.'], sources:['Nguồn','Sources'],
   noWinner:['Không có “người thắng” — chỉ là thông tin để bạn tự quyết định.','There is no “winner” — just information to help you decide.'],
   tryOutfit:['Thử outfit','Try outfit'],
-  signIn:['Đăng nhập','Sign in'], signUp:['Tạo tài khoản','Create account'], account:['Tài khoản','Account'], close:['Đóng','Close'],
+  signIn:['Đăng nhập','Sign in'], signUp:['Tạo tài khoản','Create account'], account:['Tài khoản','Account'],
   authEyebrow:['TÀI KHOẢN','ACCOUNT'],
   authSigninTitle:['Chào mừng trở lại','Welcome back'], authSigninSub:['Đăng nhập để đồng bộ Lookbook trên mọi thiết bị.','Sign in to sync your Lookbook across devices.'],
   authSignupTitle:['Tạo tài khoản','Create your account'], authSignupSub:['Lưu look lên tài khoản và mở lại trên điện thoại hay máy tính.','Save looks to your account and open them on any device.'],
@@ -752,7 +796,7 @@ const T = {
   fName:['Tên hiển thị','Display name'], fEmail:['Email','Email'], fPassword:['Mật khẩu','Password'], fNewPassword:['Mật khẩu (tối thiểu 8 ký tự)','Password (at least 8 characters)'],
   toSignup:['Chưa có tài khoản? Tạo tài khoản','No account yet? Create one'], toSignin:['Đã có tài khoản? Đăng nhập','Already have an account? Sign in'],
   toReset:['Quên mật khẩu?','Forgot password?'], backSignin:['← Quay lại đăng nhập','← Back to sign in'], sendReset:['Gửi liên kết','Send link'], savePw:['Lưu mật khẩu','Save password'],
-  signupAgree:['Khi tạo tài khoản, bạn đồng ý với','By creating an account you agree to the'], privacy:['Chính sách quyền riêng tư','Privacy policy'],
+  signupAgree:['Khi tạo tài khoản, bạn đồng ý với','By creating an account you agree to the'], privacyPolicy:['Chính sách quyền riêng tư','Privacy policy'],
   signOut:['Đăng xuất','Sign out'], memberSince:['Thành viên từ','Member since'], syncedLooks:['Look đã đồng bộ','Synced looks'], adminLink:['Mở trang quản trị →','Open admin dashboard →'],
   analyticsLabel:['Chia sẻ dữ liệu sử dụng ẩn danh','Share anonymous usage data'], analyticsHint:['Giúp chúng tôi biết tính năng nào hữu ích. Không bao gồm ảnh của bạn.','Helps us learn which features are useful. Never includes your photos.'],
   deleteAcct:['Xóa tài khoản','Delete account'], deleteConfirm:['Xác nhận xóa vĩnh viễn','Confirm permanent deletion'],
@@ -760,7 +804,14 @@ const T = {
   consentTitle:['DỮ LIỆU SỬ DỤNG','USAGE DATA'],
   consentBody:['Chúng tôi muốn ghi nhận ẩn danh cách bạn dùng ứng dụng (ví dụ trang phục bạn chọn, look bạn lưu) để cải thiện sản phẩm. Không thu ảnh của bạn, không bán dữ liệu.','We would like to record, anonymously, how you use the app (for example which garments you pick and which looks you save) to improve it. We never collect your photos or sell data.'],
   consentYes:['Đồng ý','Accept'], consentNo:['Từ chối','Decline'], dataSettings:['Cài đặt dữ liệu','Data settings'],
-  syncHint:['Đăng nhập để lưu Lookbook lên tài khoản','Sign in to save your Lookbook to your account']
+  syncHint:['Đăng nhập để lưu Lookbook lên tài khoản','Sign in to save your Lookbook to your account'],
+  gemAsk:['Hỏi Gemini Stylist','Ask Gemini Stylist'], gemAgain:['Gợi ý khác','Another take'], gemLoading:['Gemini đang phối đồ…','Gemini is styling…'],
+  gemHint:['Gemini gợi ý cách phối dựa trên lựa chọn của bạn và dữ liệu văn hóa đã biên soạn — không thay đổi nhãn phân loại.','Gemini suggests styling from your choices and the curated cultural data — it never changes the cultural label.'],
+  gemTag:['GEMINI · dựa trên dữ liệu biên soạn','GEMINI · grounded in curated data'], gemCaption:['Caption chia sẻ','Share caption'], gemCopy:['Sao chép','Copy'], gemCopied:['Đã sao chép caption','Caption copied'],
+  gemAskTitle:['Hỏi Gemini về','Ask Gemini about'], gemAskPh:['Ví dụ: Mặc trang phục này đi chùa cần lưu ý gì?','e.g. What should I keep in mind wearing this to a pagoda?'], gemSend:['Hỏi','Ask'],
+  gemGrounded:['Có trong dữ liệu biên soạn','Backed by curated data'], gemUngrounded:['Ngoài phạm vi dữ liệu — chỉ mang tính gợi ý','Outside the curated data — suggestion only'],
+  gemAskNote:['Gemini chỉ trả lời từ dữ liệu văn hóa của ứng dụng; nếu dữ liệu chưa có, Gemini sẽ nói rõ.','Gemini answers only from the app’s cultural data; if the data doesn’t cover it, it says so.'],
+  gemSrc:['Nguồn','Sources']
 };
 
 const LEVELS = [
@@ -1027,7 +1078,8 @@ class Component extends DCLogic {
       tryon:{ status:'idle', preview:null, dataUri:null, fileName:'', warnings:[], error:'', outputUrl:null },
       wx:{ query:'', suggestions:[], status:'idle', msg:'', data:null }, vw: typeof window !== 'undefined' ? window.innerWidth : 1440,
       cfg:{ provider:'hf', engine:'auto', quality:'std', hfToken:'', fashnKey:'', server: props.tryOnApiBase || '', ...load('vpr_tryon_cfg_v1', {}) }, garmentImg:null, baMode:false, baPos:50, lib:{}, libStatus:'idle', libFilter:'match', refSel:{},
-      cloudOn:false, user:null, isAdmin:false, consent:null, authOpen:false, authMode:'signin', authBusy:false, authErr:'', authMsg:'', authForm:{ name:'', email:'', password:'' }, delArm:false };
+      cloudOn:false, user:null, isAdmin:false, consent:null, authOpen:false, authMode:'signin', authBusy:false, authErr:'', authMsg:'', authForm:{ name:'', email:'', password:'' }, delArm:false,
+      gem:{ status:'idle', key:'', data:null, err:'' }, gq:{ q:'', status:'idle', gid:'', data:null, err:'', asked:'' } };
     this.exploreRef = React.createRef(); this.tryonRef = React.createRef();
   }
   async loadLibrary() {
@@ -1174,6 +1226,40 @@ class Component extends DCLogic {
       this.flash(V('Đã xóa tài khoản và dữ liệu đồng bộ','Account and synced data deleted'));
     } catch (e) { this.setState({ authErr: this.authErrText(e) }); }
     finally { this.setState({ authBusy:false }); }
+  }
+  // ── Gemini (Supabase Edge Function "gemini"; facts come only from the curated dataset) ──
+  gemGarment(g) {
+    return { id:g.id, name:g.name, descriptor:tx(g,'descriptor'), description:tx(g,'description'), period:tx(g,'period'), region:tx(g,'region'), occasions:tx(g,'context'),
+      construction:tx(g,'construction'), key_features:tx(g,'key'), modern_notes:tx(g,'modern'), misconceptions:tx(g,'misconceptions'), typical_accessories:g.known.map(id => tx(byId(ACCS,id),'name')) };
+  }
+  gemSources(g) { return g.sources.map(k => ({ id:k, title:SRC[k].title, org:SRC[k].org, year:SRC[k].year, status:SRC[k].status })); }
+  selKey() { const s = this.sel(); return [s.garment, s.event, s.style, s.palette, s.acc.slice().sort().join('+'), s.remix, this.state.lang].join('|'); }
+  gemErrText(e) {
+    const c = e && e.code;
+    if (c === 'not_configured' || c === 'not_deployed') return V('Gemini chưa được bật trên máy chủ.','Gemini is not enabled on the server yet.');
+    if (c === 'rate_limited') return V('Gemini đang quá tải — thử lại sau ít phút.','Gemini is busy — try again in a minute.');
+    return V('Chưa gọi được Gemini — vui lòng thử lại.','Could not reach Gemini — please try again.');
+  }
+  async askStylist() {
+    const st = this.state, s = this.sel(), g = byId(GARMENTS, s.garment), a = assessLook(s), pal = byId(PALETTES, s.palette), h = harmonyOf(pal), w = st.wx.data, key = this.selKey();
+    const context = { lang: st.lang, garment: this.gemGarment(g), occasion: tx(byId(EVENTS, s.event),'name'),
+      style: { name: byId(STYLES, s.style).name, tip: tx(byId(STYLES, s.style),'tip') }, palette: { name: tx(pal,'name'), colors: pal.c, color_names: tx(pal,'n') },
+      accessories: s.acc.map(id => { const x = byId(ACCS, id); return { name: tx(x,'name'), type: x.type }; }), remix_percent: s.remix,
+      assessment: { label: a.label, explanation: a.explain, preserved: a.preserved, remixed: a.remixed, warnings: a.warnings.map(x => x.text), rule_ids: a.ruleIds },
+      color_harmony: { score: h.score, summary: h.summary },
+      weather: w ? { city: w.city, temperature_c: w.temperature, feels_like_c: w.apparentTemperature, condition: (WCODE[w.weatherCode] || ['',''])[st.lang==='en'?1:0] } : null,
+      sources: this.gemSources(g) };
+    this.setState({ gem:{ status:'loading', key, data:null, err:'' } }); this.track('gemini_stylist', { garment: s.garment });
+    try { const data = await window.VPRCloud.gemini('stylist', context); this.setState({ gem:{ status:'done', key, data, err:'' } }); }
+    catch (e) { this.setState({ gem:{ status:'error', key, data:null, err: this.gemErrText(e) } }); }
+  }
+  async askGarment(q) {
+    const st = this.state, g = st.storyId ? byId(GARMENTS, st.storyId) : byId(GARMENTS, st.garment), question = (q || st.gq.q).trim();
+    if (question.length < 3 || st.gq.status === 'loading') return;
+    this.setState({ gq:{ q: question, status:'loading', gid: g.id, data:null, err:'', asked: question } }); this.track('gemini_ask', { garment: g.id });
+    try { const data = await window.VPRCloud.gemini('ask', { lang: st.lang, garment: this.gemGarment(g), sources: this.gemSources(g) }, question);
+      this.setState(s => ({ gq:{ ...s.gq, status:'done', data } })); }
+    catch (e) { this.setState(s => ({ gq:{ ...s.gq, status:'error', err: this.gemErrText(e) } })); }
   }
   setConsent(granted) {
     window.VPRCloud.setConsent(granted); this.setState({ consent: granted ? 'granted' : 'denied' });
@@ -1494,6 +1580,10 @@ class Component extends DCLogic {
     const wx = st.wx, wc = wx.data && WCODE[wx.data.weatherCode];
     const warnText = w => w[0]==='small' ? V(`Ảnh hơi nhỏ (${w[1]}×${w[2]}) — kết quả có thể kém sắc nét.`,`Photo is small (${w[1]}×${w[2]}) — the result may be soft.`) : w[0]==='landscape' ? V('Ảnh ngang — ảnh dọc toàn thân cho kết quả tốt hơn.','Landscape photo — a portrait full-body shot works better.') : V('Ảnh có thể bị cắt hoặc chỉ có nửa người. Nên dùng ảnh toàn thân.','Photo may be cropped or half-body. A full-body shot is recommended.');
     const PROV = [ { id:'hf', name:'Open-source AI', sub:V('FitDiT · Leffa · IDM-VTON — miễn phí','FitDiT · Leffa · IDM-VTON — free') }, { id:'fashn', name:'FASHN Try-On Max', sub:V('Khóa cá nhân (dev)','Personal key (dev)') }, { id:'server', name:V('Máy chủ riêng','Own server'), sub:V('FASHN qua API route','FASHN via API route') } ];
+    const gm = st.gem.key === this.selKey() ? st.gem : { status:'idle' }, gd = gm.status === 'done' ? gm.data : null;
+    const gqs = st.gq.gid === story.id ? st.gq : { status:'idle' }, gqd = gqs.status === 'done' ? gqs.data : null;
+    const srcNames = ids => (ids || []).map(id => SRC[id] ? SRC[id].title : id).join(' · ');
+    const gqAsk = q => () => { this.setState(s => ({ gq:{ ...s.gq, q } })); this.askGarment(q); };
     const lookCount = st.saved.length, u = st.user, am = st.authMode;
     const AM = { signin:[t.authSigninTitle, t.authSigninSub, t.signIn], signup:[t.authSignupTitle, t.authSignupSub, t.signUp], reset:[t.authResetTitle, t.authResetSub, t.sendReset],
       newpw:[t.authNewpwTitle, t.authNewpwSub, t.savePw], account:[t.account, t.accountSub, ''] }[am] || [];
@@ -1568,6 +1658,21 @@ class Component extends DCLogic {
           onTry: () => { if (x.tryon === 'no') { this.setState(s => ({ refSel:{ ...s.refSel, [x.g]: x.file } })); return this.flash(V('Ảnh nhiều người/cắt cúp — chỉ dùng làm tham khảo','Group or cropped photo — reference only')); } this.useLibForTryon(x, info); } }; }),
       libNote: V('Ảnh từ Wikimedia Commons (giấy phép tự do, ghi nguồn đầy đủ). Ảnh ★ là hiện vật/ảnh tách rõ áo — cho kết quả Try-On tốt nhất; ảnh mặc trên người vẫn dùng được nhưng AI phải tự trích áo.','Images from Wikimedia Commons (free licences, fully credited). ★ images show the garment clearly and give the best Try-On results; on-model photos work but the AI must extract the garment.'),
       sourceTag: hasOutput && st.showOutput ? V('AI Try-On · kết quả thật từ model','AI Try-On · real model output') : (refItem ? V('Ảnh thư viện · ','Library · ') + KIND[refItem.kind].toLowerCase() : V('Ảnh tham chiếu editorial','Editorial styling reference')),
+      gemOn: st.cloudOn,
+      gem: { idle: gm.status === 'idle' || gm.status === 'error', loading: gm.status === 'loading', has: !!gd, err: gm.status === 'error' ? gm.err : '', btn: gd ? t.gemAgain : t.gemAsk,
+        lookName: gd ? gd.look_name : '', summary: gd ? gd.summary : '', tips: gd ? gd.tips : [], note: gd ? gd.cultural_note : '', caption: gd ? gd.caption : '',
+        src: gd && (gd.source_ids || []).length ? `${t.gemSrc}: ${srcNames(gd.source_ids)}` : '' },
+      askStylist: () => this.askStylist(),
+      copyCaption: () => { try { navigator.clipboard.writeText(gd ? gd.caption : ''); this.flash(t.gemCopied); } catch (e) {} },
+      gq: { q: st.gq.q, loading: gqs.status === 'loading', has: !!gqd, err: gqs.status === 'error' ? gqs.err : '', asked: gqs.asked || '',
+        answer: gqd ? gqd.answer : '', badge: gqd && gqd.grounded ? t.gemGrounded : t.gemUngrounded, badgeFg: gqd && gqd.grounded ? '#3F5549' : '#6B5530',
+        src: gqd && (gqd.source_ids || []).length ? `${t.gemSrc}: ${srcNames(gqd.source_ids)}` : '', sendOp: gqs.status === 'loading' ? .6 : 1,
+        chips: [ ...(gqd && gqd.follow_up ? [gqd.follow_up] : []),
+          V(`${story.name} xuất hiện từ khi nào?`,`When did the ${story.name} appear?`),
+          V(`Những hiểu lầm phổ biến về ${story.name}?`,`Common misconceptions about the ${story.name}?`),
+          V(`Mặc ${story.name} đi lễ chùa cần lưu ý gì?`,`What should I keep in mind wearing a ${story.name} to a pagoda?`) ].slice(0, 3).map(q => ({ q, onClick: gqAsk(q) })) },
+      onGq: e => { const q = e.target.value; this.setState(s => ({ gq:{ ...s.gq, q } })); },
+      onGqSubmit: e => { if (e && e.preventDefault) e.preventDefault(); this.askGarment(); },
       assess: a, harmony, stylistLines: stylist, showRuleIds: this.props.showRuleIds ?? true,
       showOutput: hasOutput && st.showOutput, hasOutput, showAiNotice: hasOutput && st.showOutput, outputAlt: `AI Try-On: ${g.name}`, outputBg: tr.outputUrl ? `url("${tr.outputUrl}")` : 'none',
       toggleOutput: () => this.setState({ showOutput: !st.showOutput }), toggleOutputLabel: st.showOutput ? V('Xem ảnh tham chiếu','Show reference') : V('Xem kết quả Try-On','Show Try-On result'),

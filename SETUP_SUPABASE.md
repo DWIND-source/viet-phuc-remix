@@ -55,6 +55,20 @@ Khoảng 1–2 phút sau, site sẽ có nút **Đăng nhập** và banner xin ph
    ```
 3. Mở `https://dwind-source.github.io/viet-phuc-remix/admin.html` để xem thống kê. Bạn cũng có thể vào từ **Tài khoản → Mở trang quản trị**.
 
+## 6. Bật Gemini (Gemini Stylist + Hỏi đáp văn hóa)
+API key của Gemini chỉ nằm trên server Supabase, không bao giờ xuất hiện trong trình duyệt.
+1. **Lấy API key:** vào https://aistudio.google.com/apikey, bấm **Create API key** rồi copy key (dạng `AIza…`). Không gửi key này cho ai.
+2. **Tạo function:**
+   - Vào Supabase → **Edge Functions → Deploy a new function → Via Editor**.
+   - Đặt tên **`gemini`** (đúng chữ thường).
+   - Xóa code mẫu, dán toàn bộ file [`supabase/functions/gemini/index.ts`](supabase/functions/gemini/index.ts), rồi bấm **Deploy function**.
+3. **Tắt kiểm tra JWT:** mở function `gemini` → **Details / Settings**, tắt **Verify JWT with legacy secret** (hoặc "Enforce JWT verification") rồi Save.
+   - Lý do: publishable key kiểu mới không phải JWT, nên nếu giữ bật thì khách chưa đăng nhập sẽ bị chặn.
+4. **Thêm secret:** vào **Edge Functions → Secrets → Add new secret**, Name `GEMINI_API_KEY`, Value là key ở bước 1, rồi Save.
+   - Tùy chọn: thêm secret `GEMINI_MODEL` để đổi model. Mặc định là `gemini-3.8-flash`.
+   - Nếu key miễn phí báo hết hạn mức, đổi sang `gemini-3.5-flash-lite`.
+5. Vào web → **Studio** → khung **AI Stylist** → bấm **✦ Hỏi Gemini Stylist**.
+
 ## Dữ liệu được lưu ở đâu
 | Bảng | Nội dung | Ai đọc được |
 |---|---|---|

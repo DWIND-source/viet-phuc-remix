@@ -77,6 +77,7 @@ section[lang="en"] { border-top: 1px solid var(--line); margin-top: 64px; paddin
       <li><strong>Wikimedia Commons</strong> cung cấp ảnh tham khảo.</li>
       <li><strong>Open-Meteo</strong> nhận tên thành phố bạn tìm, hoặc tọa độ nếu bạn bấm “Dùng vị trí hiện tại”, để trả về thời tiết.</li>
       <li><strong>Hugging Face, FASHN</strong> nhận ảnh khi bạn chủ động chạy AI Try-On.</li>
+      <li><strong>Google Gemini API</strong> nhận lựa chọn phối đồ hiện tại, dữ liệu văn hóa của trang phục và câu hỏi bạn gõ, khi bạn bấm “Hỏi Gemini”. Yêu cầu đi qua máy chủ của chúng tôi (Supabase Edge Function), không kèm email hay ảnh của bạn. Đừng nhập thông tin cá nhân vào câu hỏi.</li>
     </ul>
     <p>Mỗi dịch vụ trên có chính sách riêng. Chúng tôi không bán hay cho thuê dữ liệu của bạn.</p>
 
@@ -120,7 +121,7 @@ section[lang="en"] { border-top: 1px solid var(--line); margin-top: 64px; paddin
     <p>Your browser keeps your language, Studio choices, Lookbook, Try-On settings, consent choice, sign-in session, and random visitor and session ids in localStorage. Clear the site data in your browser to remove them.</p>
 
     <h2>4. Third parties</h2>
-    <p>Supabase hosts the database and sign-in, and its infrastructure may keep technical logs, including IPs, for security. GitHub Pages hosts the site. Google Fonts, jsDelivr and unpkg serve fonts and libraries. Wikimedia Commons serves reference images. Open-Meteo receives the city you search for, or coordinates if you use your location. Hugging Face and FASHN receive photos only when you run Try-On. We never sell or rent your data.</p>
+    <p>Supabase hosts the database and sign-in, and its infrastructure may keep technical logs, including IPs, for security. GitHub Pages hosts the site. Google Fonts, jsDelivr and unpkg serve fonts and libraries. Wikimedia Commons serves reference images. Open-Meteo receives the city you search for, or coordinates if you use your location. Hugging Face and FASHN receive photos only when you run Try-On. When you click “Ask Gemini”, the Google Gemini API receives your current outfit choices, the garment’s curated cultural data and the question you type. The request goes through our server (a Supabase Edge Function) and never includes your email or photos, so please don't type personal details into questions. We never sell or rent your data.</p>
 
     <h2>5. Your rights</h2>
     <p>You can withdraw consent at any time (<em>Data settings</em> in the home page footer, or the toggle under Account). You can delete your account (Account → <em>Delete account</em>), which immediately removes your account, profile and synced Lookbook; earlier usage events are kept but no longer linked to you. For access, correction or other deletion requests, contact us as described below.</p>

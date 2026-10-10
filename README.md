@@ -41,6 +41,10 @@ Step-by-step setup (in Vietnamese): [`SETUP_SUPABASE.md`](SETUP_SUPABASE.md). Th
 - **Color harmony heuristic:** 0–100 styling score, labelled as a heuristic.
 - **Weather-aware tips:** from Open-Meteo.
 - **Image library & cover photos:** pulled live from Wikimedia Commons with author and licence credits. The covers are set in `COVER` in `index.html`.
+- **Gemini Stylist & cultural Q&A:** these call `gemini-3.8-flash` through the Supabase Edge Function [`supabase/functions/gemini`](supabase/functions/gemini/index.ts), which keeps the API key on the server.
+  - Gemini personalises styling tips and writes a look name and share caption.
+  - It answers questions *only* from the curated cultural dataset, cites source ids, and says when the data doesn't cover a question.
+  - It never changes the rule engine's cultural label.
 - **AI Try-On:** open-source engines FitDiT, Leffa and IDM-VTON on Hugging Face Spaces, with automatic fallback, or FASHN.
 
 ## Notes

@@ -118,6 +118,20 @@
     resetPassword: function (email) { return need().then(function (c) { return c.auth.resetPasswordForEmail(email, { redirectTo: here() }); }).then(unwrap); },
     updatePassword: function (password) { return need().then(function (c) { return c.auth.updateUser({ password: password }); }).then(unwrap); },
     client: need, // the shared Supabase client, for admin.html queries
+    // Gemini via the "gemini" Edge Function (the API key never reaches the browser).
+    // Resolves to the function's `data`; rejects with an Error whose .code is the function's error code.
+    gemini: function (mode, context, question) {
+      return need().then(function (c) { return c.functions.invoke('gemini', { body: { mode: mode, context: context, question: question || '' } }); })
+        .then(function (r) {
+          if (!r.error && r.data && r.data.ok) return r.data.data;
+          var res = r.error && r.error.context;
+          var read = res && typeof res.json === 'function' ? res.json().catch(function () { return {}; }) : Promise.resolve(r.data || {});
+          return read.then(function (b) {
+            var e = new Error((b && (b.detail || b.error)) || (r.error && r.error.message) || 'Gemini error');
+            e.code = (b && b.error) || (res && res.status === 404 ? 'not_deployed' : 'network'); throw e;
+          });
+        });
+    },
     isAdmin: function () { return need().then(function (c) { return c.rpc('is_admin'); }).then(function (r) { return !r.error && r.data === true; }).catch(function () { return false; }); },
     signOut: function () { flush(); return need().then(function (c) { return c.auth.signOut(); }).then(unwrap); },
     deleteAccount: function () {
