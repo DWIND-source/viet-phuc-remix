@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Việt Phục Remix</title>
+<meta name="description" content="Phối chất riêng – hiểu chất Việt. Phối đồ Việt phục (áo dài, áo ngũ thân, áo tứ thân) có ngữ cảnh văn hóa, kèm AI Try-On.">
+<meta name="theme-color" content="#F2ECE1">
+<meta property="og:title" content="Việt Phục Remix">
+<meta property="og:description" content="Phối chất riêng – hiểu chất Việt. Interactive cultural-fashion styling for Vietnamese traditional clothing.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237C2837'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-style='italic' fill='%23F2ECE1'%3EV%3C/text%3E%3C/svg%3E">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&amp;family=Be+Vietnam+Pro:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#F2ECE1;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#7C2837;text-decoration:underline;text-underline-offset:3px}
+a:hover{color:#181715}
+button,input{font-family:inherit}
+:focus-visible{outline:2px solid #B79A65;outline-offset:2px}
+input[type=range]{accent-color:#7C2837}
+@keyframes vprFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+image-slot::part(credit){left:auto;bottom:auto;right:10px;top:10px;max-width:70%;font-size:10px}
+image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 160px)}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#F2ECE1;color:#181715;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:15px;line-height:1.5">
+
+<header style="position:sticky;top:0;z-index:30;background:rgba(242,236,225,.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(24,23,21,.1)">
+  <div style="max-width:1440px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <button onClick="{{ goLanding }}" style="background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:baseline;gap:8px;color:#181715;white-space:nowrap">
+      <span style="font-family:'Playfair Display',serif;font-size:22px;font-weight:500">Việt Phục</span>
+      <span style="font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:#7C2837">Remix</span>
+    </button>
+    <nav style="display:flex;gap:2px;margin-left:auto;align-items:center" aria-label="{{ t.navAria }}">
+      <button onClick="{{ goExplore }}" style="background:none;border:0;padding:8px 12px;cursor:pointer;font-size:14px;color:#181715;white-space:nowrap;border-bottom:2px solid {{ navLandingBd }}">{{ t.navExplore }}</button>
+      <button onClick="{{ goStudio }}" style="background:none;border:0;padding:8px 12px;cursor:pointer;font-size:14px;color:#181715;white-space:nowrap;border-bottom:2px solid {{ navStudioBd }}">Studio</button>
+      <button onClick="{{ goLookbook }}" style="background:none;border:0;padding:8px 12px;cursor:pointer;font-size:14px;color:#181715;white-space:nowrap;border-bottom:2px solid {{ navLookBd }}">Lookbook <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7C2837">{{ savedCount }}</span></button>
+    </nav>
+    <div role="group" aria-label="Language / Ngôn ngữ" style="display:flex;border:1px solid rgba(24,23,21,.25);border-radius:999px;padding:3px;gap:2px">
+      <button onClick="{{ setVi }}" aria-pressed="{{ isVi }}" style="border:0;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;letter-spacing:.06em;cursor:pointer;background:{{ viBg }};color:{{ viFg }}">VI</button>
+      <button onClick="{{ setEn }}" aria-pressed="{{ isEn }}" style="border:0;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;letter-spacing:.06em;cursor:pointer;background:{{ enBg }};color:{{ enFg }}">EN</button>
+    </div>
+  </div>
+</header>
+
+<sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section style="max-width:1440px;margin:0 auto;padding:40px 24px 72px;display:grid;grid-template-columns:{{ heroCols }};gap:56px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:26px;animation:vprFade .6s ease both">
+      <div style="display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5E5A53"><span style="width:36px;height:1px;background:#B79A65"></span>Heritage × Editorial × AI Styling</div>
+      <h1 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(60px,8.5vw,128px);line-height:.92;letter-spacing:-.02em">Việt Phục<br><span style="font-style:italic;color:#7C2837">Remix</span></h1>
+      <p style="margin:0;font-family:'Playfair Display',serif;font-size:clamp(22px,2.2vw,30px);line-height:1.25">{{ t.tagline }}</p>
+      <p style="margin:0;max-width:480px;color:#4A463F;font-size:16px;text-wrap:pretty">{{ t.heroBody }}</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button onClick="{{ goStudio }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:15px 28px;white-space:nowrap;font-size:15px;font-weight:500;cursor:pointer" style-hover="background:#7C2837">{{ t.ctaStart }}</button>
+        <button onClick="{{ goExplore }}" style="background:transparent;color:#181715;border:1px solid #181715;border-radius:999px;padding:15px 28px;white-space:nowrap;font-size:15px;cursor:pointer" style-hover="background:rgba(24,23,21,.06)">{{ t.ctaExplore }}</button>
+      </div>
+    </div>
+    <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+      <div style="position:relative;aspect-ratio:4/5;max-height:78vh;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(24,23,21,.35)">
+        <image-slot id="hero-main" shape="rect" placeholder="{{ t.phHero }}" src="{{ heroCover.img }}" credit="{{ heroCover.imgCredit }}" credit-href="{{ heroCover.imgHref }}"></image-slot>
+        <div style="position:absolute;right:16px;bottom:16px;background:rgba(242,236,225,.94);padding:12px 14px;border-radius:12px;pointer-events:none;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.25">{{ t.heroQuote1 }}<br>{{ t.heroQuote2 }}</div>
+      </div>
+    </figure>
+  </section>
+
+  <section ref="{{ exploreRef }}" style="max-width:1440px;margin:0 auto;padding:16px 24px 88px">
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(24,23,21,.15);padding-top:28px;margin-bottom:32px">
+      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(36px,4vw,56px);line-height:1">{{ t.threeTitle }}</h2>
+      <p style="margin:0;max-width:420px;color:#4A463F">{{ t.threeBody }}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px">
+      <sc-for list="{{ landingCards }}" as="g" hint-placeholder-count="3">
+        <article style="display:flex;flex-direction:column;gap:14px">
+          <div style="position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease" style-hover="transform:translateY(-4px);box-shadow:0 24px 48px -28px rgba(24,23,21,.4)">
+            <image-slot id="{{ g.slotId }}" shape="rect" placeholder="{{ g.ph }}" src="{{ g.img }}" credit="{{ g.imgCredit }}" credit-href="{{ g.imgHref }}"></image-slot>
+            <div style="position:absolute;top:14px;left:14px;background:#181715;color:#F2ECE1;font-family:'JetBrains Mono',monospace;font-size:12px;padding:4px 9px;border-radius:6px;pointer-events:none">{{ g.num }}</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:34px;line-height:1">{{ g.name }}</h3>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53;text-align:right">{{ g.regionShort }}</span>
+          </div>
+          <p style="margin:0;color:#4A463F;text-wrap:pretty">{{ g.teaser }}</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button onClick="{{ g.onStudio }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:10px 18px;white-space:nowrap;cursor:pointer;font-size:14px" style-hover="background:#7C2837">{{ g.styleCta }}</button>
+            <button onClick="{{ g.onStory }}" style="background:none;border:1px solid rgba(24,23,21,.3);border-radius:999px;padding:10px 18px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715" style-hover="border-color:#181715">{{ t.learn }}</button>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#181715;color:#F2ECE1">
+    <div style="max-width:1440px;margin:0 auto;padding:80px 24px;display:flex;flex-direction:column;gap:40px">
+      <div style="display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:end">
+        <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(36px,4vw,60px);line-height:1.12;flex:none"><span style="white-space:nowrap">{{ t.ctxTitle1 }}</span><br><span style="font-style:italic;color:#B79A65;white-space:nowrap">{{ t.ctxTitle2 }}</span></h2>
+        <p style="margin:0;max-width:440px;color:#CFC7B8">{{ t.ctxBody }}</p>
+      </div>
+      <div style="height:1px;background:rgba(242,236,225,.25)"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:36px">
+        <sc-for list="{{ levelCards }}" as="l" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#B79A65">{{ l.range }}</span><h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:28px">{{ l.label }}</h3><p style="margin:0;color:#CFC7B8">{{ l.body }}</p></div>
+        </sc-for>
+      </div>
+      <div><button onClick="{{ goStudio }}" style="background:#F2ECE1;color:#181715;border:0;border-radius:999px;padding:15px 28px;white-space:nowrap;font-size:15px;font-weight:500;cursor:pointer" style-hover="background:#B79A65">{{ t.enterStudio }}</button></div>
+    </div>
+  </section>
+  <footer style="max-width:1440px;margin:0 auto;padding:28px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#5E5A53">
+    <span>{{ t.footer1 }}</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ t.footer2 }}</span>
+  </footer>
+</main>
+</sc-if>
+
+<sc-if value="{{ isStudio }}" hint-placeholder-val="{{ false }}">
+<main style="max-width:1440px;margin:0 auto;padding:20px 20px 96px;display:grid;grid-template-columns:{{ studioCols }};grid-template-areas:{{ studioAreas }};gap:24px;align-items:start">
+
+  <aside style="grid-area:l;position:{{ leftPos }};top:70px;max-height:{{ leftMaxH }};overflow:auto;display:flex;flex-direction:column;gap:24px;padding:4px 6px 12px 2px" aria-label="{{ t.controlsAria }}">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:0;font-size:13px;font-weight:600;display:flex;gap:8px"><span style="font-family:'JetBrains Mono',monospace;color:#7C2837;font-weight:400">01</span>{{ t.s1 }}</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <sc-for list="{{ eventItems }}" as="e" hint-placeholder-count="5">
+          <button onClick="{{ e.onClick }}" aria-pressed="{{ e.active }}" style="text-align:left;background:{{ e.bg }};color:{{ e.fg }};border:1px solid {{ e.bd }};border-radius:14px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;transition:all .2s ease">
+            <span style="font-size:14px;font-weight:500">{{ e.name }}</span>
+            <span style="font-size:12px;opacity:.78">{{ e.hint }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;background:#EAE1D1;border-radius:14px;padding:12px;margin-top:-12px">
+      <span style="font-size:12px;color:#4A463F;text-wrap:pretty">{{ suggestText }}</span>
+      <button onClick="{{ applySuggest }}" style="align-self:flex-start;background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-size:12px" style-hover="background:#7C2837">{{ suggestBtn }}</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <h2 style="margin:0;font-size:13px;font-weight:600;display:flex;gap:8px"><span style="font-family:'JetBrains Mono',monospace;color:#7C2837;font-weight:400">02</span>{{ t.s2 }}</h2>
+      <sc-for list="{{ garmentItems }}" as="g" hint-placeholder-count="3">
+        <button onClick="{{ g.onClick }}" aria-pressed="{{ g.active }}" style="display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;text-align:left;background:{{ g.bg }};border:1px solid {{ g.bd }};border-radius:14px;padding:8px 10px;cursor:pointer;color:#181715;transition:all .2s ease">
+          <span style="width:48px;height:60px;border-radius:10px;background-color:{{ g.tileBg }};background-image:{{ g.tileImg }};background-size:cover;background-position:center top;color:{{ g.tileFg }};display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:20px;font-style:italic">{{ g.tileNum }}</span>
+          <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+            <span style="display:flex;justify-content:space-between;align-items:baseline;gap:6px"><span style="font-family:'Playfair Display',serif;font-size:19px">{{ g.name }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;white-space:nowrap;color:{{ g.fitFg }};border:1px solid {{ g.fitFg }};border-radius:4px;padding:1px 5px">{{ g.fitLabel }}</span></span>
+            <span style="font-size:12px;color:#5E5A53">{{ g.descriptor }}</span>
+            <span style="font-size:11px;color:{{ g.fitFg }}">{{ g.fitWhy }}</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:0;font-size:13px;font-weight:600;display:flex;gap:8px"><span style="font-family:'JetBrains Mono',monospace;color:#7C2837;font-weight:400">03</span>{{ t.s3 }}</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <sc-for list="{{ styleItems }}" as="s" hint-placeholder-count="6">
+          <button onClick="{{ s.onClick }}" aria-pressed="{{ s.active }}" style="background:{{ s.bg }};color:{{ s.fg }};border:1px solid {{ s.bd }};border-radius:999px;padding:7px 13px;white-space:nowrap;font-size:13px;cursor:pointer;transition:all .2s ease">{{ s.name }}<span style="color:#B79A65">{{ s.recMark }}</span></button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:0;font-size:13px;font-weight:600;display:flex;gap:8px"><span style="font-family:'JetBrains Mono',monospace;color:#7C2837;font-weight:400">04</span>{{ t.s4 }}</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <sc-for list="{{ paletteItems }}" as="p" hint-placeholder-count="6">
+          <button onClick="{{ p.onClick }}" aria-pressed="{{ p.active }}" aria-label="{{ p.aria }}" style="background:#F8F4EC;border:1px solid {{ p.bd }};box-shadow:{{ p.ring }};border-radius:14px;padding:8px;cursor:pointer;display:flex;flex-direction:column;gap:7px;text-align:left;color:#181715;transition:all .2s ease">
+            <span style="display:flex;height:24px;border-radius:7px;overflow:hidden;border:1px solid rgba(24,23,21,.08)"><span style="flex:5;background:{{ p.c1 }}"></span><span style="flex:3;background:{{ p.c2 }}"></span><span style="flex:1.4;background:{{ p.c3 }}"></span></span>
+            <span style="display:flex;justify-content:space-between;align-items:baseline;gap:4px"><span style="font-size:13px;font-weight:500">{{ p.name }}</span><span style="font-size:11px;color:#5E5A53">{{ p.tag }}</span></span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:0;font-size:13px;font-weight:600;display:flex;gap:8px"><span style="font-family:'JetBrains Mono',monospace;color:#7C2837;font-weight:400">05</span>{{ t.s5 }}</h2>
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <sc-for list="{{ accItems }}" as="a" hint-placeholder-count="8">
+          <button onClick="{{ a.onClick }}" aria-pressed="{{ a.active }}" style="display:flex;align-items:center;gap:10px;background:{{ a.bg }};border:1px solid {{ a.bd }};border-radius:12px;padding:7px 10px;cursor:pointer;text-align:left;color:#181715;transition:all .2s ease">
+            <span style="width:16px;height:16px;border-radius:4px;border:1.5px solid #181715;background:{{ a.check }};flex:none;display:grid;place-items:center;color:#F2ECE1;font-size:11px;line-height:1">{{ a.mark }}</span>
+            <span style="flex:1;font-size:14px">{{ a.name }}<span style="color:#9A7B45;font-size:12px">{{ a.recMark }}</span></span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{{ a.tagFg }};border:1px solid {{ a.tagFg }};border-radius:5px;padding:1px 6px;white-space:nowrap">{{ a.tag }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:0;font-size:13px;font-weight:600;display:flex;gap:8px;justify-content:space-between"><span style="display:flex;gap:8px"><span style="font-family:'JetBrains Mono',monospace;color:#7C2837;font-weight:400">06</span>{{ t.s6 }}</span><span style="font-family:'JetBrains Mono',monospace;font-weight:400">{{ remix }}%</span></h2>
+      <input type="range" min="0" max="100" step="1" value="{{ remix }}" onChange="{{ onRemix }}" aria-label="{{ t.s6 }}" aria-valuetext="{{ remixAria }}" style="width:100%">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;font-size:11px;gap:4px;line-height:1.3">
+        <span style="font-weight:{{ rw0 }};color:{{ rc0 }}">Grounded</span>
+        <span style="text-align:center;font-weight:{{ rw1 }};color:{{ rc1 }}">Adaptation</span>
+        <span style="text-align:right;font-weight:{{ rw2 }};color:{{ rc2 }}">Creative</span>
+      </div>
+    </div>
+  </aside>
+
+  <section style="grid-area:c;display:flex;flex-direction:column;gap:18px;min-width:0" aria-label="{{ t.canvasAria }}">
+    <nav aria-label="{{ journeyAria }}" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;align-items:center">
+      <sc-for list="{{ journey }}" as="j" hint-placeholder-count="5">
+        <button onClick="{{ j.onClick }}" style="display:flex;align-items:center;gap:6px;background:{{ j.bg }};color:{{ j.fg }};border:1px solid {{ j.bd }};border-radius:999px;padding:5px 11px;cursor:pointer;font-size:12px;white-space:nowrap"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.7">{{ j.n }}</span>{{ j.label }}</button>
+      </sc-for>
+    </nav>
+    <div style="display:flex;justify-content:center">
+      <div style="position:relative;width:{{ canvasW }};aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:#E6DDCD;box-shadow:0 40px 80px -40px rgba(24,23,21,.45)">
+        <sc-for list="{{ canvasSlots }}" as="s" hint-placeholder-count="1">
+          <div style="position:absolute;inset:0;opacity:{{ s.op }};transform:scale({{ s.sc }});transition:opacity .55s ease,transform .8s ease;pointer-events:{{ s.pe }}">
+            <image-slot id="{{ s.id }}" shape="rect" placeholder="{{ s.ph }}" src="{{ s.img }}"></image-slot>
+          </div>
+        </sc-for>
+        <sc-if value="{{ hasRef }}" hint-placeholder-val="{{ false }}">
+          <div role="img" aria-label="{{ refAlt }}" style="position:absolute;inset:0;background-color:#181715;background-image:{{ refBg }};background-size:cover;background-position:center top;animation:vprFade .45s ease both"></div>
+        </sc-if>
+        <sc-if value="{{ showOutput }}" hint-placeholder-val="{{ false }}">
+          <div role="img" aria-label="{{ t.up1 }}" style="position:absolute;inset:0;background-color:#181715;background-image:{{ previewBg }};background-size:cover;background-position:center top"></div>
+          <div role="img" aria-label="{{ outputAlt }}" style="position:absolute;inset:0;background-color:#181715;background-image:{{ outputBg }};background-size:cover;background-position:center top;clip-path:{{ outClip }};animation:vprFade .5s ease both"></div>
+          <sc-if value="{{ baMode }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:0;bottom:0;left:{{ baLeft }};width:2px;margin-left:-1px;background:#F2ECE1;box-shadow:0 0 0 1px rgba(24,23,21,.25);pointer-events:none"></div>
+            <div style="position:absolute;top:50%;left:{{ baLeft }};width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;background:#F2ECE1;color:#181715;display:grid;place-items:center;font-size:13px;pointer-events:none;box-shadow:0 6px 18px -6px rgba(24,23,21,.6)">⇆</div>
+            <input type="range" min="0" max="100" value="{{ baPos }}" onChange="{{ onBa }}" aria-label="{{ baAria }}" style="position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize">
+          </sc-if>
+        </sc-if>
+        <div style="position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none">
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0">
+            <span style="background:#181715;color:#F2ECE1;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;padding:5px 10px;border-radius:6px">{{ overlayTitle }}</span>
+            <span style="background:rgba(242,236,225,.92);color:#181715;font-size:12px;padding:4px 9px;border-radius:6px">{{ sourceTag }}</span>
+            <sc-if value="{{ refCredit }}" hint-placeholder-val="{{ false }}"><a href="{{ refPage }}" target="_blank" rel="noopener noreferrer" style="pointer-events:auto;background:rgba(24,23,21,.72);color:#F2ECE1;font-size:11px;padding:3px 8px;border-radius:5px;text-decoration:none;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">© {{ refCredit }}</a></sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px;background:rgba(242,236,225,.92);padding:5px;border-radius:8px;flex:none">
+            <span style="width:18px;height:28px;border-radius:4px;background:{{ pal.c1 }}"></span>
+            <span style="width:18px;height:16px;border-radius:4px;background:{{ pal.c2 }};border:1px solid rgba(24,23,21,.1)"></span>
+            <span style="width:18px;height:8px;border-radius:3px;background:{{ pal.c3 }}"></span>
+          </div>
+        </div>
+        <div style="position:absolute;left:16px;right:16px;bottom:16px;display:flex;flex-wrap:wrap-reverse;justify-content:space-between;align-items:flex-end;gap:8px 12px;pointer-events:none">
+          <div style="background:rgba(242,236,225,.94);padding:12px 14px;border-radius:12px;display:flex;flex-direction:column;gap:2px;flex:none">
+            <span style="font-family:'Playfair Display',serif;font-size:26px;line-height:1.05">{{ garment.name }}</span>
+            <span style="font-size:13px;color:#4A463F;white-space:nowrap">{{ pal.name }} · {{ event.name }} · {{ remix }}%</span>
+          </div>
+          <span style="background:{{ assess.color }};color:#F2ECE1;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;padding:7px 11px;border-radius:7px;text-transform:uppercase;white-space:nowrap;flex:none">{{ assess.glyph }} {{ assess.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <sc-if value="{{ showAiNotice }}" hint-placeholder-val="{{ false }}">
+      <p style="margin:0 auto;max-width:620px;font-size:13px;color:#4A463F;text-align:center">{{ t.aiNotice }}</p>
+    </sc-if>
+
+    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+      <button onClick="{{ prevLook }}" style="background:#F8F4EC;border:1px solid rgba(24,23,21,.15);border-radius:999px;padding:9px 16px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715" style-hover="border-color:#181715">{{ t.prev }}</button>
+      <button onClick="{{ nextLook }}" style="background:#F8F4EC;border:1px solid rgba(24,23,21,.15);border-radius:999px;padding:9px 16px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715" style-hover="border-color:#181715">{{ t.next }}</button>
+      <button onClick="{{ openCompare }}" style="background:#F8F4EC;border:1px solid rgba(24,23,21,.15);border-radius:999px;padding:9px 16px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715" style-hover="border-color:#181715">{{ t.compare }}</button>
+      <sc-if value="{{ hasOutput }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleOutput }}" style="background:#F8F4EC;border:1px solid rgba(24,23,21,.15);border-radius:999px;padding:9px 16px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715">{{ toggleOutputLabel }}</button>
+        <button onClick="{{ toggleBa }}" aria-pressed="{{ baMode }}" style="background:#F8F4EC;border:1px solid rgba(24,23,21,.15);border-radius:999px;padding:9px 16px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715">{{ baLabel }}</button>
+        <button onClick="{{ regenerate }}" disabled="{{ tryDisabled }}" style="background:#F8F4EC;border:1px solid rgba(24,23,21,.15);border-radius:999px;padding:9px 16px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715">{{ regenLabel }}</button>
+      </sc-if>
+      <button onClick="{{ saveLook }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:9px 18px;white-space:nowrap;cursor:pointer;font-size:14px" style-hover="background:#7C2837">{{ t.save }}</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><h2 style="margin:0;font-size:13px;font-weight:600">{{ recsTitle }}</h2><span style="font-size:12px;color:#5E5A53">{{ recsSub }}</span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+        <sc-for list="{{ recItems }}" as="r" hint-placeholder-count="4">
+          <button onClick="{{ r.onClick }}" aria-pressed="{{ r.active }}" style="text-align:left;background:{{ r.bg }};color:{{ r.fg }};border:1px solid {{ r.bd }};border-radius:16px;padding:12px;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-2px);box-shadow:0 14px 28px -18px rgba(24,23,21,.5)">
+            <span style="display:flex;justify-content:space-between;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.8"><span>{{ r.num }}</span><span>{{ r.match }}</span></span>
+            <span style="font-family:'Playfair Display',serif;font-size:18px;line-height:1.1">{{ r.title }}</span>
+            <span style="font-size:12px;opacity:.82">{{ r.meta }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <section aria-label="{{ libTitle }}" style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <h2 style="margin:0;font-size:13px;font-weight:600">{{ libTitle }}</h2>
+        <a href="{{ libCommonsUrl }}" target="_blank" rel="noopener noreferrer" style="font-size:12px">{{ libMore }}</a>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <sc-for list="{{ libFilters }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.onClick }}" aria-pressed="{{ c.active }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.bd }};border-radius:999px;padding:5px 11px;white-space:nowrap;font-size:12px;cursor:pointer">{{ c.name }}</button></sc-for>
+      </div>
+      <sc-if value="{{ libMsg }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#5E5A53">{{ libMsg }}</span></sc-if>
+      <div style="display:grid;grid-auto-flow:column;grid-auto-columns:158px;gap:12px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory">
+        <sc-for list="{{ libItems }}" as="m" hint-placeholder-count="4">
+          <figure style="margin:0;display:flex;flex-direction:column;gap:6px;scroll-snap-align:start">
+            <button onClick="{{ m.onView }}" aria-pressed="{{ m.active }}" aria-label="{{ m.cap }}" style="position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;border:2px solid {{ m.bd }};padding:0;cursor:pointer;background-color:#E6DDCD;background-image:{{ m.bg }};background-size:cover;background-position:center top;transition:transform .2s ease" style-hover="transform:translateY(-2px)">
+              <span style="position:absolute;top:8px;left:8px;background:rgba(24,23,21,.82);color:#F2ECE1;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;padding:2px 6px;border-radius:4px">{{ m.kindLabel }}</span>
+              <sc-if value="{{ m.match }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;bottom:8px;left:8px;background:#B79A65;color:#181715;font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px">{{ m.matchLabel }}</span></sc-if>
+            </button>
+            <figcaption style="font-size:12px;line-height:1.35;color:#2E2B27">{{ m.cap }}</figcaption>
+            <a href="{{ m.page }}" target="_blank" rel="noopener noreferrer" style="font-size:10px;color:#5E5A53;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="{{ m.credit }}">© {{ m.credit }}</a>
+            <button onClick="{{ m.onTry }}" style="background:{{ m.tryBg }};color:{{ m.tryFg }};border:1px solid #181715;border-radius:999px;padding:6px 10px;white-space:nowrap;cursor:pointer;font-size:12px">{{ m.tryLabel }}</button>
+          </figure>
+        </sc-for>
+      </div>
+      <span style="font-size:11px;color:#5E5A53">{{ libNote }}</span>
+    </section>
+
+    <div ref="{{ tryonRef }}" style="background:#F8F4EC;border:1px solid rgba(24,23,21,.1);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:26px;line-height:1.1">AI Try-On</h2>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53">{{ providerLabel }}</span>
+        </div>
+        <button onClick="{{ toggleSettings }}" aria-expanded="{{ settingsOpen }}" style="background:none;border:1px solid rgba(24,23,21,.25);border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-size:13px;color:#181715" style-hover="border-color:#181715">{{ settingsLabel }}</button>
+      </div>
+
+      <sc-if value="{{ settingsOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(24,23,21,.1);border-bottom:1px solid rgba(24,23,21,.1);padding:14px 0;animation:vprFade .25s ease both">
+          <div role="radiogroup" aria-label="{{ t.providerAria }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px">
+            <sc-for list="{{ providerItems }}" as="p" hint-placeholder-count="3">
+              <button role="radio" aria-checked="{{ p.active }}" onClick="{{ p.onClick }}" style="text-align:left;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.bd }};border-radius:12px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600">{{ p.name }}</span><span style="font-size:11px;opacity:.82">{{ p.sub }}</span></button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ isHf }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;color:#5E5A53">{{ engineHead }}</span>
+              <div role="radiogroup" aria-label="{{ engineHead }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px">
+                <sc-for list="{{ engineItems }}" as="e" hint-placeholder-count="4">
+                  <button role="radio" aria-checked="{{ e.active }}" onClick="{{ e.onClick }}" style="text-align:left;background:{{ e.bg }};color:{{ e.fg }};border:1px solid {{ e.bd }};border-radius:10px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:1px"><span style="font-size:13px;font-weight:600">{{ e.name }}</span><span style="font-size:11px;opacity:.82">{{ e.sub }}</span></button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;align-items:end">
+              <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:#5E5A53">{{ qualityHead }}</span>
+                <div style="display:flex;border:1px solid rgba(24,23,21,.2);border-radius:999px;padding:3px;gap:2px">
+                  <sc-for list="{{ qualityItems }}" as="q" hint-placeholder-count="2"><button onClick="{{ q.onClick }}" aria-pressed="{{ q.active }}" style="flex:1;border:0;border-radius:999px;padding:6px 10px;font-size:12px;cursor:pointer;white-space:nowrap;background:{{ q.bg }};color:{{ q.fg }}">{{ q.name }}</button></sc-for>
+                </div>
+              </div>
+              <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#5E5A53">{{ t.hfToken }}<input type="password" value="{{ cfg.hfToken }}" onChange="{{ onHfToken }}" placeholder="hf_…" autocomplete="off" style="width:100%;border:1px solid rgba(24,23,21,.2);border-radius:10px;padding:9px 12px;font-size:13px;background:#F2ECE1;color:#181715"></label>
+            </div>
+            <span style="font-size:12px;color:#5E5A53">{{ hfNote }}</span>
+          </sc-if>
+          <sc-if value="{{ isFashn }}" hint-placeholder-val="{{ false }}">
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#5E5A53">{{ t.fashnKey }}<input type="password" value="{{ cfg.fashnKey }}" onChange="{{ onFashnKey }}" placeholder="fa-…" autocomplete="off" style="width:100%;border:1px solid rgba(24,23,21,.2);border-radius:10px;padding:9px 12px;font-size:13px;background:#F2ECE1;color:#181715"></label>
+            <span style="font-size:12px;color:#5E1C29">{{ t.fashnWarn }}</span>
+          </sc-if>
+          <sc-if value="{{ isServer }}" hint-placeholder-val="{{ false }}">
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#5E5A53">{{ t.serverUrl }}<input type="url" value="{{ cfg.server }}" onChange="{{ onServer }}" placeholder="https://your-app.vercel.app" style="width:100%;border:1px solid rgba(24,23,21,.2);border-radius:10px;padding:9px 12px;font-size:13px;background:#F2ECE1;color:#181715"></label>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ notConfigured }}" hint-placeholder-val="{{ false }}">
+        <div role="note" style="display:flex;gap:10px;align-items:flex-start;border:1px solid #3E506B;border-radius:12px;padding:12px 14px;color:#2B3A50">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid #3E506B;border-radius:4px;padding:0 5px;flex:none">i</span>
+          <span style="font-size:14px"><strong style="font-weight:600">{{ t.notCfgTitle }}</strong> {{ t.notCfgBody }}</span>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noProduct }}" hint-placeholder-val="{{ false }}">
+        <div role="note" style="display:flex;gap:10px;align-items:flex-start;border:1px solid #7C2837;border-radius:12px;padding:12px 14px;color:#5E1C29">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid #7C2837;border-radius:4px;padding:0 5px;flex:none">!</span>
+          <span style="font-size:14px">{{ noProductText }}</span>
+        </div>
+      </sc-if>
+
+      <div style="display:grid;grid-template-columns:{{ tryCols }};gap:10px">
+        <label style="position:relative;display:grid;grid-template-columns:60px 1fr;gap:12px;align-items:center;border:1.5px dashed {{ upBd1 }};border-radius:14px;padding:10px;cursor:pointer;background:#F2ECE1" style-hover="border-color:#181715">
+          <input type="file" accept="image/jpeg,image/png,image/webp" onChange="{{ onFile }}" aria-label="{{ t.up1 }}" style="position:absolute;width:1px;height:1px;opacity:0">
+          <span role="img" aria-label="{{ t.up1 }}" style="width:60px;height:76px;border-radius:9px;background-color:#E6DDCD;background-image:{{ previewBg }};background-size:cover;background-position:center;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53">{{ up1Mark }}</span>
+          <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7C2837;letter-spacing:.08em">{{ t.step1 }}</span>
+            <span style="font-weight:500;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ uploadTitle }}</span>
+            <span style="font-size:12px;color:#5E5A53">{{ uploadSub }}</span>
+          </span>
+        </label>
+        <sc-if value="{{ needGarmentImg }}" hint-placeholder-val="{{ true }}">
+          <label style="position:relative;display:grid;grid-template-columns:60px 1fr;gap:12px;align-items:center;border:1.5px dashed {{ upBd2 }};border-radius:14px;padding:10px;cursor:pointer;background:#F2ECE1" style-hover="border-color:#181715">
+            <input type="file" accept="image/jpeg,image/png,image/webp" onChange="{{ onGarmentFile }}" aria-label="{{ garmentUpTitle }}" style="position:absolute;width:1px;height:1px;opacity:0">
+            <span role="img" aria-label="{{ garmentUpTitle }}" style="width:60px;height:76px;border-radius:9px;background-color:#E6DDCD;background-image:{{ garmentBg }};background-size:cover;background-position:center;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53">{{ up2Mark }}</span>
+            <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7C2837;letter-spacing:.08em">{{ t.step2 }}</span>
+              <span style="font-weight:500;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ garmentUpTitle }}</span>
+              <span style="font-size:12px;color:#5E5A53">{{ garmentUpSub }}</span>
+            </span>
+          </label>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ hasWarnings }}" hint-placeholder-val="{{ false }}">
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px">
+          <sc-for list="{{ tryWarnings }}" as="w" hint-placeholder-count="1"><li style="font-size:13px;color:#5E1C29">! {{ w }}</li></sc-for>
+        </ul>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <button onClick="{{ startTryon }}" disabled="{{ tryDisabled }}" style="background:{{ tryBtnBg }};color:#F2ECE1;border:0;border-radius:999px;padding:13px 24px;white-space:nowrap;font-size:14px;font-weight:500;cursor:{{ tryCursor }}">{{ tryBtnLabel }}</button>
+        <div aria-live="polite" role="status" style="display:flex;align-items:center;gap:8px;font-size:13px;flex:1;min-width:200px">
+          <span style="width:8px;height:8px;border-radius:50%;background:{{ statusDot }};flex:none"></span>
+          <span style="color:{{ statusFg }}">{{ statusText }}</span>
+        </div>
+        <sc-if value="{{ canRetry }}" hint-placeholder-val="{{ false }}"><button onClick="{{ startTryon }}" style="background:none;border:1px solid #181715;border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-size:13px;color:#181715">{{ t.retry }}</button></sc-if>
+      </div>
+      <p style="margin:0;font-size:12px;color:#5E5A53;border-top:1px solid rgba(24,23,21,.08);padding-top:12px">{{ t.privacy }}</p>
+    </div>
+  </section>
+
+  <aside style="grid-area:r;display:flex;flex-direction:column;gap:18px;min-width:0" aria-label="{{ t.insightsAria }}">
+    <div style="background:#F8F4EC;border:1px solid rgba(24,23,21,.1);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><h2 style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">CULTURAL CHECK</h2><span style="font-size:12px;color:#5E5A53">{{ t.ruleBased }}</span></div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="width:44px;height:44px;border-radius:12px;background:{{ assess.color }};color:#F2ECE1;display:grid;place-items:center;font-size:18px;flex:none">{{ assess.glyph }}</span>
+        <div style="display:flex;flex-direction:column"><span style="font-family:'Playfair Display',serif;font-size:24px;line-height:1.1">{{ assess.label }}</span><span style="font-size:13px;color:#5E5A53">{{ assess.labelSub }}</span></div>
+      </div>
+      <p style="margin:0;font-size:14px;color:#2E2B27;text-wrap:pretty">{{ assess.explain }}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:600;color:#3F5549">{{ t.preserved }}</span>
+          <sc-for list="{{ assess.preserved }}" as="x" hint-placeholder-count="3"><span style="font-size:13px;display:flex;gap:6px"><span style="color:#5B7568">✓</span>{{ x }}</span></sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:600;color:#7C2837">Remix</span>
+          <sc-for list="{{ assess.remixed }}" as="x" hint-placeholder-count="2"><span style="font-size:13px;display:flex;gap:6px"><span style="color:#7C2837">↻</span>{{ x }}</span></sc-for>
+          <sc-if value="{{ assess.noRemix }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#5E5A53">{{ t.noModern }}</span></sc-if>
+        </div>
+      </div>
+      <sc-for list="{{ assess.warnings }}" as="w" hint-placeholder-count="0">
+        <div role="note" style="display:flex;gap:10px;background:#F2ECE1;border:1px solid rgba(124,40,55,.35);border-radius:12px;padding:10px 12px;animation:vprFade .3s ease both">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7C2837;border:1px solid #7C2837;border-radius:4px;padding:0 5px;height:18px;flex:none">!</span>
+          <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:#7C2837;text-transform:uppercase;letter-spacing:.08em">{{ w.kind }}</span><span style="font-size:13px">{{ w.text }}</span></span>
+        </div>
+      </sc-for>
+      <sc-for list="{{ assess.notes }}" as="n" hint-placeholder-count="0"><p style="margin:0;font-size:13px;color:#2B3A50;display:flex;gap:6px"><span>ⓘ</span><span>{{ n }}</span></p></sc-for>
+      <sc-if value="{{ showRuleIds }}" hint-placeholder-val="{{ true }}"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E5A53">{{ t.rulesApplied }} {{ assess.ruleIds }}</span></sc-if>
+      <span style="font-size:12px;color:#5E5A53;border-top:1px solid rgba(24,23,21,.1);padding-top:10px">{{ t.ccDisclaimer }}</span>
+    </div>
+
+    <div style="background:#181715;color:#F2ECE1;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><h2 style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">AI STYLIST</h2><span style="font-size:11px;color:#B8AF9F">{{ t.stylistSub }}</span></div>
+      <sc-for list="{{ stylistLines }}" as="x" hint-placeholder-count="3"><p style="margin:0;font-family:'Playfair Display',serif;font-size:18px;line-height:1.35;text-wrap:pretty">“{{ x }}”</p></sc-for>
+      <div style="display:flex;align-items:center;gap:14px;border-top:1px solid rgba(242,236,225,.15);padding-top:12px" title="{{ t.harmonyTip }}">
+        <span style="font-family:'Playfair Display',serif;font-size:40px;line-height:1">{{ harmony.score }}</span>
+        <span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:500">{{ harmony.summary }}</span><span style="font-size:12px;color:#B8AF9F">{{ harmony.notesText }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#B79A65">Color harmony heuristic ⓘ</span></span>
+      </div>
+    </div>
+
+    <div style="background:#F8F4EC;border:1px solid rgba(24,23,21,.1);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">{{ t.wxTitle }}</h2>
+      <div style="position:relative">
+        <input type="text" value="{{ wx.query }}" onChange="{{ onWxQuery }}" placeholder="{{ t.wxPh }}" aria-label="{{ t.wxPh }}" style="width:100%;border:1px solid rgba(24,23,21,.2);border-radius:12px;padding:11px 14px;font-size:14px;background:#F2ECE1;color:#181715">
+        <sc-if value="{{ hasSuggestions }}" hint-placeholder-val="{{ false }}">
+          <div role="listbox" style="position:absolute;left:0;right:0;top:calc(100% + 4px);background:#F8F4EC;border:1px solid rgba(24,23,21,.18);border-radius:12px;box-shadow:0 18px 40px -20px rgba(24,23,21,.4);z-index:5;overflow:hidden">
+            <sc-for list="{{ wxSuggestions }}" as="c" hint-placeholder-count="3">
+              <button role="option" onClick="{{ c.onClick }}" style="display:block;width:100%;text-align:left;background:none;border:0;padding:10px 14px;cursor:pointer;font-size:14px;color:#181715" style-hover="background:#EDE5D7">{{ c.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <button onClick="{{ useLocation }}" style="align-self:flex-start;background:none;border:0;padding:0;font-size:12px;color:#3E506B;cursor:pointer;text-decoration:underline;text-underline-offset:3px">{{ t.useLoc }}</button>
+      <sc-if value="{{ wxMsg }}" hint-placeholder-val="{{ false }}"><span aria-live="polite" style="font-size:13px;color:{{ wxMsgFg }}">{{ wxMsg }}</span></sc-if>
+      <sc-if value="{{ hasWx }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:10px;animation:vprFade .3s ease both">
+          <div style="display:flex;align-items:flex-end;gap:14px">
+            <span style="font-family:'Playfair Display',serif;font-size:44px;line-height:1">{{ wx.data.temperature }}°C</span>
+            <span style="display:flex;flex-direction:column;font-size:13px;color:#4A463F"><span style="font-weight:500;color:#181715">{{ wx.data.place }}</span><span>{{ wxLine }}</span></span>
+          </div>
+          <span style="font-size:12px;font-weight:600">Styling recommendation</span>
+          <sc-for list="{{ wxRecs }}" as="x" hint-placeholder-count="2"><p style="margin:0;font-size:13px;display:flex;gap:8px"><span style="color:#5B7568">→</span>{{ x }}</p></sc-for>
+          <span style="font-size:11px;color:#5E5A53">{{ t.wxNote }}</span>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="background:#F8F4EC;border:1px solid rgba(24,23,21,.1);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">CULTURAL STORY</h2>
+      <span style="font-family:'Playfair Display',serif;font-size:30px;line-height:1">{{ garment.nameUpper }}</span>
+      <p style="margin:0;font-size:14px;color:#2E2B27;text-wrap:pretty">{{ garment.teaser }}</p>
+      <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px">
+        <dt style="color:#5E5A53">{{ t.period }}</dt><dd style="margin:0">{{ garment.periodShort }}</dd>
+        <dt style="color:#5E5A53">{{ t.region }}</dt><dd style="margin:0">{{ garment.regionShort }}</dd>
+        <dt style="color:#5E5A53">{{ t.structure }}</dt><dd style="margin:0">{{ garment.keyText }}</dd>
+      </dl>
+      <button onClick="{{ openStory }}" style="align-self:flex-start;background:none;border:1px solid #181715;border-radius:999px;padding:9px 16px;white-space:nowrap;cursor:pointer;font-size:14px;color:#181715" style-hover="background:#181715;color:#F2ECE1">{{ t.learnMore }}</button>
+    </div>
+  </aside>
+</main>
+</sc-if>
+
+<sc-if value="{{ isLookbook }}" hint-placeholder-val="{{ false }}">
+<main style="max-width:1440px;margin:0 auto;padding:48px 24px 96px;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap">
+    <h1 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(44px,6vw,84px);line-height:.95">My Việt Phục<br><span style="font-style:italic;color:#7C2837">Lookbook</span></h1>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53">{{ lookCountText }}</span>
+  </div>
+  <sc-if value="{{ lookbookEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="border:1.5px dashed rgba(24,23,21,.25);border-radius:22px;padding:56px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <span style="font-family:'Playfair Display',serif;font-size:28px">{{ t.emptyTitle }}</span>
+      <span style="color:#4A463F">{{ t.emptyBody }}</span>
+      <button onClick="{{ goStudio }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:12px 22px;white-space:nowrap;cursor:pointer;font-size:14px">{{ t.enterStudio }}</button>
+    </div>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px">
+    <sc-for list="{{ savedItems }}" as="l" hint-placeholder-count="0">
+      <article style="display:flex;flex-direction:column;gap:12px;animation:vprFade .4s ease both">
+        <div style="position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:#E6DDCD;box-shadow:0 24px 50px -32px rgba(24,23,21,.5)">
+          <sc-if value="{{ l.noOutput }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;inset:0;pointer-events:none"><image-slot id="{{ l.slotId }}" shape="rect" placeholder="{{ l.gName }}" src="{{ l.img }}" credit="{{ l.imgCredit }}" credit-href="{{ l.imgHref }}" data-cr="lb"></image-slot></div></sc-if>
+          <sc-if value="{{ l.hasOutput }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ t.savedTryon }}" style="position:absolute;inset:0;background-image:{{ l.outBg }};background-size:cover;background-position:center"></div></sc-if>
+          <div style="position:absolute;top:0;left:0;right:0;padding:16px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none">
+            <span style="font-family:'Playfair Display',serif;font-size:30px;line-height:.9;color:#F2ECE1;background:#181715;padding:6px 10px 8px;border-radius:6px">VIỆT<br>PHỤC</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(242,236,225,.92);padding:3px 7px;border-radius:5px">{{ l.date }}</span>
+          </div>
+          <div style="position:absolute;left:14px;right:14px;bottom:14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;pointer-events:none">
+            <span style="background:{{ l.color }};color:#F2ECE1;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;padding:4px 8px;border-radius:5px;text-transform:uppercase;white-space:nowrap">{{ l.glyph }} {{ l.label }}</span>
+            <span style="background:rgba(242,236,225,.94);padding:10px 12px;border-radius:10px;display:flex;flex-direction:column"><span style="font-family:'Playfair Display',serif;font-size:22px;line-height:1.1">{{ l.name }}</span><span style="font-size:12px;color:#4A463F">{{ l.meta }}</span></span>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button onClick="{{ l.onView }}" style="background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-size:13px">{{ t.view }}</button>
+          <button onClick="{{ l.onCompare }}" style="background:none;border:1px solid rgba(24,23,21,.3);border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-size:13px;color:#181715">{{ t.compare }}</button>
+          <button onClick="{{ l.onDup }}" style="background:none;border:1px solid rgba(24,23,21,.3);border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-size:13px;color:#181715">{{ t.duplicate }}</button>
+          <button onClick="{{ l.onDel }}" style="background:none;border:1px solid rgba(124,40,55,.4);border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-size:13px;color:#7C2837;margin-left:auto">{{ t.del }}</button>
+        </div>
+      </article>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ storyOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeStory }}" style="position:fixed;inset:0;background:rgba(24,23,21,.45);z-index:50;animation:vprFade .25s ease both"></div>
+  <aside role="dialog" aria-modal="true" aria-label="{{ story.name }}" style="position:fixed;top:0;right:0;bottom:0;width:min(600px,100vw);background:#F2ECE1;z-index:51;overflow:auto;box-shadow:-30px 0 60px -30px rgba(24,23,21,.5);animation:vprFade .3s ease both">
+    <div style="padding:28px 32px 48px;display:flex;flex-direction:column;gap:26px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:#5E5A53">CULTURAL STORY</span><button onClick="{{ closeStory }}" aria-label="{{ t.close }}" style="background:none;border:1px solid rgba(24,23,21,.3);border-radius:999px;width:36px;height:36px;cursor:pointer;font-size:16px;color:#181715">✕</button></div>
+      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:52px;line-height:.95">{{ story.nameUpper }}</h2>
+      <p style="margin:0;font-size:16px;text-wrap:pretty">{{ story.description }}</p>
+      <dl style="margin:0;display:grid;grid-template-columns:110px 1fr;gap:14px 18px;border-top:1px solid rgba(24,23,21,.15);padding-top:20px;font-size:14px">
+        <dt style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53;text-transform:uppercase">{{ t.region }}</dt><dd style="margin:0">{{ story.region }}</dd>
+        <dt style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53;text-transform:uppercase">{{ t.period }}</dt><dd style="margin:0">{{ story.period }}</dd>
+        <dt style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53;text-transform:uppercase">{{ t.context }}</dt><dd style="margin:0">{{ story.contextText }}</dd>
+        <dt style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E5A53;text-transform:uppercase">{{ t.s5 }}</dt><dd style="margin:0">{{ story.accText }}</dd>
+      </dl>
+      <div style="display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:24px">{{ t.structure }}</h3>
+        <sc-for list="{{ story.construction }}" as="x" hint-placeholder-count="4"><p style="margin:0;font-size:14px;display:flex;gap:10px"><span style="color:#B79A65">—</span>{{ x }}</p></sc-for></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:24px">{{ t.modernTitle }}</h3>
+        <sc-for list="{{ story.modern }}" as="x" hint-placeholder-count="2"><p style="margin:0;font-size:14px;display:flex;gap:10px"><span style="color:#B79A65">—</span>{{ x }}</p></sc-for></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:24px">{{ t.mythTitle }}</h3>
+        <sc-for list="{{ story.misconceptions }}" as="x" hint-placeholder-count="2"><p style="margin:0;font-size:14px;display:flex;gap:10px"><span style="color:#7C2837">≠</span>{{ x }}</p></sc-for></div>
+      <p style="margin:0;font-size:13px;color:#2B3A50">ⓘ {{ t.variants }}</p>
+      <div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(24,23,21,.15);padding-top:20px"><h3 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:24px">{{ t.sources }}</h3>
+        <sc-for list="{{ story.sources }}" as="s" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:24px 1fr;gap:8px;font-size:14px">
+            <span style="font-family:'JetBrains Mono',monospace;color:#5E5A53">{{ s.n }}.</span>
+            <span style="display:flex;flex-direction:column;gap:3px"><span style="font-style:italic">{{ s.title }}</span><span style="font-size:13px;color:#4A463F">{{ s.org }} · {{ s.year }}</span>
+              <sc-if value="{{ s.url }}" hint-placeholder-val="{{ false }}"><a href="{{ s.url }}" target="_blank" rel="noopener noreferrer" style="font-size:13px;word-break:break-all">{{ s.url }}</a></sc-if>
+              <span style="align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:11px;color:{{ s.stFg }};border:1px solid {{ s.stFg }};border-radius:4px;padding:1px 6px">{{ s.statusLabel }}</span></span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </aside>
+</sc-if>
+
+<sc-if value="{{ compareOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeCompare }}" style="position:fixed;inset:0;background:rgba(24,23,21,.5);z-index:60"></div>
+  <div role="dialog" aria-modal="true" aria-label="{{ t.compare }}" style="position:fixed;inset:{{ cmpInset }};background:#F2ECE1;z-index:61;border-radius:22px;overflow:auto;animation:vprFade .3s ease both">
+    <div style="padding:24px 28px 36px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+        <div style="display:flex;flex-direction:column;gap:4px"><h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:400;font-size:36px">{{ t.compare }}</h2><span style="font-size:14px;color:#4A463F">{{ t.noWinner }}</span></div>
+        <button onClick="{{ closeCompare }}" aria-label="{{ t.close }}" style="background:none;border:1px solid rgba(24,23,21,.3);border-radius:999px;width:36px;height:36px;cursor:pointer;font-size:16px;color:#181715;flex:none">✕</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+        <sc-for list="{{ cmpCols }}" as="c" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em">{{ c.head }}</span>
+            <div style="position:relative;aspect-ratio:4/5;max-height:420px;border-radius:16px;overflow:hidden;background:#E6DDCD">
+              <sc-if value="{{ c.noOutput }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;inset:0;pointer-events:none"><image-slot id="{{ c.slotId }}" shape="rect" placeholder="{{ c.gName }}" src="{{ c.img }}" credit="{{ c.imgCredit }}" credit-href="{{ c.imgHref }}"></image-slot></div></sc-if>
+              <sc-if value="{{ c.hasOutput }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="AI Try-On" style="position:absolute;inset:0;background-image:{{ c.outBg }};background-size:cover;background-position:center"></div></sc-if>
+              <span style="position:absolute;left:10px;bottom:10px;background:{{ c.color }};color:#F2ECE1;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 8px;border-radius:5px;text-transform:uppercase;white-space:nowrap;pointer-events:none">{{ c.glyph }} {{ c.label }}</span>
+            </div>
+            <dl style="margin:0;display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px 12px;font-size:13px">
+              <sc-for list="{{ c.rows }}" as="r" hint-placeholder-count="8">
+                <dt style="color:#5E5A53;border-top:1px solid rgba(24,23,21,.1);padding-top:8px">{{ r.k }}</dt><dd style="margin:0;border-top:1px solid rgba(24,23,21,.1);padding-top:8px">{{ r.v }}</dd>
+              </sc-for>
+            </dl>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showSticky }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:12px;right:12px;bottom:12px;z-index:40;display:flex;gap:8px">
+    <button onClick="{{ scrollToTryon }}" style="flex:1;background:#181715;color:#F2ECE1;border:0;border-radius:999px;padding:15px;white-space:nowrap;font-size:15px;font-weight:500;box-shadow:0 12px 30px -10px rgba(24,23,21,.6);cursor:pointer">{{ t.tryOutfit }}</button>
+    <button onClick="{{ saveLook }}" style="background:#F2ECE1;color:#181715;border:1px solid #181715;border-radius:999px;padding:15px 20px;white-space:nowrap;font-size:15px;cursor:pointer">{{ t.saveShort }}</button>
+  </div>
+</sc-if>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+  <div role="status" aria-live="polite" style="position:fixed;left:50%;bottom:{{ toastBottom }};transform:translateX(-50%);background:#181715;color:#F2ECE1;padding:12px 20px;border-radius:999px;font-size:14px;z-index:70;animation:vprFade .25s ease both;white-space:nowrap">{{ toast }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tryOnApiBase&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;AI Try-On&quot;},&quot;resolution&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1k&quot;,&quot;2k&quot;],&quot;default&quot;:&quot;1k&quot;,&quot;tsType&quot;:&quot;'1k'|'2k'&quot;,&quot;section&quot;:&quot;AI Try-On&quot;},&quot;showRuleIds&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Cultural engine&quot;}}">
+let LANG = 'vi';
+const V = (vi, en) => LANG === 'en' ? en : vi;
+const tx = (o, k) => (LANG === 'en' && o[k + '_en'] != null) ? o[k + '_en'] : o[k];
+const C = { lacquer:'#7C2837', ivory:'#F2ECE1', ink:'#181715', jade:'#5B7568', indigo:'#3E506B', gold:'#B79A65', paper:'#F8F4EC' };
+
+const T = {
+  navAria:['Điều hướng chính','Main navigation'], navExplore:['Khám phá','Explore'],
+  tagline:['“Phối chất riêng – hiểu chất Việt.”','“Style your own way – understand the Vietnamese way.”'],
+  heroBody:['Khám phá Việt phục, phối theo phong cách của bạn và hiểu điều gì thuộc về truyền thống, điều gì là một cách diễn giải hiện đại.','Explore Vietnamese traditional dress, style it your way, and understand what belongs to tradition and what is a modern interpretation.'],
+  ctaStart:['Bắt đầu phối đồ →','Start styling →'], ctaExplore:['Khám phá Việt phục','Explore Việt phục'],
+  phHero:['Ảnh hero · Việt phục (ảnh có giấy phép)','Hero photo · Việt phục (licensed)'],
+  heroQuote1:['Mặc câu chuyện.','Wear the story.'], heroQuote2:['Phối chất riêng.','Remix the future.'],
+  threeTitle:['Ba dòng Việt phục','Three garment families'],
+  threeBody:['Mỗi dòng mang bối cảnh, cấu trúc và giới hạn phối riêng — không phải những món đồ thay thế cho nhau.','Each carries its own context, construction and styling limits — they are not interchangeable fashion items.'],
+  learn:['Tìm hiểu','Learn'], ctxTitle1:['Sáng tạo','Creativity'], ctxTitle2:['có bối cảnh.','with context.'],
+  ctxBody:['Mỗi outfit được phân loại bằng quy tắc minh bạch từ dữ liệu văn hóa đã biên soạn — không chấm điểm “đúng/sai”, không để AI tự viết lịch sử.','Every outfit is classified by transparent rules over a curated cultural dataset — no “right/wrong” scores, and no AI-invented history.'],
+  enterStudio:['Vào Studio →','Enter Studio →'],
+  footer1:['Thông tin văn hóa lấy từ bộ dữ liệu biên soạn — nguồn hiển thị trong từng trang phục.','Cultural information comes from a curated dataset — sources are listed per garment.'],
+  footer2:['Dữ liệu seed · chờ biên tập viên văn hóa duyệt','Seed data · pending cultural editor review'],
+  controlsAria:['Điều khiển phối đồ','Styling controls'], canvasAria:['Khung outfit','Outfit canvas'], insightsAria:['Thông tin văn hóa và gợi ý','Cultural info and suggestions'],
+  s1:['Bạn mặc vào dịp nào?','What’s the occasion?'], s2:['Chọn Việt phục','Choose a garment'], s3:['Phong cách','Style'], s4:['Bảng màu','Palette'], s5:['Phụ kiện','Accessories'], s6:['Mức remix','Remix intensity'],
+  aiNotice:['Ảnh AI có thể làm thay đổi chi tiết trang phục. Xem panel văn hóa để biết cấu trúc đã được xác minh.','AI visualization can alter garment details. Refer to the cultural information panel for verified construction features.'],
+  prev:['← Look trước','← Previous'], next:['Look tiếp →','Next →'], compare:['So sánh','Compare'], save:['Lưu vào Lookbook','Save to Lookbook'], saveShort:['Lưu','Save'],
+  providerAria:['Nhà cung cấp Try-On','Try-On provider'],
+  hfToken:['HF token (tùy chọn, tăng quota GPU)','HF token (optional, more GPU quota)'],
+  hfNote:['Model mở IDM-VTON chạy trên GPU miễn phí của Hugging Face — có thể phải xếp hàng. Model tối ưu cho áo thân trên; tà áo dài có thể bị rút ngắn.','Open IDM-VTON model on Hugging Face’s free GPUs — queues are possible. Optimised for upper-body garments; long panels may be shortened.'],
+  fashnKey:['FASHN API key (chỉ lưu trên trình duyệt này)','FASHN API key (stored in this browser only)'],
+  fashnWarn:['! Chế độ dev: khóa được gửi từ trình duyệt. Khi triển khai, dùng “Máy chủ riêng” để giữ FASHN_API_KEY phía server.','! Dev mode: the key is sent from the browser. In production use “Own server” to keep FASHN_API_KEY server-side.'],
+  serverUrl:['URL máy chủ (có /api/tryon/start và /api/tryon/status/:id)','Server URL (exposing /api/tryon/start and /api/tryon/status/:id)'],
+  notCfgTitle:['AI Try-On chưa được cấu hình trên môi trường này.','AI Try-On is not configured in this environment.'],
+  notCfgBody:['Mở “Cài đặt” để cấu hình, hoặc chọn Hugging Face (không cần key). Các tính năng khác vẫn hoạt động.','Open “Settings” to configure, or pick Hugging Face (no key needed). Everything else still works.'],
+  up1:['Ảnh toàn thân của bạn','Your full-body photo'], step1:['BƯỚC 1 · ẢNH CỦA BẠN','STEP 1 · YOUR PHOTO'], step2:['BƯỚC 2 · ẢNH ÁO','STEP 2 · GARMENT PHOTO'],
+  retry:['Thử lại','Retry'],
+  privacy:['Ảnh của bạn chỉ được sử dụng để tạo preview trong phiên hiện tại. Try-On chỉ dựng áo chính; phụ kiện hiển thị dưới dạng gợi ý.','Your photo is only used to create a preview in the current session. Try-On renders the main garment only; accessories are shown as suggestions.'],
+  ruleBased:['phân loại theo quy tắc','rule-based classification'], preserved:['Giữ lại','Preserved'], noModern:['Không có yếu tố hiện đại','No modern elements'],
+  rulesApplied:['Quy tắc áp dụng:','Rules applied:'],
+  ccDisclaimer:['Dựa trên dữ liệu văn hóa đã được biên soạn. Đây là phân loại, không phải điểm “độ chuẩn”.','Based on curated cultural data. This is a classification, not an “accuracy” score.'],
+  stylistSub:['rule-based · dữ liệu biên soạn','rule-based · curated data'],
+  harmonyTip:['Color harmony heuristic — điểm gợi ý dựa trên hue, độ bão hòa và tương phản sáng. Không phải thước đo “đẹp” khách quan.','Color harmony heuristic — a suggestion based on hue distance, saturation balance and lightness contrast. Not an objective measure of beauty.'],
+  wxTitle:['THỜI TIẾT & STYLING','WEATHER & STYLING'], wxPh:['Tìm thành phố, vd. Hà Nội','Search a city, e.g. Hanoi'], useLoc:['Dùng vị trí hiện tại (tùy chọn)','Use my location (optional)'],
+  wxNote:['Gợi ý thực dụng — không thay đổi thông tin văn hóa. Dữ liệu: Open-Meteo.','Practical advice only — never overrides cultural facts. Data: Open-Meteo.'],
+  period:['Thời kỳ','Period'], region:['Vùng','Region'], structure:['Cấu trúc','Construction'], context:['Bối cảnh','Context'], learnMore:['Tìm hiểu →','Learn more →'],
+  emptyTitle:['Chưa có look nào.','No looks yet.'], emptyBody:['Phối một outfit trong Studio và bấm “Lưu vào Lookbook”.','Style an outfit in the Studio and press “Save to Lookbook”.'],
+  savedTryon:['Kết quả Try-On đã lưu','Saved Try-On result'], view:['Xem','View'], duplicate:['Nhân bản','Duplicate'], del:['Xóa','Delete'], close:['Đóng','Close'],
+  modernTitle:['Styling & diễn giải hiện đại','Styling & modern interpretation'], mythTitle:['Hiểu lầm thường gặp','Common misconceptions'],
+  variants:['Có nhiều cách diễn giải / biến thể theo thời kỳ hoặc khu vực.','Interpretations and variants differ by period and region.'], sources:['Nguồn','Sources'],
+  noWinner:['Không có “người thắng” — chỉ là thông tin để bạn tự quyết định.','There is no “winner” — just information to help you decide.'],
+  tryOutfit:['Thử outfit','Try outfit']
+};
+
+const LEVELS = [
+  { label:'Historically grounded', vi:'Bám sát truyền thống', en:'Close to documented tradition', color:'#4E6A5C', glyph:'■', range:'0 — 25',
+    body:['Giữ cấu trúc, bối cảnh và phụ kiện gắn với trang phục theo tư liệu.','Keeps the construction, context and accessories documented for the garment.'] },
+  { label:'Modern adaptation', vi:'Thích ứng hiện đại', en:'Garment kept, styling updated', color:'#3E506B', glyph:'◆', range:'26 — 70',
+    body:['Giữ thân áo làm gốc, thêm màu sắc, phụ kiện hoặc styling đương đại.','Keeps the garment as the anchor, adding contemporary colour, accessories or styling.'] },
+  { label:'Creative interpretation', vi:'Diễn giải sáng tạo', en:'A free reinterpretation', color:'#7C2837', glyph:'●', range:'71 — 100',
+    body:['Một cách diễn giải tự do — được trình bày rõ ràng là sáng tạo, không phải tái hiện.','A free interpretation — clearly presented as creative, not as a reconstruction.'] }
+];
+const SRC = {
+  pkb:{ title:'Việt Nam phong tục', org:'Phan Kế Bính', year:'1915', url:'', status:'primary' },
+  dtt:{ title:'Trang phục Việt Nam', org:'Đoàn Thị Tình · NXB Mỹ thuật', year:'2006', url:'', status:'review' },
+  vwm:{ title:'Bộ sưu tập trang phục phụ nữ Việt Nam', org:'Bảo tàng Phụ nữ Việt Nam', year:'—', url:'https://baotangphunu.org.vn', status:'review' },
+  dnl:{ title:'Đại Nam thực lục (ghi chép về cải cách y phục năm 1744)', org:'Quốc sử quán triều Nguyễn', year:'TK 19', url:'', status:'primary' },
+  lmr:{ title:'Các bài giới thiệu áo “Le Mur” trên Phong Hóa / Ngày Nay', org:'Tự Lực văn đoàn · Cát Tường', year:'1934–1935', url:'', status:'review' },
+  qh:{ title:'Dân ca Quan họ Bắc Ninh — Di sản văn hóa phi vật thể đại diện', org:'UNESCO', year:'2009', url:'', status:'review' }
+};
+const GARMENTS = [
+  { id:'aodai', name:'Áo dài', short:'áo dài', descriptor:'Dáng ôm, hai tà · TK 20 – nay', descriptor_en:'Fitted, two long panels · 20th c. – today',
+    teaser:'Dáng áo ôm thân, hai tà xẻ cao, mặc cùng quần dài — hình thức định hình trong thế kỷ 20 từ nền áo ngũ thân.',
+    teaser_en:'A fitted tunic with two high-slit panels worn over trousers — a form shaped in the 20th century from the five-panel robe.',
+    description:'Áo dài hiện đại là trang phục ôm theo thân người với hai tà trước – sau xẻ cao từ eo, thường mặc cùng quần dài. Dáng áo được cách tân nhiều lần trong thế kỷ 20, trong đó có mẫu áo “Le Mur” của họa sĩ Cát Tường những năm 1930, và tiếp tục biến đổi về cổ, tay, độ ôm qua các thập niên.',
+    description_en:'The modern áo dài is a body-fitted tunic with front and back panels slit high from the waist, usually worn with long trousers. It was reworked many times in the 20th century — including painter Cát Tường’s “Le Mur” designs of the 1930s — and kept evolving in collar, sleeve and fit across the decades.',
+    period:'Thế kỷ 20 – nay (dáng hiện đại định hình từ thập niên 1930)', period_en:'20th century – today (modern cut from the 1930s)', periodShort:'TK 20 – nay', periodShort_en:'20th c. – today',
+    region:'Toàn quốc; phổ biến ở đô thị trước, sau lan rộng', region_en:'Nationwide; spread first in cities', regionShort:'Toàn quốc', regionShort_en:'Nationwide',
+    context:['Tết','Lễ tốt nghiệp','Nghi lễ trang trọng','Chụp ảnh','Streetwear đương đại'], context_en:['Tết','Graduation','Formal ceremonies','Photoshoots','Contemporary streetwear'],
+    construction:['Thân áo ôm theo dáng người, chiết eo','Hai tà trước – sau xẻ cao từ eo','Cổ đứng phổ biến (có biến thể cổ thuyền, cổ tròn)','Cài khuy/bấm chéo từ cổ sang nách phải','Mặc cùng quần dài ống suông'],
+    construction_en:['Body-fitted, darted at the waist','Front and back panels slit high from the waist','Stand-up collar common (boat and round necks exist)','Fastens diagonally from collar to right armpit','Worn with straight-leg trousers'],
+    key:['Hai tà xẻ cao','Cổ đứng','Dáng ôm thân'], key_en:['High-slit panels','Stand-up collar','Fitted body'],
+    known:['khanvan','non_la','guoc','hai','quat'],
+    misconceptions:['Dáng ôm eo hiện nay không phải hình thức “nguyên bản” duy nhất — đó là kết quả cách tân thế kỷ 20.','Áo dài không đồng nhất với áo ngũ thân; hai loại khác nhau về cách cắt và cấu trúc thân.'],
+    misconceptions_en:['Today’s fitted cut is not the single “original” form — it results from 20th-century reforms.','The áo dài is not the same as the áo ngũ thân; they differ in cut and panel structure.'],
+    modern:['Có thể đổi chất liệu, họa tiết, bảng màu mà vẫn giữ hai tà và cổ áo làm gốc.','Phối quần ống rộng, loafers hoặc túi nhỏ là cách thích ứng phổ biến cho đời thường.'],
+    modern_en:['Fabric, print and palette can change while keeping the panels and collar as the anchor.','Wide trousers, loafers or a small bag are common everyday adaptations.'],
+    sources:['lmr','dtt','vwm'], productImageUrl:'/garments/ao-dai-product.jpg' },
+  { id:'nguthan', name:'Áo ngũ thân', short:'áo ngũ thân', descriptor:'Năm thân, dáng suông · TK 18 – đầu TK 20', descriptor_en:'Five panels, straight cut · 18th – early 20th c.',
+    teaser:'Áo năm thân, cổ đứng, dáng suông không chiết eo — trang phục phổ biến từ cuộc cải cách y phục thế kỷ 18.',
+    teaser_en:'A five-panel robe with a stand-up collar and straight, undarted cut — widespread after the 18th-century dress reform.',
+    description:'Áo ngũ thân gồm hai thân trước, hai thân sau và một vạt con nằm phía trong, cổ đứng, cài khuy, dáng suông không chiết eo. Hình thức này được phổ biến từ cuộc cải cách y phục ở Đàng Trong thời chúa Nguyễn Phúc Khoát (1744) và dần trở thành trang phục thông dụng đến đầu thế kỷ 20. Hiện nay áo được phục dựng và mặc trong lễ Tết, nghi lễ và sự kiện văn hóa.',
+    description_en:'The áo ngũ thân has two front panels, two back panels and a small inner flap, a stand-up collar, buttons, and a straight undarted cut. It spread after the dress reform in Đàng Trong under Lord Nguyễn Phúc Khoát (1744) and remained common until the early 20th century. Today it is reconstructed and worn at Tết, ceremonies and cultural events.',
+    period:'Phổ biến từ giữa thế kỷ 18 (cải cách y phục năm 1744) đến đầu thế kỷ 20', period_en:'Mid-18th century (1744 dress reform) to early 20th century', periodShort:'TK 18 – đầu TK 20', periodShort_en:'18th – early 20th c.',
+    region:'Khởi từ Đàng Trong, sau thông dụng trên cả nước', region_en:'Originated in Đàng Trong, later nationwide', regionShort:'Toàn quốc · từ Đàng Trong', regionShort_en:'Nationwide · from Đàng Trong',
+    context:['Tết','Nghi lễ, tế lễ','Sự kiện trang trọng','Phục dựng lịch sử'], context_en:['Tết','Rites and ceremonies','Formal events','Historical reconstruction'],
+    construction:['Năm thân: hai thân trước, hai thân sau, một vạt con phía trong','Cổ đứng','Cài khuy bên phải (thường 5 khuy)','Dáng suông, không chiết eo','Tà áo dài, rộng hơn áo dài hiện đại'],
+    construction_en:['Five panels: two front, two back, one small inner flap','Stand-up collar','Buttons on the right side (typically five)','Straight cut, no waist darts','Long, wider panels than the modern áo dài'],
+    key:['Cấu trúc năm thân','Cổ đứng','Dáng suông'], key_en:['Five-panel structure','Stand-up collar','Straight cut'],
+    known:['khanvan','hai','guoc','non_la','quat'],
+    misconceptions:['Áo ngũ thân không phải “áo dài may rộng” — khác nhau về số thân và cách cắt.','Không có một mẫu “chuẩn” duy nhất; có biến thể theo thời kỳ, tầng lớp và chất liệu.'],
+    misconceptions_en:['The áo ngũ thân is not a “loose áo dài” — panel count and cut differ.','There is no single “standard” pattern; variants exist by period, class and fabric.'],
+    modern:['Phân biệt rõ phục dựng (bám tư liệu) và thiết kế lấy cảm hứng (thay chất liệu, màu, phụ kiện).','Giữ cổ đứng và năm thân là điều kiện tối thiểu để vẫn gọi là áo ngũ thân.'],
+    modern_en:['Distinguish reconstruction (follows sources) from inspired design (new fabric, colour, accessories).','Keeping the stand-up collar and five panels is the minimum for it to remain an áo ngũ thân.'],
+    sources:['dnl','dtt','vwm'], productImageUrl:'/garments/ao-ngu-than-product.jpg' },
+  { id:'tuthan', name:'Áo tứ thân', short:'áo tứ thân', descriptor:'Bốn thân, mặc nhiều lớp · Bắc Bộ', descriptor_en:'Four panels, layered · Northern Vietnam',
+    teaser:'Áo bốn thân mặc ngoài yếm, hai vạt trước buông hoặc thắt lại, đi cùng thắt lưng và váy — gắn với vùng Kinh Bắc.',
+    teaser_en:'A four-panel coat worn over a yếm bodice, front flaps loose or tied, with sash and skirt — associated with Kinh Bắc.',
+    description:'Áo tứ thân là trang phục truyền thống của phụ nữ Bắc Bộ: hai thân sau nối ở sống lưng, hai vạt trước để buông hoặc thắt lại, không cài khuy. Áo mặc ngoài yếm, thắt lưng quanh eo và phối váy dài. Từng là trang phục thường ngày ở đồng bằng Bắc Bộ; ngày nay gắn nhiều với lễ hội và sinh hoạt Quan họ vùng Kinh Bắc.',
+    description_en:'The áo tứ thân is the traditional dress of Northern Vietnamese women: two back panels joined at the spine and two front flaps left loose or tied, with no buttons. It is worn over a yếm bodice, with a sash at the waist and a long skirt. Once everyday wear in the Red River Delta, it is now closely associated with festivals and Quan họ singing in Kinh Bắc.',
+    period:'Trang phục thường nhật và lễ hội, phổ biến đến đầu thế kỷ 20', period_en:'Everyday and festive wear, common until the early 20th century', periodShort:'Truyền thống · đến đầu TK 20', periodShort_en:'Traditional · to early 20th c.',
+    region:'Bắc Bộ — đồng bằng sông Hồng, vùng Kinh Bắc', region_en:'Northern Vietnam — Red River Delta, Kinh Bắc', regionShort:'Bắc Bộ · Kinh Bắc', regionShort_en:'North · Kinh Bắc',
+    context:['Lễ hội','Quan họ / Kinh Bắc','Tết','Biểu diễn, chụp ảnh'], context_en:['Festivals','Quan họ / Kinh Bắc','Tết','Performance, photoshoots'],
+    construction:['Bốn thân: hai thân sau nối sống lưng, hai vạt trước','Hai vạt trước buông hoặc thắt lại, không cài khuy','Mặc ngoài yếm','Thắt lưng (bao) quanh eo','Thường phối váy dài màu tối'],
+    construction_en:['Four panels: two back panels joined at the spine, two front flaps','Front flaps loose or tied, no buttons','Worn over a yếm bodice','Sash tied at the waist','Usually paired with a long dark skirt'],
+    key:['Bốn thân, vạt trước buông','Mặc lớp ngoài yếm','Thắt lưng'], key_en:['Four panels, loose front flaps','Layered over a yếm','Waist sash'],
+    known:['yem','khan_mo_qua','non_quai_thao','non_la','quat','guoc'],
+    misconceptions:['Áo tứ thân không chỉ là trang phục biểu diễn Quan họ — đó từng là trang phục thường ngày.','Bỏ yếm và thắt lưng làm mất cấu trúc nhiều lớp đặc trưng.'],
+    misconceptions_en:['The áo tứ thân is not only a Quan họ stage costume — it was everyday wear.','Removing the yếm and sash loses the characteristic layered structure.'],
+    modern:['Có thể giữ cấu trúc lớp (yếm – áo – thắt lưng) và thay chất liệu, màu cho chụp ảnh.','Phối streetwear nên được trình bày như diễn giải sáng tạo.'],
+    modern_en:['Keep the layered structure (yếm – coat – sash) while changing fabric or colour for shoots.','Streetwear pairings should be presented as creative interpretation.'],
+    sources:['pkb','qh','vwm'], productImageUrl:null }
+];
+const EVENTS = [
+  { id:'tet', name:'Tết', name_en:'Tết', hint:'Du xuân, chúc Tết', hint_en:'Lunar New Year visits', tone:'hợp không khí Tết mà vẫn đủ contemporary', tone_en:'suits the Tết mood while staying contemporary' },
+  { id:'festival', name:'Lễ hội', name_en:'Festival', hint:'Hội làng, đình, chùa', hint_en:'Village, temple, pagoda', tone:'hài hòa với không gian lễ hội', tone_en:'sits well in a festival setting' },
+  { id:'photoshoot', name:'Kỷ yếu / Photoshoot', name_en:'Yearbook / Shoot', hint:'Lên hình, kỷ niệm', hint_en:'Camera-ready', tone:'lên hình rõ khối màu', tone_en:'reads clearly on camera' },
+  { id:'formal', name:'Sự kiện trang trọng', name_en:'Formal event', hint:'Lễ, tiệc, nghi thức', hint_en:'Ceremony, reception', tone:'giữ được độ trang trọng', tone_en:'keeps a formal register' },
+  { id:'street', name:'Dạo phố / Creative', name_en:'Street / Creative', hint:'Thường ngày, sáng tạo', hint_en:'Everyday, experimental', tone:'dễ mặc ra phố', tone_en:'is easy to wear on the street' }
+];
+const STYLES = [
+  { id:'heritage', name:'Heritage', tip:'Giữ phụ kiện truyền thống, hạn chế chi tiết hiện đại.', tip_en:'Keep traditional accessories and limit modern details.' },
+  { id:'minimal', name:'Minimal', tip:'Một màu chủ đạo, tối đa một phụ kiện nổi bật.', tip_en:'One dominant colour, at most one statement accessory.' },
+  { id:'elegant', name:'Elegant', tip:'Chất liệu có độ rủ, trang sức nhỏ, tông trầm.', tip_en:'Fluid fabrics, small jewellery, deep tones.' },
+  { id:'vintage', name:'Vintage', tip:'Tông nâu trầm, phụ kiện gỗ, mây tre.', tip_en:'Warm browns, wood and rattan accessories.' },
+  { id:'editorial', name:'Editorial', tip:'Tạo điểm nhấn bằng tạo dáng và ánh sáng, không bằng cắt sửa áo.', tip_en:'Create impact through pose and light, not by altering the garment.' },
+  { id:'genz', name:'Gen Z Remix', tip:'Phối item hiện đại nhưng giữ áo làm visual anchor.', tip_en:'Mix modern items but keep the garment as the visual anchor.' }
+];
+const PALETTES = [
+  { id:'lacquer', name:'Lacquer', c:['#7C2837','#F2ECE1','#B79A65'], n:['đỏ sơn mài','kem ngà','vàng cổ'], n_en:['lacquer red','ivory','antique gold'], trad:true },
+  { id:'indigo', name:'Indigo', c:['#3E506B','#EFE6D4','#7A5A43'], n:['chàm','kem ấm','nâu trầm'], n_en:['indigo','warm cream','muted brown'], trad:true },
+  { id:'jade', name:'Jade', c:['#5B7568','#F2ECE1','#A88D5A'], n:['ngọc bích','ngà','vàng mờ'], n_en:['muted jade','ivory','soft gold'], trad:true },
+  { id:'tea', name:'Nâu Trà', name_en:'Tea Brown', c:['#6E4A33','#E9DCC6','#2F2B24'], n:['nâu củ nâu','be','đen tuyền'], n_en:['yam-dye brown','beige','deep black'], trad:true },
+  { id:'ink', name:'Ink & Ivory', c:['#181715','#F2ECE1','#8C8478'], n:['mực đen','ngà','xám đá'], n_en:['ink black','ivory','stone grey'], trad:false },
+  { id:'plum', name:'Plum', c:['#5E2B45','#D9A5A8','#F1E7DA'], n:['mận chín','hồng khói','kem'], n_en:['plum','dusty rose','cream'], trad:false }
+];
+const ACCS = [
+  { id:'khanvan', name:'Khăn vấn', name_en:'Khăn vấn (head wrap)', type:'traditional', for:['aodai','nguthan','tuthan'] },
+  { id:'khan_mo_qua', name:'Khăn mỏ quạ', name_en:'Khăn mỏ quạ (crow-beak scarf)', type:'traditional', for:['tuthan'] },
+  { id:'non_quai_thao', name:'Nón quai thao', name_en:'Nón quai thao (flat hat)', type:'traditional', for:['tuthan'] },
+  { id:'yem', name:'Yếm & thắt lưng', name_en:'Yếm & sash', type:'traditional', for:['tuthan'] },
+  { id:'non_la', name:'Nón lá', name_en:'Nón lá (conical hat)', type:'traditional', for:['aodai','nguthan','tuthan'] },
+  { id:'hai', name:'Hài thêu', name_en:'Embroidered hài shoes', type:'traditional', for:['aodai','nguthan'] },
+  { id:'guoc', name:'Guốc mộc', name_en:'Wooden clogs', type:'traditional', for:['aodai','nguthan','tuthan'] },
+  { id:'quat', name:'Quạt', name_en:'Hand fan', type:'context', for:['aodai','nguthan','tuthan'] },
+  { id:'loafers', name:'Loafers', type:'adaptation', for:[] },
+  { id:'tui_mini', name:'Túi mini', name_en:'Mini bag', type:'modern', for:[] },
+  { id:'sneakers', name:'Sneakers', type:'modern', for:[] }
+];
+const ACC_TAG = { traditional:[['Truyền thống','Traditional'],'#3F5549'], adaptation:[['Thích ứng','Adaptation'],'#3E506B'], modern:[['Hiện đại','Modern'],'#7C2837'], context:[['Tùy bối cảnh','Context'],'#6B5530'] };
+const PRESETS = [
+  { id:'ad1', title:'Tết Sơn Mài', title_en:'Lacquer Tết', garment:'aodai', event:'tet', style:'heritage', palette:'lacquer', acc:['khanvan','guoc'], remix:15, desc:'Đỏ sơn mài, khăn vấn, guốc mộc.', desc_en:'Lacquer red, head wrap, clogs.' },
+  { id:'ad2', title:'Kỷ yếu Ivory', title_en:'Ivory Yearbook', garment:'aodai', event:'photoshoot', style:'minimal', palette:'ink', acc:['loafers','tui_mini'], remix:45, desc:'Tối giản mực – ngà, túi nhỏ.', desc_en:'Minimal ink & ivory, small bag.' },
+  { id:'ad3', title:'Editorial Indigo', garment:'aodai', event:'formal', style:'editorial', palette:'indigo', acc:['loafers'], remix:55, desc:'Chàm trầm, loafers.', desc_en:'Deep indigo, loafers.' },
+  { id:'ad4', title:'Phố Remix', title_en:'Street Remix', garment:'aodai', event:'street', style:'genz', palette:'plum', acc:['sneakers','tui_mini'], remix:85, desc:'Mận – hồng khói, sneakers.', desc_en:'Plum & dusty rose, sneakers.' },
+  { id:'nt1', title:'Lễ phục Ngũ Thân', title_en:'Ceremonial Ngũ Thân', garment:'nguthan', event:'formal', style:'heritage', palette:'indigo', acc:['khanvan','hai'], remix:15, desc:'Chàm, khăn vấn, hài thêu.', desc_en:'Indigo, head wrap, hài shoes.' },
+  { id:'nt2', title:'Tết Ngọc Bích', title_en:'Jade Tết', garment:'nguthan', event:'tet', style:'elegant', palette:'jade', acc:['khanvan','quat'], remix:30, desc:'Ngọc bích, quạt, khăn vấn.', desc_en:'Jade, fan, head wrap.' },
+  { id:'nt3', title:'Chợ Phiên Vintage', title_en:'Market-day Vintage', garment:'nguthan', event:'festival', style:'vintage', palette:'tea', acc:['non_la','guoc'], remix:40, desc:'Nâu trà, nón lá, guốc mộc.', desc_en:'Tea brown, conical hat, clogs.' },
+  { id:'nt4', title:'Ngũ Thân Street', garment:'nguthan', event:'street', style:'genz', palette:'ink', acc:['sneakers','tui_mini'], remix:80, desc:'Mực – ngà, sneakers, túi mini.', desc_en:'Ink & ivory, sneakers, mini bag.' },
+  { id:'tt1', title:'Quan họ Kinh Bắc', garment:'tuthan', event:'festival', style:'heritage', palette:'tea', acc:['yem','khan_mo_qua','non_quai_thao'], remix:10, desc:'Nâu trà, yếm, khăn mỏ quạ, nón quai thao.', desc_en:'Tea brown, yếm, scarf, flat hat.' },
+  { id:'tt2', title:'Tết Làng', title_en:'Village Tết', garment:'tuthan', event:'tet', style:'vintage', palette:'lacquer', acc:['yem','khan_mo_qua','quat'], remix:30, desc:'Sơn mài, khăn mỏ quạ, quạt.', desc_en:'Lacquer, scarf, fan.' },
+  { id:'tt3', title:'Tứ Thân Studio', garment:'tuthan', event:'photoshoot', style:'editorial', palette:'indigo', acc:['yem','quat'], remix:55, desc:'Chàm, ánh sáng studio.', desc_en:'Indigo, studio light.' },
+  { id:'tt4', title:'Tứ Thân Street', garment:'tuthan', event:'street', style:'genz', palette:'plum', acc:['sneakers','tui_mini'], remix:80, desc:'Mận, sneakers, túi mini.', desc_en:'Plum, sneakers, mini bag.' }
+];
+const FIT = { tet:{ aodai:3, nguthan:3, tuthan:2 }, festival:{ tuthan:3, nguthan:2, aodai:2 }, photoshoot:{ aodai:3, tuthan:3, nguthan:2 }, formal:{ nguthan:3, aodai:3, tuthan:1 }, street:{ aodai:3, nguthan:1, tuthan:1 } };
+const FIT_WHY = {
+  'tet|tuthan':['Hợp Tết ở làng quê, hội xuân','Suits village Tết and spring fairs'], 'festival|tuthan':['Gắn với lễ hội Kinh Bắc, Quan họ','Tied to Kinh Bắc festivals and Quan họ'],
+  'formal|tuthan':['Mang tính dân gian hơn nghi lễ trang trọng','More folk than formal-ceremonial'], 'street|nguthan':['Dáng lễ phục — hợp khi diễn giải sáng tạo','Ceremonial cut — works as a creative take'],
+  'street|tuthan':['Nhiều lớp — hợp khi diễn giải sáng tạo','Layered — works as a creative take'], 'formal|nguthan':['Lễ phục truyền thống cho nghi thức','Traditional ceremonial dress'],
+  'tet|nguthan':['Trang phục Tết truyền thống','Traditional Tết attire'], 'photoshoot|tuthan':['Lên hình nhiều lớp, giàu chất liệu','Layered, textural on camera'], 'street|aodai':['Dễ mặc hằng ngày','Easy for everyday wear']
+};
+const EV_REC = { tet:{ s:['heritage','elegant'], p:['lacquer','jade'], a:['khanvan','quat','guoc'] }, festival:{ s:['heritage','vintage'], p:['tea','indigo'], a:['non_quai_thao','non_la','quat','yem','khan_mo_qua'] },
+  photoshoot:{ s:['editorial','minimal'], p:['ink','indigo'], a:['quat','non_la','loafers'] }, formal:{ s:['elegant','heritage'], p:['indigo','jade'], a:['khanvan','hai'] }, street:{ s:['genz','minimal'], p:['plum','ink'], a:['tui_mini','sneakers','loafers'] } };
+const LIB = [
+  { file:'2 girls in aodai and a tree.jpg', g:'aodai', ev:['street','photoshoot'], kind:'modern', cap:['Áo dài trắng thường ngày','Everyday white áo dài'], tryon:'ok' },
+  { file:'Ao Dai (modern).jpg', g:'aodai', ev:['street','photoshoot'], kind:'modern', cap:['Áo dài hiện đại','Modern áo dài'], tryon:'ok' },
+  { file:'In front of palace-crop.JPG', g:'aodai', ev:['formal','tet','festival'], kind:'modern', cap:['Áo dài trước cung điện Huế','Áo dài at the Huế palace'], tryon:'ok' },
+  { file:'Aodai Nghe 2018 (cropped).jpg', g:'aodai', ev:['tet','formal','photoshoot'], kind:'modern', cap:['Áo dài họa tiết truyền thống','Áo dài with traditional motifs'], tryon:'ok' },
+  { file:'AO DAI23.jpg', g:'aodai', ev:['photoshoot','formal'], kind:'modern', cap:['Áo dài editorial','Editorial áo dài'], tryon:'ok' },
+  { file:'HUT students in ao dai.jpg', g:'aodai', ev:['photoshoot'], kind:'modern', cap:['Sinh viên mặc áo dài — kỷ yếu','Students in áo dài — yearbook'], tryon:'no' },
+  { file:'Hansers tim hieu Tet Nguyen Dan 16-02-2026 1771376448448.jpg', g:'aodai', ev:['tet'], kind:'modern', cap:['Áo dài ngày Tết Nguyên Đán','Áo dài at Lunar New Year'], tryon:'no' },
+  { file:'KOCIS Korea Hanbok-AoDai FashionShow 01 (9766357915).jpg', g:'aodai', ev:['formal','photoshoot'], kind:'modern', cap:['Áo dài trình diễn thời trang','Áo dài on the runway'], tryon:'ok' },
+  { file:'3-1-2012 Xuan Huong 5.JPG', g:'aodai', ev:['tet','street'], kind:'modern', cap:['Áo dài dạo hồ Xuân Hương','Áo dài by Xuân Hương lake'], tryon:'no' },
+  { file:'Ao ngu than on postcard dated 1904.JPG', g:'nguthan', ev:['formal','tet'], kind:'archival', cap:['Áo ngũ thân — bưu thiếp 1904','Áo ngũ thân — 1904 postcard'], tryon:'no' },
+  { file:'Huế en 1920s. Jeune femme (1).jpg', g:'nguthan', ev:['formal','tet'], kind:'archival', cap:['Thiếu nữ Huế thập niên 1920 (cần xác minh kiểu áo)','Huế woman, 1920s (garment type to verify)'], tryon:'ok' },
+  { file:'Huế en 1920s. Jeune femme (2).jpg', g:'nguthan', ev:['formal','tet'], kind:'archival', cap:['Huế thập niên 1920 — áo dài giai đoạn chuyển tiếp','Huế 1920s — transitional long robe'], tryon:'ok' },
+  { file:'Huế en 1920s. Jeune femme (5).jpg', g:'nguthan', ev:['formal','photoshoot'], kind:'archival', cap:['Chân dung Huế 1920s','Huế portrait, 1920s'], tryon:'ok' },
+  { file:'Huế en 1920s. La coiffure (1).jpg', g:'nguthan', ev:['formal','tet'], kind:'archival', cap:['Kiểu tóc và khăn Huế 1920s','Huế hairstyle and head wrap, 1920s'], tryon:'no' },
+  { file:'Áo tứ thân.jpg', g:'tuthan', ev:['festival','photoshoot','tet'], kind:'festival', cap:['Áo tứ thân với yếm và thắt lưng','Áo tứ thân with yếm and sash'], tryon:'ok' },
+  { file:'Bộ trang phục quan họ 2.jpg', g:'tuthan', ev:['festival','photoshoot'], kind:'festival', cap:['Bộ trang phục Quan họ','Quan họ costume'], tryon:'ok' },
+  { file:'Liền chị quan họ - Hội Lim, Bắc Ninh.JPG', g:'tuthan', ev:['festival','tet'], kind:'festival', cap:['Liền chị Quan họ — Hội Lim','Quan họ singer — Lim festival'], tryon:'ok' },
+  { file:'Ao Tu Than.jpg', g:'tuthan', ev:['photoshoot','festival'], kind:'modern', cap:['Áo tứ thân chụp ảnh','Áo tứ thân photoshoot'], tryon:'ok' },
+  { file:"Woman's garment, traditional Viet - Vietnam Museum of Ethnology - Hanoi, Vietnam - DSC02552.JPG", g:'tuthan', ev:['festival','formal','tet','photoshoot'], kind:'museum', cap:['Hiện vật — Bảo tàng Dân tộc học Việt Nam','Artefact — Vietnam Museum of Ethnology'], tryon:'best' },
+  { file:'Mời Trầu - hội Lim, Bắc Ninh.JPG', g:'tuthan', ev:['festival'], kind:'festival', cap:['Mời trầu — Hội Lim, Bắc Ninh','Offering betel — Lim festival'], tryon:'no' },
+  { file:'Tonkinoise.jpg', g:'tuthan', ev:['festival','tet'], kind:'archival', cap:['Phụ nữ Bắc Kỳ — ảnh tư liệu','Northern woman — archival photo'], tryon:'no' },
+  { file:'Vietnam girls 1918.jpg', g:'tuthan', ev:['festival','tet'], kind:'archival', cap:['Thiếu nữ Việt 1918','Vietnamese girls, 1918'], tryon:'no' },
+  { file:'Áo tứ thân 1a.jpg', g:'tuthan', ev:['photoshoot','festival'], kind:'festival', cap:['Áo tứ thân — dáng đứng','Áo tứ thân — standing'], tryon:'ok' }
+];
+const COMMONS_CAT = { aodai:'https://commons.wikimedia.org/wiki/Category:%C3%81o_d%C3%A0i', nguthan:'https://commons.wikimedia.org/w/index.php?search=%C3%A1o+ng%C5%A9+th%C3%A2n&title=Special:MediaSearch&type=image', tuthan:'https://commons.wikimedia.org/wiki/Category:%C3%81o_t%E1%BB%A9_th%C3%A2n' };
+const COVER = { hero:'Aodai Nghe 2018 (cropped).jpg', aodai:'KOCIS Korea Hanbok-AoDai FashionShow 01 (9766357915).jpg', nguthan:'Huế en 1920s. Jeune femme (2).jpg', tuthan:'Ao Tu Than.jpg' };
+const WCODE = { 0:['Trời quang','Clear'],1:['Ít mây','Mostly clear'],2:['Có mây','Partly cloudy'],3:['Nhiều mây','Cloudy'],45:['Sương mù','Fog'],48:['Sương mù','Fog'],51:['Mưa phùn','Drizzle'],53:['Mưa phùn','Drizzle'],55:['Mưa phùn','Drizzle'],61:['Mưa nhỏ','Light rain'],63:['Mưa vừa','Rain'],65:['Mưa to','Heavy rain'],80:['Mưa rào','Showers'],81:['Mưa rào','Showers'],82:['Mưa rào lớn','Heavy showers'],95:['Dông','Thunderstorm'],96:['Dông','Thunderstorm'],99:['Dông','Thunderstorm'] };
+const byId = (arr, id) => arr.find(x => x.id === id) || arr[0];
+const GARMENT_CAT = { aodai:'dress', nguthan:'dress', tuthan:'upper' };
+const GARMENT_DESC = { aodai:'Vietnamese ao dai, long fitted tunic with mandarin collar and high side slits, worn over trousers', nguthan:'Vietnamese ao ngu than, long straight five-panel robe with stand-up collar and side buttons', tuthan:'Vietnamese ao tu than, four-panel open-front coat worn over a bodice with a waist sash' };
+const ENGINES = [
+  { id:'fitdit', name:'FitDiT', host:'https://boyuanjiang-fitdit.hf.space', sub:['Chi tiết cao · hỗ trợ váy dài','High detail · long dresses'] },
+  { id:'leffa', name:'Leffa', host:'https://franciszzj-leffa.hf.space', sub:['Giữ họa tiết · chế độ Dress','Keeps texture · Dress mode'] },
+  { id:'idm', name:'IDM-VTON', host:'https://yisol-idm-vton.hf.space', sub:['Áo thân trên · dự phòng','Upper body · fallback'] }
+];
+function padTo34(dataUri, mode) {
+  return new Promise((res, rej) => { const img = new Image(); img.onload = () => {
+    const H = Math.min(1536, Math.max(1024, img.naturalHeight)), W = Math.round(H * 3 / 4), cv = document.createElement('canvas'); cv.width = W; cv.height = H; const cx = cv.getContext('2d');
+    const k = Math.min(W / img.naturalWidth, H / img.naturalHeight), w = img.naturalWidth * k, h = img.naturalHeight * k;
+    if (mode === 'person') { const kb = Math.max(W / img.naturalWidth, H / img.naturalHeight); cx.filter = 'blur(28px) brightness(1.02)'; cx.drawImage(img, (W - img.naturalWidth*kb)/2, (H - img.naturalHeight*kb)/2, img.naturalWidth*kb, img.naturalHeight*kb); cx.filter = 'none'; }
+    else { cx.fillStyle = '#ffffff'; cx.fillRect(0, 0, W, H); }
+    cx.drawImage(img, (W - w) / 2, mode === 'person' ? (H - h) / 2 : (H - h) / 2, w, h);
+    res(cv.toDataURL('image/jpeg', .93)); }; img.onerror = () => rej(new Error('img')); img.src = dataUri; });
+}
+const isQuota = m => /quota|exceeded|GPU task|ZeroGPU|too many/i.test(m || '');
+const lvlOf = r => r <= 25 ? 0 : r <= 70 ? 1 : 2;
+
+function assessLook(sel) {
+  const g = byId(GARMENTS, sel.garment), ev = byId(EVENTS, sel.event), st = byId(STYLES, sel.style), pal = byId(PALETTES, sel.palette);
+  const accs = (sel.acc || []).map(id => byId(ACCS, id)), has = id => sel.acc.includes(id), r = sel.remix, base = lvlOf(r);
+  let min = base; const fired = [], warnings = [], notes = [], remixed = [], why = [];
+  const bump = (l, id) => { if (l > min) min = l; fired.push(id); };
+  const an = a => tx(a, 'name');
+  if (has('sneakers')) { bump(1,'R02'); remixed.push('Sneakers'); }
+  if (has('tui_mini')) { bump(1,'R03'); remixed.push(V('Túi mini','Mini bag')); }
+  if (has('loafers')) { bump(1,'R04'); remixed.push(V('Loafers (thích ứng)','Loafers (adaptation)')); }
+  if ((g.id==='tuthan'||g.id==='nguthan') && has('sneakers') && (ev.id==='street'||st.id==='genz') && r > 60) {
+    bump(2,'R05'); why.push(V('Giày hiện đại và streetwear styling không phải thành phần truyền thống. Outfit phù hợp khi được trình bày như một cách diễn giải sáng tạo.','Modern shoes and streetwear styling are not traditional components. The outfit works when presented as a creative interpretation.'));
+  }
+  if (st.id==='genz') { bump(r > 50 ? 2 : 1,'R06'); remixed.push(V('Styling Gen Z','Gen Z styling')); }
+  if (st.id==='editorial') { bump(1,'R07'); remixed.push(V('Styling editorial','Editorial styling')); }
+  const off = accs.filter(a => a.type==='traditional' && !a.for.includes(g.id));
+  if (off.length) { bump(1,'R08'); warnings.push({ kind:V('Bối cảnh','Context'), text:V(`${off.map(an).join(', ')} gắn với trang phục/vùng khác. Pha trộn phụ kiện khác bối cảnh nên được ghi chú rõ.`,`${off.map(an).join(', ')} belong to another garment or region. Mixing accessories across contexts should be labelled clearly.`) }); remixed.push(...off.map(a => an(a) + V(' (khác bối cảnh)',' (other context)'))); }
+  if (r > 70) { fired.push('R09'); warnings.push({ kind:V('Cấu trúc','Construction'), text:V(`Ở mức remix này, nếu thay đổi ${g.key.join(' / ').toLowerCase()} thì outfit không còn thể hiện cấu trúc ${g.short} theo tư liệu.`,`At this remix level, altering the ${g.key_en.join(' / ').toLowerCase()} means the outfit no longer reflects the documented ${g.name} construction.`) }); remixed.push(V('Tỷ lệ silhouette','Silhouette proportions')); }
+  if (g.id==='tuthan' && !has('yem') && r <= 25) { bump(1,'R10'); notes.push(V('Cách mặc truyền thống của áo tứ thân gồm yếm bên trong và thắt lưng — thiếu lớp này, outfit được xếp là thích ứng.','Traditionally the áo tứ thân is worn over a yếm with a sash — without these layers the outfit is classed as an adaptation.')); }
+  if (ev.id==='formal' && has('sneakers')) { fired.push('R11'); warnings.push({ kind:V('Dịp','Occasion'), text:V('Sneakers có thể kém phù hợp với nghi thức trang trọng — kiểm tra dress code của sự kiện.','Sneakers may not suit a formal ceremony — check the event’s dress code.') }); }
+  if (ev.id==='festival' && r > 70) { fired.push('R12'); warnings.push({ kind:V('Tôn trọng','Respect'), text:V('Một số lễ hội gắn với đình, chùa, tín ngưỡng. Cân nhắc giảm mức remix khi tham dự phần nghi lễ.','Some festivals are tied to temples and belief. Consider a lower remix level for the ritual parts.') }); }
+  if (!pal.trad) { fired.push('R13'); remixed.push(V('Bảng màu hiện đại','Modern palette')); if (r <= 25) bump(1,'R13'); }
+  const allTrad = accs.every(a => a.type==='traditional' && a.for.includes(g.id));
+  if (g.id==='nguthan' && ev.id==='formal' && allTrad && accs.length && r <= 25) { fired.push('R14'); why.push(V('Áo ngũ thân với phụ kiện gắn với trang phục, trong bối cảnh trang trọng, phù hợp cách trình bày lễ phục.','An áo ngũ thân with its associated accessories in a formal setting fits a ceremonial presentation.')); }
+  if (has('quat') && ev.id==='street') { fired.push('R15'); notes.push(V('Quạt mang tính ngữ cảnh — hợp chụp ảnh, biểu diễn hơn là đồ dùng dạo phố.','The fan is context-dependent — better for shoots and performance than street use.')); }
+  if (g.id==='aodai' && min===0) { fired.push('R16'); notes.push(V('“Grounded” với áo dài nghĩa là bám theo form áo dài thế kỷ 20, không phải trang phục cổ hơn.','“Grounded” for the áo dài means the 20th-century form, not an older garment.')); }
+  const level = min, L = LEVELS[level], gName = V(g.short, g.name);
+  if (level > base) why.push(V(`Slider ở mức ${LEVELS[base].label.toLowerCase()}, nhưng các yếu tố đã chọn khiến outfit được phân loại là ${L.label}.`,`The slider sits at ${LEVELS[base].label.toLowerCase()}, but the selected elements classify the outfit as ${L.label}.`));
+  if (!why.length) why.push(level===0 ? V(`Giữ cấu trúc ${gName}, phụ kiện và bảng màu gần với tư liệu.`,`Keeps the ${gName} construction, accessories and palette close to the sources.`) : level===1 ? V(`Giữ ${gName} làm gốc, bổ sung yếu tố đương đại có kiểm soát.`,`Keeps the ${gName} as the base with controlled contemporary additions.`) : V(`Outfit dùng ${gName} làm điểm xuất phát cho một diễn giải tự do.`,`Uses the ${gName} as a starting point for a free interpretation.`));
+  const key = tx(g, 'key'); const preserved = r > 70 ? key.slice(1) : key.slice();
+  if (level === 0 && accs.length) preserved.push(V('Phụ kiện đúng bối cảnh','Context-appropriate accessories'));
+  const rem = [...new Set(remixed)];
+  return { level, label:L.label, labelSub:V(L.vi, L.en), color:L.color, glyph:L.glyph, explain:why.join(' '), warnings, notes, preserved, remixed:rem, noRemix:rem.length===0, ruleIds:['R01', ...new Set(fired)].join(', ') };
+}
+function hsl(hex) {
+  const n = parseInt(hex.slice(1),16); let r=(n>>16&255)/255, g=(n>>8&255)/255, b=(n&255)/255;
+  const mx=Math.max(r,g,b), mn=Math.min(r,g,b), l=(mx+mn)/2; let h=0, s=0;
+  if (mx!==mn) { const d=mx-mn; s = l>.5 ? d/(2-mx-mn) : d/(mx+mn); h = mx===r ? (g-b)/d+(g<b?6:0) : mx===g ? (b-r)/d+2 : (r-g)/d+4; h*=60; }
+  return { h, s, l };
+}
+function harmonyOf(pal) {
+  const [p,s,a] = pal.c.map(hsl); let score = 55; const notes = [];
+  const dL = Math.abs(p.l - s.l);
+  if (dL >= .45) { score += 20; notes.push(V('Contrast tốt','Good contrast')); } else if (dL >= .25) { score += 12; notes.push(V('Contrast vừa','Moderate contrast')); } else { score -= 5; notes.push(V('Contrast thấp','Low contrast')); }
+  let dh = Math.abs(p.h - a.h); dh = Math.min(dh, 360 - dh);
+  if (p.s < .08 || a.s < .08) { score += 8; notes.push(V('Nền trung tính','Neutral base')); }
+  else if (dh <= 45) { score += 13; notes.push(V('Tương đồng','Analogous')); }
+  else if (dh >= 150 && dh <= 210) { score += 10; notes.push(V('Bổ túc','Complementary')); }
+  else score += 4;
+  if (a.s - p.s > .25 && a.l < .8) { score -= 8; notes.push(V('Accent hơi mạnh','Accent slightly strong')); } else score += 7;
+  if (s.s < .25 || s.l > .85) score += 5;
+  score = Math.max(0, Math.min(100, Math.round(score)));
+  return { score, summary: score >= 85 ? V('Hài hòa cao','Highly harmonious') : score >= 70 ? V('Hài hòa tốt','Harmonious') : V('Cần cân nhắc','Worth reconsidering'), notesText: notes.join(' · ') };
+}
+const isRain = w => w.precipitation > 0 || [51,53,55,61,63,65,80,81,82,95,96,99].includes(w.weatherCode);
+function weatherRecs(w, sel) {
+  if (!w) return [];
+  const out = [];
+  if (w.temperature >= 32) out.push(V('Ưu tiên chất liệu nhẹ, giảm layer và phụ kiện nặng.','Favour light fabrics; reduce layers and heavy accessories.'));
+  else if (w.temperature >= 22) out.push(V('Điều kiện phù hợp với outfit hiện tại.','Conditions suit the current outfit.'));
+  else if (w.temperature <= 18) out.push(V('Có thể thêm outer layer nhẹ nhưng tránh che silhouette.','Add a light outer layer, but avoid hiding the silhouette.'));
+  else out.push(V('Trời dịu — có thể mang thêm khăn mỏng.','Mild — a light scarf may help.'));
+  if (isRain(w)) out.push(V('Ưu tiên giày thực dụng và hạn chế chất liệu/phụ kiện nhạy với nước.','Choose practical shoes and avoid water-sensitive fabrics or accessories.'));
+  if (w.humidity >= 80) out.push(V('Độ ẩm cao — ưu tiên chất liệu thoáng và giảm layering.','High humidity — favour breathable fabrics and fewer layers.'));
+  if (w.temperature >= 32 && sel.garment==='tuthan') out.push(V('Áo tứ thân mặc nhiều lớp — chọn vải mỏng cho yếm và áo ngoài.','The áo tứ thân is layered — pick thin fabric for the yếm and coat.'));
+  if (isRain(w) && (sel.acc.includes('hai') || sel.acc.includes('non_quai_thao'))) out.push(V('Hài thêu / nón quai thao dễ hỏng khi ướt — cân nhắc thay thế.','Hài shoes and the flat hat are easily damaged when wet — consider alternatives.'));
+  return out;
+}
+function weatherFit(w, sel) {
+  if (!w) return V('Chưa có dữ liệu thời tiết','No weather data yet');
+  if (w.temperature >= 32 && (sel.garment==='tuthan' || sel.acc.length >= 3)) return V('Cần giảm lớp / phụ kiện','Reduce layers / accessories');
+  if (isRain(w) && ['hai','non_quai_thao','guoc'].some(x => sel.acc.includes(x))) return V('Phụ kiện nhạy nước','Water-sensitive accessories');
+  return V(`Phù hợp (${w.temperature}°C)`, `Suitable (${w.temperature}°C)`);
+}
+function groundedAlt(sel) {
+  const g = byId(GARMENTS, sel.garment), p = PRESETS.find(x => x.garment === g.id && x.style === 'heritage'), pal = byId(PALETTES, sel.palette);
+  return { garment:g.id, event:sel.event, style:'heritage', palette: pal.trad ? pal.id : p.palette, acc:p.acc.slice(), remix:10 };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v == null ? d : v; } catch (e) { return d; } };
+    const s = load('vpr_studio_v1', { garment:'aodai', event:'tet', style:'heritage', palette:'lacquer', acc:['khanvan','guoc'], remix:15, look:'ad1' });
+    this.state = { view:'landing', ...s, saved: load('vpr_lookbook_v1', []), lang: load('vpr_lang_v1', 'vi'), storyOpen:false, storyId:null, compare:null, toast:'', showOutput:true, settingsOpen:false,
+      tryon:{ status:'idle', preview:null, dataUri:null, fileName:'', warnings:[], error:'', outputUrl:null },
+      wx:{ query:'', suggestions:[], status:'idle', msg:'', data:null }, vw: typeof window !== 'undefined' ? window.innerWidth : 1440,
+      cfg:{ provider:'hf', engine:'auto', quality:'std', hfToken:'', fashnKey:'', server: props.tryOnApiBase || '', ...load('vpr_tryon_cfg_v1', {}) }, garmentImg:null, baMode:false, baPos:50, lib:{}, libStatus:'idle', libFilter:'match', refSel:{} };
+    this.exploreRef = React.createRef(); this.tryonRef = React.createRef();
+  }
+  async loadLibrary() {
+    this.setState({ libStatus:'loading' });
+    const out = {};
+    try {
+      for (let i = 0; i < LIB.length; i += 40) {
+        const titles = LIB.slice(i, i + 40).map(x => 'File:' + x.file).join('|');
+        const r = await fetch('https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=900&titles=' + encodeURIComponent(titles));
+        if (!r.ok) throw 0; const j = await r.json();
+        const norm = {}; ((j.query || {}).normalized || []).forEach(n => norm[n.to] = n.from);
+        Object.values((j.query || {}).pages || {}).forEach(p => { const ii = (p.imageinfo || [])[0]; if (!ii) return; const m = ii.extmetadata || {};
+          const strip = s => (s || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+          const key = (norm[p.title] || p.title).replace(/^File:/, '');
+          out[key] = { thumb: ii.thumburl || ii.url, page: ii.descriptionurl, credit: [strip(m.Artist && m.Artist.value).slice(0, 60), strip(m.LicenseShortName && m.LicenseShortName.value)].filter(Boolean).join(' · ') + ' · Wikimedia Commons' }; });
+      }
+      this.setState({ lib: out, libStatus: Object.keys(out).length ? 'ok' : 'error' });
+    } catch (e) { this.setState({ libStatus:'error' }); }
+  }
+  async useLibForTryon(m, info) {
+    this.flash(V('Đang tải ảnh từ thư viện…','Loading library image…'));
+    try {
+      const blob = await (await fetch(info.thumb)).blob();
+      const dataUri = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(blob); });
+      const norm = await new Promise((res) => { const img = new Image(); img.onload = () => { const cv = document.createElement('canvas'); cv.width = img.naturalWidth; cv.height = img.naturalHeight; const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0,0,cv.width,cv.height); cx.drawImage(img,0,0); res(cv.toDataURL('image/jpeg', .92)); }; img.onerror = () => res(dataUri); img.src = dataUri; });
+      this.setState(s => ({ garmentImg:{ dataUri:norm, name:m.cap[LANG==='en'?1:0], garment:m.g, source:'lib', file:m.file }, refSel:{ ...s.refSel, [m.g]: m.file } }));
+      this.flash(V('Đã chọn làm ảnh áo cho AI Try-On','Set as the Try-On garment image'));
+      if (!this.state.tryon.dataUri) setTimeout(() => this.scrollTo(this.tryonRef), 300);
+    } catch (e) { this.flash(V('Không tải được ảnh — hãy thử ảnh khác','Could not load the image — try another')); }
+  }
+  componentDidMount() {
+    this.loadLibrary();
+    this.onResize = () => this.setState({ vw: window.innerWidth });
+    this.onKey = e => { if (e.key === 'Escape') this.setState({ storyOpen:false, compare:null }); };
+    window.addEventListener('resize', this.onResize); window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); window.removeEventListener('keydown', this.onKey); clearTimeout(this.wxT); clearTimeout(this.pollT); clearTimeout(this.toastT); }
+  track(name, data) { (window.vprAnalytics = window.vprAnalytics || []).push({ name, data, t: Date.now() }); }
+  store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  persist(patch) { this.setState(patch, () => { const { garment, event, style, palette, acc, remix, look } = this.state; this.store('vpr_studio_v1', { garment, event, style, palette, acc, remix, look }); }); }
+  setLang(l) { LANG = l; this.setState({ lang:l }); this.store('vpr_lang_v1', l); document.documentElement.lang = l; }
+  flash(msg) { clearTimeout(this.toastT); this.setState({ toast: msg }); this.toastT = setTimeout(() => this.setState({ toast:'' }), 2400); }
+  go(view) { this.setState({ view, storyOpen:false, compare:null }); window.scrollTo(0,0); if (view==='studio') this.track('studio_started'); }
+  sel() { const { garment, event, style, palette, acc, remix } = this.state; return { garment, event, style, palette, acc, remix }; }
+  applyPreset(p) { this.persist({ garment:p.garment, event:p.event, style:p.style, palette:p.palette, acc:p.acc.slice(), remix:p.remix, look:p.id }); }
+  recs() { const { garment, event } = this.state; return PRESETS.filter(p => p.garment === garment).sort((a,b) => (b.event===event) - (a.event===event)); }
+  stepLook(d) { const list = this.recs(), i = list.findIndex(p => p.id === this.state.look); this.applyPreset(list[(i + d + list.length) % list.length]); }
+  saveLook() {
+    const s = this.sel(), a = assessLook(s), p = PRESETS.find(x => x.id === this.state.look), t = this.state.tryon;
+    const look = { id:'lk_' + Date.now().toString(36), presetId: p && p.garment===s.garment ? p.id : null, customName: p && p.garment===s.garment ? null : `${byId(GARMENTS,s.garment).name} ${byId(STYLES,s.style).name}`,
+      ...s, accessories:s.acc, remixIntensity:s.remix, interpretationLabel:a.label, tryOnResultUrl: t.status==='completed' ? t.outputUrl : null, createdAt:new Date().toISOString() };
+    this.writeSaved([look, ...this.state.saved]); this.track('look_saved', { garment:s.garment }); this.flash(V('Đã lưu vào Lookbook','Saved to Lookbook'));
+  }
+  writeSaved(saved) { this.setState({ saved }); try { localStorage.setItem('vpr_lookbook_v1', JSON.stringify(saved)); } catch (e) { this.flash(V('Không lưu được trên thiết bị này','Could not save on this device')); } }
+  lookName(l) { const p = l.presetId && PRESETS.find(x => x.id === l.presetId); return p ? tx(p,'title') : (l.customName || l.name || 'Look'); }
+
+  coverOf(k) { const i = (this.state.lib || {})[COVER[k]]; return { img: i ? i.thumb : '', imgCredit: i ? i.credit : '', imgHref: i ? i.page : '' }; }
+  apiBase() { return ((this.state.cfg && this.state.cfg.server) || this.props.tryOnApiBase || '').trim().replace(/\/$/, ''); }
+  setCfg(p) { this.setState(s => ({ cfg: { ...s.cfg, ...p } }), () => this.store('vpr_tryon_cfg_v1', this.state.cfg)); }
+  setTry(patch) { this.setState(s => ({ tryon: { ...s.tryon, ...patch } })); }
+  onFile(e) {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    this.setTry({ status:'validating', warnings:[], error:'', outputUrl:null, fileName:f.name });
+    if (!['image/jpeg','image/png','image/webp'].includes(f.type)) return this.setTry({ status:'invalid', error:V('Định dạng không hỗ trợ. Hãy dùng JPEG, PNG hoặc WEBP.','Unsupported format. Use JPEG, PNG or WEBP.'), preview:null, dataUri:null });
+    if (f.size > 10*1024*1024) return this.setTry({ status:'invalid', error:V('Ảnh lớn hơn 10MB.','Image is larger than 10MB.'), preview:null, dataUri:null });
+    const url = URL.createObjectURL(f), img = new Image();
+    img.onload = () => {
+      const w = img.naturalWidth, h = img.naturalHeight, warnings = [];
+      if (Math.min(w,h) < 256) { URL.revokeObjectURL(url); return this.setTry({ status:'invalid', error:V(`Ảnh quá nhỏ (${w}×${h}). Cần tối thiểu 256px.`,`Image too small (${w}×${h}). Minimum 256px.`), preview:null, dataUri:null }); }
+      if (Math.min(w,h) < 512) warnings.push(['small', w, h]);
+      if (w > h) warnings.push(['landscape']); else if (h / w < 1.25) warnings.push(['cropped']);
+      const k = Math.min(1, 2048 / Math.max(w,h)), cv = document.createElement('canvas');
+      cv.width = Math.round(w*k); cv.height = Math.round(h*k); cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      const dataUri = cv.toDataURL('image/jpeg', .9); URL.revokeObjectURL(url);
+      this.setTry({ status:'selected', preview:dataUri, dataUri, warnings });
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); this.setTry({ status:'invalid', error:V('Không đọc được ảnh.','Could not read the image.'), preview:null, dataUri:null }); };
+    img.src = url;
+  }
+  onGarmentFile(e) {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    if (!['image/jpeg','image/png','image/webp'].includes(f.type) || f.size > 10*1024*1024) return this.flash(V('Ảnh áo cần là JPEG/PNG/WEBP dưới 10MB','Garment photo must be JPEG/PNG/WEBP under 10MB'));
+    const url = URL.createObjectURL(f), img = new Image();
+    img.onload = () => { const k = Math.min(1, 1536 / Math.max(img.naturalWidth, img.naturalHeight)), cv = document.createElement('canvas');
+      cv.width = Math.round(img.naturalWidth*k); cv.height = Math.round(img.naturalHeight*k); const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0,0,cv.width,cv.height); cx.drawImage(img,0,0,cv.width,cv.height);
+      URL.revokeObjectURL(url); this.setState({ garmentImg:{ dataUri: cv.toDataURL('image/jpeg', .92), name:f.name, garment:this.state.garment } }); };
+    img.onerror = () => { URL.revokeObjectURL(url); this.flash(V('Không đọc được ảnh áo','Could not read the garment photo')); };
+    img.src = url;
+  }
+  productSrc() { const gi = this.state.garmentImg; return gi && gi.garment === this.state.garment ? gi.dataUri : null; }
+  async startTryon(newSeed) {
+    const base = this.apiBase(), g = byId(GARMENTS, this.state.garment), t = this.state.tryon, pv = this.state.cfg.provider;
+    if (!t.dataUri) return;
+    clearTimeout(this.pollT);
+    if (pv === 'hf') return this.productSrc() && this.runHf(newSeed === true);
+    if (pv === 'fashn') return this.productSrc() && this.state.cfg.fashnKey.trim() && this.runFashn();
+    if (!base || !g.productImageUrl) return;
+    this.setTry({ status:'submitting', error:'', outputUrl:null }); this.track('tryon_started', { garment:g.id, provider:'server' });
+    try {
+      const ctrl = new AbortController(), to = setTimeout(() => ctrl.abort(), 30000);
+      const res = await fetch(base + '/api/tryon/start', { method:'POST', headers:{ 'Content-Type':'application/json' }, signal: ctrl.signal,
+        body: JSON.stringify({ modelImage:t.dataUri, productImage:new URL(g.productImageUrl, base + '/').href, garmentId:g.id, resolution:this.props.resolution || '1k' }) });
+      clearTimeout(to);
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || !body.predictionId) return this.fail(this.errMsg(res.status, body));
+      this.started = Date.now(); this.setTry({ status:'queued' }); this.poll(body.predictionId);
+    } catch (e) { this.fail(e.name === 'AbortError' ? V('Máy chủ Try-On không phản hồi (timeout).','Try-On server did not respond (timeout).') : V('Không kết nối được máy chủ Try-On.','Could not reach the Try-On server.')); }
+  }
+  errMsg(code, body) {
+    if (body && body.code === 'not_configured') return V('Máy chủ chưa có FASHN_API_KEY.','The server has no FASHN_API_KEY configured.');
+    if (code === 401) return V('Xác thực với nhà cung cấp thất bại (API key sai).','Provider authentication failed (invalid API key).');
+    if (code === 402) return V('Tài khoản Try-On đã hết credits.','The Try-On account is out of credits.');
+    if (code === 429) return V('Quá nhiều yêu cầu — thử lại sau ít phút.','Too many requests — try again in a few minutes.');
+    return (body && body.error) || V(`Lỗi Try-On (HTTP ${code}).`,`Try-On error (HTTP ${code}).`);
+  }
+  fail(msg, status) { this.setTry({ status: status || 'failed', error: msg }); this.track('tryon_failed', { msg }); }
+  poll(id) {
+    this.pollT = setTimeout(async () => {
+      if (Date.now() - this.started > 180000) return this.fail(V('Quá thời gian chờ (3 phút).','Timed out after 3 minutes.'), 'timeout');
+      try {
+        const res = await fetch(this.apiBase() + '/api/tryon/status/' + encodeURIComponent(id)), b = await res.json().catch(() => ({}));
+        if (!res.ok) return this.fail(this.errMsg(res.status, b));
+        if (b.status === 'completed' && b.outputUrl) { this.setTry({ status:'completed', outputUrl:b.outputUrl }); this.setState({ showOutput:true }); this.track('tryon_completed'); return; }
+        if (b.status === 'failed') return this.fail(b.error || V('Nhà cung cấp báo lỗi.','The provider reported an error.'));
+        this.setTry({ status: b.status === 'processing' ? 'processing' : 'queued' }); this.poll(id);
+      } catch (e) { this.fail(V('Mất kết nối khi kiểm tra trạng thái.','Lost connection while checking status.')); }
+    }, 2000);
+  }
+  async gradioConnect(host, auth, signal) {
+    this.cfgCache = this.cfgCache || {};
+    if (this.cfgCache[host]) return this.cfgCache[host];
+    let r; try { r = await fetch(host + '/config', { headers:auth, signal }); } catch (e) { throw { kind:'net', msg: V('Không kết nối được ','Could not reach ') + host }; }
+    if (!r.ok) throw { kind:'down', msg: V('Space chưa sẵn sàng (HTTP ' + r.status + ') — có thể đang khởi động.','Space not ready (HTTP ' + r.status + ') — it may be starting.') };
+    const c = await r.json(); const out = { pre: host + (c.api_prefix || ''), deps: c.dependencies || [] };
+    this.cfgCache[host] = out; return out;
+  }
+  async gradioUpload(pre, blobs, auth, signal) {
+    const fd = new FormData(); blobs.forEach((b, i) => fd.append('files', b, 'img' + i + '.jpg'));
+    const r = await fetch(pre + '/upload', { method:'POST', body:fd, headers:auth, signal });
+    if (!r.ok) throw { kind:'upload', msg: V('Upload ảnh thất bại (HTTP ' + r.status + ').','Upload failed (HTTP ' + r.status + ').') };
+    return (await r.json()).map(p => ({ path:p, url:pre + '/file=' + p, orig_name:p.split('/').pop(), meta:{ _type:'gradio.FileData' } }));
+  }
+  async gradioCall(conn, apiName, data, auth, signal, label) {
+    const fi = conn.deps.findIndex(d => d.api_name === apiName);
+    if (fi < 0) throw { kind:'api', msg: V('Space không có endpoint ','Space has no endpoint ') + apiName };
+    const fnIndex = conn.deps[fi].id != null ? conn.deps[fi].id : fi, session = Math.random().toString(36).slice(2, 13);
+    const jr = await fetch(conn.pre + '/queue/join', { method:'POST', signal, headers:{ 'Content-Type':'application/json', ...auth }, body: JSON.stringify({ data, event_data:null, fn_index:fnIndex, trigger_id:null, session_hash:session }) });
+    if (!jr.ok) { const tx2 = await jr.text().catch(() => ''); throw { kind: jr.status === 429 ? 'quota' : 'join', msg: V('Space từ chối yêu cầu (HTTP ' + jr.status + '). ','Space rejected the request (HTTP ' + jr.status + '). ') + tx2.slice(0, 140) }; }
+    this.setTry({ status:'queued', stage:label });
+    const sr = await fetch(conn.pre + '/queue/data?session_hash=' + session, { headers:{ Accept:'text/event-stream', ...auth }, signal });
+    if (!sr.ok || !sr.body) throw { kind:'stream', msg: V('Không mở được luồng trạng thái.','Could not open status stream.') };
+    const reader = sr.body.getReader(), dec = new TextDecoder(); let buf = '';
+    while (true) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream:true }); let i;
+      while ((i = buf.indexOf('\n\n')) >= 0) {
+        const chunk = buf.slice(0, i); buf = buf.slice(i + 2);
+        const line = chunk.split('\n').find(l => l.startsWith('data:')); if (!line) continue;
+        let m; try { m = JSON.parse(line.slice(5).trim()); } catch (e) { continue; }
+        if (m.msg === 'estimation') this.setTry({ status:'queued', stage:label, queuePos: m.rank != null ? m.rank + 1 : null });
+        else if (m.msg === 'process_starts' || m.msg === 'progress') this.setTry({ status:'processing', stage:label });
+        else if (m.msg === 'unexpected_error') { reader.cancel(); throw { kind: isQuota(m.message) ? 'quota' : 'model', msg: m.message || 'error' }; }
+        else if (m.msg === 'process_completed') {
+          reader.cancel();
+          if (!m.success) { const em = (m.output && m.output.error) || ''; throw { kind: isQuota(em) ? 'quota' : 'model', msg: em || V('Model báo lỗi.','Model error.') }; }
+          return (m.output && m.output.data) || [];
+        }
+      }
+    }
+    throw { kind:'stream', msg: V('Kết nối bị đóng trước khi có kết quả.','Connection closed before a result arrived.') };
+  }
+  pickUrl(x, pre) {
+    if (!x) return null;
+    if (Array.isArray(x)) return this.pickUrl(x[0], pre);
+    if (typeof x === 'string') return /^(https?:|data:)/.test(x) ? x : pre + '/file=' + x;
+    if (x.image) return this.pickUrl(x.image, pre);
+    if (x.url) return x.url;
+    if (x.path) return pre + '/file=' + x.path;
+    if (x.composite) return this.pickUrl(x.composite, pre);
+    return null;
+  }
+  async runEngine(eng, person, garm, ctx) {
+    const conn = await this.gradioConnect(eng.host, ctx.auth, ctx.signal);
+    const [pf, gf] = await this.gradioUpload(conn.pre, [person, garm], ctx.auth, ctx.signal);
+    const cat = GARMENT_CAT[ctx.garment], hq = ctx.quality === 'hq';
+    if (eng.id === 'fitdit') {
+      const m = await this.gradioCall(conn, 'generate_mask', [pf, cat === 'dress' ? 'Dresses' : 'Upper-body', 0, 0, 0, 0], ctx.auth, ctx.signal, 'FitDiT · ' + V('bước 1/2: tạo mask cơ thể','step 1/2: body mask'));
+      const out = await this.gradioCall(conn, 'process', [pf, gf, m[0], m[1], hq ? 30 : 20, 2, ctx.seed, 1, hq ? '1152x1536' : '768x1024'], ctx.auth, ctx.signal, 'FitDiT · ' + V('bước 2/2: dựng trang phục','step 2/2: rendering garment'));
+      return this.pickUrl(out[0], conn.pre);
+    }
+    if (eng.id === 'leffa') {
+      const dress = cat === 'dress';
+      const out = await this.gradioCall(conn, 'leffa_predict_vt', [pf, gf, false, hq ? 50 : 30, 2.5, ctx.seed, dress ? 'dress_code' : 'viton_hd', dress ? 'dresses' : 'upper_body', false], ctx.auth, ctx.signal, 'Leffa · ' + V('dựng trang phục','rendering garment'));
+      return this.pickUrl(out[0], conn.pre);
+    }
+    const out = await this.gradioCall(conn, 'tryon', [{ background:pf, layers:[], composite:null }, gf, GARMENT_DESC[ctx.garment], true, false, hq ? 40 : 30, ctx.seed], ctx.auth, ctx.signal, 'IDM-VTON · ' + V('dựng áo thân trên','rendering upper body'));
+    return this.pickUrl(out[0], conn.pre);
+  }
+  async runHf(newSeed) {
+    const t = this.state.tryon, cfg = this.state.cfg, g = byId(GARMENTS, this.state.garment), prod = this.productSrc();
+    const seed = newSeed ? Math.floor(Math.random() * 1e6) : 42;
+    this.setTry({ status:'submitting', error:'', outputUrl:null, queuePos:null, stage:V('Chuẩn hóa ảnh về khung 3:4…','Normalising photos to 3:4…'), attempts:[] });
+    this.setState({ baMode:false });
+    this.track('tryon_started', { garment:g.id, provider:'hf', engine:cfg.engine });
+    const tok = (cfg.hfToken || '').trim(), auth = tok ? { Authorization:'Bearer ' + tok } : {};
+    const ctrl = new AbortController(), guard = setTimeout(() => ctrl.abort(), 300000), started = Date.now();
+    let person, garm;
+    try {
+      const [pd, gd] = await Promise.all([padTo34(t.dataUri, 'person'), padTo34(prod, 'garment')]);
+      [person, garm] = await Promise.all([pd, gd].map(d => fetch(d).then(r => r.blob())));
+    } catch (e) { clearTimeout(guard); return this.fail(V('Không xử lý được ảnh đầu vào.','Could not preprocess the input photos.')); }
+    const order = cfg.engine === 'auto' ? (GARMENT_CAT[g.id] === 'dress' ? ['fitdit','leffa','idm'] : ['fitdit','idm','leffa']) : [cfg.engine];
+    const attempts = [];
+    for (const id of order) {
+      const eng = byId(ENGINES, id);
+      try {
+        const url = await this.runEngine(eng, person, garm, { auth, signal:ctrl.signal, garment:g.id, quality:cfg.quality, seed });
+        if (!url) throw { kind:'model', msg:V('Không có ảnh trả về.','No image returned.') };
+        clearTimeout(guard);
+        this.setTry({ status:'completed', outputUrl:url, engine:eng.name, seed, elapsed:Math.round((Date.now() - started) / 1000), attempts });
+        this.setState({ showOutput:true, baMode:true, baPos:50 }); this.track('tryon_completed', { provider:'hf', engine:eng.id }); return;
+      } catch (e) {
+        if (ctrl.signal.aborted) { clearTimeout(guard); return this.fail(V('Quá thời gian chờ (5 phút) — hàng đợi GPU miễn phí đang đông.','Timed out after 5 minutes — the free GPU queue is busy.'), 'timeout'); }
+        const kind = e && e.kind || 'model', msg = (e && e.msg) || (e && e.message) || '—';
+        attempts.push(eng.name + ': ' + (kind === 'quota' ? V('hết quota GPU','GPU quota exhausted') : msg.slice(0, 90)));
+        this.setTry({ attempts: attempts.slice(), stage: order.indexOf(id) < order.length - 1 ? V('Chuyển sang engine dự phòng…','Switching to fallback engine…') : '' });
+      }
+    }
+    clearTimeout(guard);
+    const allQuota = attempts.every(x => /quota/.test(x));
+    this.fail((allQuota ? V('Hết quota GPU miễn phí trên tất cả engine. Thêm HF token (miễn phí tại huggingface.co/settings/tokens) hoặc thử lại sau. ','Free GPU quota exhausted on every engine. Add an HF token (free at huggingface.co/settings/tokens) or retry later. ') : V('Không engine nào tạo được ảnh. ','No engine could produce an image. ')) + attempts.join(' · '));
+  }
+  async runFashn() {
+    const t = this.state.tryon, key = this.state.cfg.fashnKey.trim(), g = byId(GARMENTS, this.state.garment);
+    const H = { 'Content-Type':'application/json', Authorization:'Bearer ' + key };
+    this.setTry({ status:'submitting', error:'', outputUrl:null }); this.track('tryon_started', { garment:g.id, provider:'fashn' });
+    try {
+      const res = await fetch('https://api.fashn.ai/v1/run', { method:'POST', headers:H, body: JSON.stringify({ model_name:'tryon-max',
+        inputs:{ model_image:t.dataUri, product_image:this.productSrc(), generation_mode:'balanced', resolution:this.props.resolution || '1k', num_images:1, output_format:'jpeg', return_base64:true } }) });
+      const b = await res.json().catch(() => ({}));
+      if (!res.ok || !b.id) return this.fail(this.errMsg(res.status, { error: b.error && (b.error.message || b.error) || b.message }));
+      const start = Date.now();
+      const tick = async () => {
+        if (Date.now() - start > 180000) return this.fail(V('Quá thời gian chờ (3 phút).','Timed out after 3 minutes.'), 'timeout');
+        try {
+          const r = await fetch('https://api.fashn.ai/v1/status/' + encodeURIComponent(b.id), { headers:H }), s = await r.json().catch(() => ({}));
+          if (!r.ok) return this.fail(this.errMsg(r.status, {}));
+          if (s.status === 'completed' && s.output && s.output[0]) { let o = s.output[0]; if (!/^(https?:|data:)/.test(o)) o = 'data:image/jpeg;base64,' + o;
+            this.setTry({ status:'completed', outputUrl:o }); this.setState({ showOutput:true }); this.track('tryon_completed', { provider:'fashn' }); return; }
+          if (s.status === 'failed') return this.fail((s.error && (s.error.message || s.error.name)) || V('FASHN báo lỗi.','FASHN reported an error.'));
+          this.setTry({ status: s.status === 'processing' ? 'processing' : 'queued' }); this.pollT = setTimeout(tick, 2500);
+        } catch (e) { this.fail(V('Mất kết nối khi kiểm tra trạng thái.','Lost connection while checking status.')); }
+      };
+      this.pollT = setTimeout(tick, 2500);
+    } catch (e) { this.fail(V('Trình duyệt không gọi trực tiếp được FASHN (mạng hoặc CORS). Hãy dùng “Máy chủ riêng”.','The browser could not call FASHN directly (network or CORS). Use “Own server”.')); }
+  }
+
+  setWx(patch) { this.setState(s => ({ wx: { ...s.wx, ...patch } })); }
+  onWxQuery(e) {
+    const q = e.target.value; this.setWx({ query:q });
+    clearTimeout(this.wxT); if (q.trim().length < 2) return this.setWx({ suggestions:[] });
+    this.wxT = setTimeout(async () => {
+      try {
+        const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q.trim())}&count=5&language=${LANG}&format=json`);
+        if (!r.ok) throw 0; const d = await r.json();
+        const list = (d.results || []).map(x => ({ name:x.name, country:x.country || '', admin:x.admin1 || '', lat:x.latitude, lon:x.longitude }));
+        this.setWx({ suggestions:list, status:'idle', msg: list.length ? '' : V('Không tìm thấy thành phố phù hợp.','No matching city found.') });
+      } catch (err) { this.setWx({ suggestions:[], msg:V('Không truy cập được dịch vụ tìm địa điểm.','Location search is unavailable.'), status:'error' }); }
+    }, 350);
+  }
+  async loadWeather(c) {
+    this.setWx({ suggestions:[], query: c.country ? `${c.name}, ${c.country}` : c.name, status:'loading', msg:V('Đang lấy thời tiết…','Fetching weather…') });
+    try {
+      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code&timezone=auto`);
+      if (!r.ok) throw 0; const d = (await r.json()).current;
+      this.setWx({ status:'ok', msg:'', data:{ city:c.name, country:c.country, place: c.country ? `${c.name}, ${c.country}` : c.name, temperature:Math.round(d.temperature_2m), apparentTemperature:Math.round(d.apparent_temperature), humidity:Math.round(d.relative_humidity_2m), precipitation:d.precipitation, weatherCode:d.weather_code } });
+    } catch (e) { this.setWx({ status:'error', msg:V('Dịch vụ thời tiết tạm thời không khả dụng.','The weather service is temporarily unavailable.') }); }
+  }
+  useLocation() {
+    if (!navigator.geolocation) return this.setWx({ msg:V('Trình duyệt không hỗ trợ định vị.','Geolocation is not supported.'), status:'error' });
+    this.setWx({ msg:V('Đang xin quyền vị trí…','Requesting location…'), status:'idle' });
+    navigator.geolocation.getCurrentPosition(p => this.loadWeather({ name:V('Vị trí hiện tại','Current location'), country:'', lat:p.coords.latitude.toFixed(3), lon:p.coords.longitude.toFixed(3) }),
+      () => this.setWx({ msg:V('Không lấy được vị trí — hãy nhập tên thành phố.','Location unavailable — type a city instead.'), status:'error' }), { timeout:8000 });
+  }
+  scrollTo(ref) { const el = ref.current; if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' }); }
+
+  compareCols() {
+    const cmp = this.state.compare; if (!cmp) return [];
+    const w = this.state.wx.data;
+    return [cmp.a, cmp.b].map((s, i) => {
+      const a = assessLook(s), g = byId(GARMENTS, s.garment), pal = byId(PALETTES, s.palette), h = harmonyOf(pal);
+      return { head: i === 0 ? (cmp.aHead || V('LOOK HIỆN TẠI','CURRENT LOOK')) : V('PHƯƠNG ÁN BÁM TRUYỀN THỐNG','GROUNDED ALTERNATIVE'), slotId:`g-${g.id}-0`, gName:g.name, ...this.coverOf(g.id),
+        hasOutput: !!s.out, noOutput: !s.out, outBg: s.out ? `url("${s.out}")` : 'none', color:a.color, glyph:a.glyph, label:a.label,
+        rows:[ { k:V('Trang phục','Garment'), v:g.name }, { k:V('Dịp','Occasion'), v:tx(byId(EVENTS,s.event),'name') }, { k:V('Phong cách','Style'), v:byId(STYLES,s.style).name }, { k:V('Mức remix','Remix'), v:s.remix + '%' },
+          { k:V('Phân loại','Interpretation'), v:a.label }, { k:V('Giữ lại','Preserved'), v:a.preserved.join(', ') }, { k:V('Yếu tố hiện đại','Modern elements'), v:a.remixed.join(', ') || '—' },
+          { k:V('Thời tiết','Weather fit'), v:weatherFit(w, s) }, { k:'Color harmony', v:`${h.score} · ${h.summary} (${tx(pal,'name')})` } ] };
+    });
+  }
+  renderVals() {
+    const st = this.state; LANG = st.lang;
+    const t = {}; for (const k in T) t[k] = T[k][LANG === 'en' ? 1 : 0];
+    const vw = st.vw, sel = this.sel(), mobile = vw < 760, tablet = vw < 1180 && !mobile;
+    const g = byId(GARMENTS, st.garment), ev = byId(EVENTS, st.event), sty = byId(STYLES, st.style), palO = byId(PALETTES, st.palette);
+    const a = assessLook(sel), harmony = harmonyOf(palO), lv = lvlOf(st.remix);
+    const base = this.apiBase(), tr = st.tryon, cfg = st.cfg, pv = cfg.provider, prod = this.productSrc();
+    const busy = ['validating','submitting','queued','processing'].includes(tr.status);
+    const notConfigured = pv === 'server' ? !base : pv === 'fashn' ? !cfg.fashnKey.trim() : false;
+    const noProduct = pv === 'server' && !g.productImageUrl, needGarmentImg = pv !== 'server';
+    const tryDisabled = notConfigured || noProduct || !tr.dataUri || busy || (needGarmentImg && !prod);
+    const SM = {
+      idle:[V('Chọn ảnh để bắt đầu.','Choose photos to begin.'), '#8C8478', '#5E5A53'], validating:[V('Kiểm tra ảnh…','Checking photo…'), C.gold, C.ink],
+      selected:[needGarmentImg && !prod ? V('Ảnh của bạn đã sẵn sàng — thêm ảnh áo.','Your photo is ready — add a garment photo.') : V('Sẵn sàng tạo Try-On.','Ready to generate.'), C.jade, C.ink],
+      invalid:[tr.error, C.lacquer, '#5E1C29'], submitting:[tr.stage || V('Đang tạo phiên thử đồ…','Creating try-on session…'), C.gold, C.ink],
+      queued:[(tr.stage ? tr.stage + ' — ' : '') + (tr.queuePos ? V(`chờ GPU (vị trí ${tr.queuePos})`,`waiting for GPU (position ${tr.queuePos})`) : V('đang chờ xử lý…','waiting in queue…')), C.gold, C.ink],
+      processing:[tr.stage || V('AI đang dựng outfit…','AI is rendering the outfit…'), C.indigo, C.ink],
+      completed:[V(`Hoàn tất${tr.elapsed ? ' sau ' + tr.elapsed + 's' : ''}${tr.engine ? ' · ' + tr.engine : ''}${tr.attempts && tr.attempts.length ? ' (sau khi chuyển engine)' : ''} — kéo thanh trên ảnh để so sánh trước/sau.`,`Done${tr.elapsed ? ' in ' + tr.elapsed + 's' : ''}${tr.engine ? ' · ' + tr.engine : ''}${tr.attempts && tr.attempts.length ? ' (after fallback)' : ''} — drag across the image to compare before/after.`), C.jade, C.ink],
+      failed:[tr.error, C.lacquer, '#5E1C29'], timeout:[tr.error, C.lacquer, '#5E1C29'] };
+    const sm = SM[tr.status] || SM.idle;
+    const recs = this.recs(), curPreset = recs.find(p => p.id === st.look);
+    const hasOutput = tr.status === 'completed' && !!tr.outputUrl;
+    const pn = tx(palO,'n'), mods = sel.acc.map(id => byId(ACCS,id)).filter(x => x.type === 'modern');
+    const gShort = V(g.short, g.name);
+    const stylist = [ V(`Giữ ${g.short} làm visual anchor — ${g.key[0].toLowerCase()} là điểm nhận diện chính.`,`Keep the ${g.name} as the visual anchor — the ${g.key_en[0].toLowerCase()} is its signature.`),
+      `${pn[0][0].toUpperCase() + pn[0].slice(1)} + ${pn[1]} ${tx(ev,'tone')}.`, tx(sty,'tip') ];
+    if (st.remix <= 25 && mods.length) stylist.push(V(`Bỏ ${mods.map(m => tx(m,'name').toLowerCase()).join(', ')} nếu muốn giữ mức Historically grounded.`,`Drop the ${mods.map(m => tx(m,'name').toLowerCase()).join(', ')} to stay Historically grounded.`));
+    else if (st.remix > 50 && !mods.length) stylist.push(V('Thêm túi mini để outfit trẻ hơn.','Add a mini bag for a younger feel.'));
+    else { const k = g.known.find(id => !sel.acc.includes(id)); if (k) stylist.push(V(`Có thể thêm ${tx(byId(ACCS,k),'name').toLowerCase()} — phụ kiện gắn với ${gShort}.`,`Consider a ${tx(byId(ACCS,k),'name').toLowerCase()} — associated with the ${gShort}.`)); }
+    const tog = (on, extra) => ({ bg: on ? C.ink : C.paper, fg: on ? C.ivory : C.ink, bd: on ? C.ink : 'rgba(24,23,21,.14)', active: on, ...extra });
+    const rec = EV_REC[st.event] || { s:[], p:[], a:[] };
+    const recAcc = rec.a.filter(id => { const ac = byId(ACCS, id); return ac.type !== 'traditional' || ac.for.includes(g.id); });
+    const fitMeta = n => n === 3 ? [V('RẤT HỢP','GREAT FIT'), '#3F5549'] : n === 2 ? [V('HỢP','GOOD FIT'), '#3E506B'] : [V('CÂN NHẮC','CONSIDER'), '#7C2837'];
+    const lib = st.lib || {};
+    const libFor = gid => LIB.filter(x => x.g === gid && lib[x.file]);
+    const firstImg = gid => { const sel = st.refSel && st.refSel[gid]; const it = (sel && lib[sel]) ? lib[sel] : (libFor(gid).sort((a, b) => (b.ev.includes(st.event)) - (a.ev.includes(st.event)))[0] ? lib[libFor(gid).sort((a, b) => (b.ev.includes(st.event)) - (a.ev.includes(st.event)))[0].file] : null); return it; };
+    const bestG = GARMENTS.slice().sort((a, b) => FIT[st.event][b.id] - FIT[st.event][a.id])[0];
+    const KIND = { modern:V('HIỆN ĐẠI','MODERN'), archival:V('TƯ LIỆU','ARCHIVAL'), festival:V('LỄ HỘI','FESTIVAL'), museum:V('HIỆN VẬT','ARTEFACT') };
+    const libAll = libFor(g.id).map(x => ({ ...x, match: x.ev.includes(st.event) })).sort((a, b) => (b.match - a.match) || ((b.tryon === 'best') - (a.tryon === 'best')));
+    const lf = st.libFilter || 'match';
+    let libList = lf === 'match' ? libAll.filter(x => x.match) : lf === 'archival' ? libAll.filter(x => x.kind === 'archival') : lf === 'tryon' ? libAll.filter(x => x.tryon !== 'no') : libAll;
+    if (lf === 'match' && !libList.length) libList = libAll;
+    const refFile = st.refSel && st.refSel[g.id], refInfo = refFile && lib[refFile], refItem = refFile && LIB.find(x => x.file === refFile);
+    const story = st.storyId ? byId(GARMENTS, st.storyId) : g;
+    const wx = st.wx, wc = wx.data && WCODE[wx.data.weatherCode];
+    const warnText = w => w[0]==='small' ? V(`Ảnh hơi nhỏ (${w[1]}×${w[2]}) — kết quả có thể kém sắc nét.`,`Photo is small (${w[1]}×${w[2]}) — the result may be soft.`) : w[0]==='landscape' ? V('Ảnh ngang — ảnh dọc toàn thân cho kết quả tốt hơn.','Landscape photo — a portrait full-body shot works better.') : V('Ảnh có thể bị cắt hoặc chỉ có nửa người. Nên dùng ảnh toàn thân.','Photo may be cropped or half-body. A full-body shot is recommended.');
+    const PROV = [ { id:'hf', name:'Open-source AI', sub:V('FitDiT · Leffa · IDM-VTON — miễn phí','FitDiT · Leffa · IDM-VTON — free') }, { id:'fashn', name:'FASHN Try-On Max', sub:V('Khóa cá nhân (dev)','Personal key (dev)') }, { id:'server', name:V('Máy chủ riêng','Own server'), sub:V('FASHN qua API route','FASHN via API route') } ];
+    const lookCount = st.saved.length;
+    return {
+      t, isVi: LANG==='vi', isEn: LANG==='en', setVi: () => this.setLang('vi'), setEn: () => this.setLang('en'),
+      viBg: LANG==='vi' ? C.ink : 'transparent', viFg: LANG==='vi' ? C.ivory : C.ink, enBg: LANG==='en' ? C.ink : 'transparent', enFg: LANG==='en' ? C.ivory : C.ink,
+      isLanding: st.view==='landing', isStudio: st.view==='studio', isLookbook: st.view==='lookbook',
+      navLandingBd: st.view==='landing' ? C.lacquer : 'transparent', navStudioBd: st.view==='studio' ? C.lacquer : 'transparent', navLookBd: st.view==='lookbook' ? C.lacquer : 'transparent',
+      savedCount: lookCount, lookbookEmpty: lookCount === 0, lookCountText: V(`${lookCount} look · lưu trên thiết bị này`,`${lookCount} look${lookCount===1?'':'s'} · saved on this device`),
+      goLanding: () => this.go('landing'), goStudio: () => this.go('studio'), goLookbook: () => this.go('lookbook'),
+      goExplore: () => { if (st.view !== 'landing') this.setState({ view:'landing', storyOpen:false, compare:null }, () => setTimeout(() => this.scrollTo(this.exploreRef), 60)); else this.scrollTo(this.exploreRef); },
+      exploreRef: this.exploreRef, tryonRef: this.tryonRef,
+      heroCols: vw < 900 ? '1fr' : 'minmax(0,1fr) minmax(0,1fr)', heroCover: this.coverOf('hero'),
+      landingCards: GARMENTS.map((x,i) => ({ num:'0'+(i+1), name:x.name, regionShort:tx(x,'regionShort'), teaser:tx(x,'teaser'), slotId:`g-${x.id}-0`, ph:V(`Ảnh editorial · ${x.name}`,`Editorial photo · ${x.name}`), ...this.coverOf(x.id),
+        styleCta: V(`Phối ${x.name} →`,`Style ${x.name} →`),
+        onStudio: () => { this.applyPreset(PRESETS.find(p => p.garment===x.id)); this.go('studio'); this.track('garment_selected',{ id:x.id }); },
+        onStory: () => { this.setState({ storyOpen:true, storyId:x.id }); this.track('culture_story_opened',{ id:x.id }); } })),
+      levelCards: LEVELS.map(l => ({ range:l.range, label:l.label, body:l.body[LANG==='en'?1:0] })),
+      studioCols: mobile ? 'minmax(0,1fr)' : tablet ? '290px minmax(0,1fr)' : '300px minmax(0,1fr) 340px',
+      studioAreas: mobile ? "'c' 'l' 'r'" : tablet ? "'l c' 'r r'" : "'l c r'",
+      leftPos: mobile ? 'static' : 'sticky', leftMaxH: mobile ? 'none' : 'calc(100vh - 86px)',
+      canvasW: mobile ? '100%' : 'min(100%, max(400px, calc((100vh - 190px) * .8)))',
+      tryCols: 'repeat(auto-fit,minmax(220px,1fr))',
+      eventItems: EVENTS.map(e => tog(e.id===st.event, { name:tx(e,'name'), hint:tx(e,'hint'), onClick: () => { this.persist({ event:e.id }); this.track('event_selected',{ id:e.id }); } })),
+      garmentItems: GARMENTS.map((x,i) => { const on = x.id===st.garment, fit = FIT[st.event][x.id], fm = fitMeta(fit), ti = firstImg(x.id), why = FIT_WHY[st.event + '|' + x.id];
+        return { ...tog(on), bg: on ? '#EAE1D1' : C.paper, tileBg: on ? C.lacquer : '#E6DDCD', tileFg: on ? C.ivory : C.ink, tileImg: ti ? 'url("' + ti.thumb + '")' : 'none', tileNum: ti ? '' : '0'+(i+1),
+        fitLabel: fm[0], fitFg: fm[1], fitWhy: why ? why[LANG==='en'?1:0] : '', name:x.name, descriptor:tx(x,'descriptor'),
+        onClick: () => { const p = PRESETS.find(q => q.garment===x.id && q.event===st.event) || PRESETS.find(q => q.garment===x.id);
+          this.persist({ garment:x.id, look:p.id, acc: st.acc.filter(id => { const ac = byId(ACCS,id); return ac.type!=='traditional' || ac.for.includes(x.id); }) });
+          this.setTry({ outputUrl:null, status: tr.dataUri ? 'selected' : 'idle' }); this.track('garment_selected',{ id:x.id }); } }; }),
+      styleItems: STYLES.map(s => { const o = tog(s.id===st.style, { name:s.name, recMark: rec.s.includes(s.id) ? ' ✦' : '', onClick: () => { this.persist({ style:s.id }); this.track('style_selected',{ id:s.id }); } }); if (!o.active && rec.s.includes(s.id)) o.bd = C.gold; return o; }),
+      paletteItems: PALETTES.map(p => ({ name:tx(p,'name'), c1:p.c[0], c2:p.c[1], c3:p.c[2], tag: (rec.p.includes(p.id) ? '✦ ' : '') + (p.trad ? V('Truyền thống','Traditional') : V('Hiện đại','Modern')), active:p.id===st.palette,
+        aria:`${tx(p,'name')}: ${tx(p,'n').join(', ')}`, bd: p.id===st.palette ? C.ink : 'rgba(24,23,21,.14)', ring: p.id===st.palette ? '0 0 0 1px #181715' : 'none', onClick: () => this.persist({ palette:p.id }) })),
+      accItems: ACCS.map(x => { const on = st.acc.includes(x.id), tg = ACC_TAG[x.type];
+        return { recMark: recAcc.includes(x.id) ? V(' · gợi ý',' · suggested') : '', name:tx(x,'name'), tag:tg[0][LANG==='en'?1:0], tagFg:tg[1], active:on, check: on ? C.ink : 'transparent', mark: on ? '✓' : '', bg: on ? '#EAE1D1' : 'transparent', bd: on ? 'rgba(24,23,21,.35)' : 'transparent',
+          onClick: () => this.persist({ acc: on ? st.acc.filter(i => i!==x.id) : [...st.acc, x.id] }) }; }),
+      remix: st.remix, remixAria: `${st.remix}% — ${LEVELS[lv].label}`, onRemix: e => this.persist({ remix:+e.target.value }),
+      rw0: lv===0?600:400, rw1: lv===1?600:400, rw2: lv===2?600:400, rc0: lv===0?C.ink:'#5E5A53', rc1: lv===1?C.ink:'#5E5A53', rc2: lv===2?C.ink:'#5E5A53',
+      canvasSlots: GARMENTS.map(x => { const on = x.id===g.id; return { id:`g-${x.id}-0`, ph:V(`Ảnh editorial · ${x.name}`,`Editorial photo · ${x.name}`), img: this.coverOf(x.id).img, op: on ? 1 : 0, pe: on ? 'auto' : 'none', sc: on ? 1 : 1.03 }; }),
+      pal: { name:tx(palO,'name'), c1:palO.c[0], c2:palO.c[1], c3:palO.c[2] },
+      garment: { name:g.name, nameUpper:g.name.toUpperCase(), teaser:tx(g,'teaser'), periodShort:tx(g,'periodShort'), regionShort:tx(g,'regionShort'), keyText:tx(g,'key').join(' · ') },
+      event: { name:tx(ev,'name') },
+      overlayTitle: `${sty.name.toUpperCase()} · ${curPreset ? tx(curPreset,'title').toUpperCase() : 'CUSTOM LOOK'}`,
+      hasRef: !!refInfo && !(hasOutput && st.showOutput), refBg: refInfo ? 'url("' + refInfo.thumb + '")' : 'none', refAlt: refItem ? refItem.cap[LANG==='en'?1:0] : '', refCredit: hasOutput && st.showOutput ? '' : refInfo ? refInfo.credit : this.coverOf(g.id).imgCredit, refPage: refInfo ? refInfo.page : this.coverOf(g.id).imgHref,
+      suggestText: V('Gợi ý cho dịp ' + tx(ev,'name') + ': ' + bestG.name + ' · ' + rec.s.map(id => byId(STYLES,id).name).join(' / ') + ' · bảng màu ' + rec.p.map(id => tx(byId(PALETTES,id),'name')).join(' / ') + '. Mục có ✦ là gợi ý theo dịp.', 'For ' + tx(ev,'name') + ': ' + bestG.name + ' · ' + rec.s.map(id => byId(STYLES,id).name).join(' / ') + ' · ' + rec.p.map(id => tx(byId(PALETTES,id),'name')).join(' / ') + ' palette. Items marked ✦ suit this occasion.'),
+      suggestBtn: V('Áp dụng gợi ý cho ' + g.name, 'Apply to ' + g.name),
+      applySuggest: () => { const keepTrad = st.acc.filter(id => byId(ACCS,id).for.includes(g.id)); this.persist({ style: rec.s[0], palette: rec.p[0], acc: [...new Set(recAcc.slice(0, 3))], remix: rec.s[0] === 'genz' ? 75 : rec.s[0] === 'editorial' || rec.s[0] === 'minimal' ? 45 : 15, look:null }); this.flash(V('Đã áp dụng gợi ý theo dịp','Occasion suggestions applied')); },
+      journeyAria: V('Hành trình phối đồ','Styling journey'),
+      journey: [ { n:'01', label:tx(ev,'name') }, { n:'02', label:g.name }, { n:'03', label:sty.name + ' · ' + tx(palO,'name') }, { n:'04', label: refItem ? V('Ảnh thư viện','Library image') : V('Chọn ảnh thư viện','Pick library image') }, { n:'05', label: hasOutput ? V('Try-On ✓','Try-On ✓') : prod && tr.dataUri ? V('Sẵn sàng Try-On','Ready for Try-On') : 'AI Try-On' } ].map((j, i) => { const done = i < 3 || (i === 3 && !!refItem) || (i === 4 && hasOutput); return { ...j, bg: done ? '#EAE1D1' : 'transparent', fg: C.ink, bd: done ? 'rgba(24,23,21,.25)' : 'rgba(24,23,21,.15)', onClick: () => { if (i >= 3) this.scrollTo(this.tryonRef); else window.scrollTo({ top:0, behavior:'smooth' }); } }; }),
+      libTitle: V('Thư viện ảnh · ' + g.name, 'Image library · ' + g.name), libMore: V('Xem thêm trên Wikimedia Commons ↗','More on Wikimedia Commons ↗'), libCommonsUrl: COMMONS_CAT[g.id],
+      libMsg: st.libStatus === 'loading' ? V('Đang tải thư viện từ Wikimedia Commons…','Loading library from Wikimedia Commons…') : st.libStatus === 'error' ? V('Không tải được thư viện ảnh. Kiểm tra kết nối mạng.','Could not load the image library. Check your connection.') : (lf === 'match' && !libAll.some(x => x.match) ? V('Chưa có ảnh gắn với dịp này — đang hiển thị tất cả.','No images tagged for this occasion — showing all.') : ''),
+      libFilters: [['match', V('Hợp dịp ' + tx(ev,'name'), 'Fits ' + tx(ev,'name'))], ['tryon', V('Dùng được cho Try-On','Try-On ready')], ['archival', V('Tư liệu lịch sử','Archival')], ['all', V('Tất cả','All')]].map(c => ({ ...tog(lf === c[0]), name:c[1], onClick: () => this.setState({ libFilter:c[0] }) })),
+      libItems: libList.map(x => { const info = lib[x.file], on = refFile === x.file, used = prod && st.garmentImg.file === x.file;
+        return { cap:x.cap[LANG==='en'?1:0], bg:'url("' + info.thumb + '")', page:info.page, credit:info.credit, kindLabel:KIND[x.kind], match:x.match, matchLabel:V('HỢP DỊP','OCCASION FIT'), active:on, bd: on ? C.lacquer : 'transparent',
+          tryLabel: used ? V('✓ Đang dùng cho Try-On','✓ Used for Try-On') : x.tryon === 'no' ? V('Chỉ tham khảo','Reference only') : x.tryon === 'best' ? V('Dùng cho Try-On ★','Use for Try-On ★') : V('Dùng cho Try-On','Use for Try-On'),
+          tryBg: used ? C.ink : 'transparent', tryFg: used ? C.ivory : C.ink,
+          onView: () => this.setState(s => ({ refSel:{ ...s.refSel, [x.g]: x.file }, showOutput:false })),
+          onTry: () => { if (x.tryon === 'no') { this.setState(s => ({ refSel:{ ...s.refSel, [x.g]: x.file } })); return this.flash(V('Ảnh nhiều người/cắt cúp — chỉ dùng làm tham khảo','Group or cropped photo — reference only')); } this.useLibForTryon(x, info); } }; }),
+      libNote: V('Ảnh từ Wikimedia Commons (giấy phép tự do, ghi nguồn đầy đủ). Ảnh ★ là hiện vật/ảnh tách rõ áo — cho kết quả Try-On tốt nhất; ảnh mặc trên người vẫn dùng được nhưng AI phải tự trích áo.','Images from Wikimedia Commons (free licences, fully credited). ★ images show the garment clearly and give the best Try-On results; on-model photos work but the AI must extract the garment.'),
+      sourceTag: hasOutput && st.showOutput ? V('AI Try-On · kết quả thật từ model','AI Try-On · real model output') : (refItem ? V('Ảnh thư viện · ','Library · ') + KIND[refItem.kind].toLowerCase() : V('Ảnh tham chiếu editorial','Editorial styling reference')),
+      assess: a, harmony, stylistLines: stylist, showRuleIds: this.props.showRuleIds ?? true,
+      showOutput: hasOutput && st.showOutput, hasOutput, showAiNotice: hasOutput && st.showOutput, outputAlt: `AI Try-On: ${g.name}`, outputBg: tr.outputUrl ? `url("${tr.outputUrl}")` : 'none',
+      toggleOutput: () => this.setState({ showOutput: !st.showOutput }), toggleOutputLabel: st.showOutput ? V('Xem ảnh tham chiếu','Show reference') : V('Xem kết quả Try-On','Show Try-On result'),
+      prevLook: () => this.stepLook(-1), nextLook: () => this.stepLook(1),
+      recsTitle: V(`Gợi ý look cho ${g.name}`,`Suggested looks for ${g.name}`), recsSub: V(`Ưu tiên dịp: ${tx(ev,'name')}`,`Prioritised for: ${tx(ev,'name')}`),
+      recItems: recs.map((p,i) => { const on = p.id===st.look; return { ...tog(on), num:`LOOK 0${i+1}`, title:tx(p,'title'), meta:`${byId(STYLES,p.style).name} · ${p.remix}% · ${tx(p,'desc')}`,
+        match: p.event===st.event ? V('Hợp dịp','Occasion match') : tx(byId(EVENTS,p.event),'name'), onClick: () => this.applyPreset(p) }; }),
+      openCompare: () => { this.setState({ compare:{ a:{ ...sel, out: hasOutput ? tr.outputUrl : null }, b:groundedAlt(sel) } }); this.track('look_compared'); },
+      saveLook: () => this.saveLook(),
+      settingsOpen: st.settingsOpen, toggleSettings: () => this.setState({ settingsOpen: !st.settingsOpen }), settingsLabel: st.settingsOpen ? V('Đóng cài đặt','Close settings') : V('Cài đặt ⚙','Settings ⚙'),
+      engineHead: V('Engine AI (mã nguồn mở, chạy trên Hugging Face)','AI engine (open source, on Hugging Face)'), qualityHead: V('Chất lượng','Quality'),
+      engineItems: [{ id:'auto', name:'Auto', sub:[GARMENT_CAT[g.id]==='dress' ? 'FitDiT → Leffa → IDM' : 'FitDiT → IDM → Leffa', ''] }, ...ENGINES].map(e => ({ ...tog((cfg.engine || 'auto') === e.id), name:e.name, sub: e.id==='auto' ? V('Tự chọn + dự phòng: ','Auto + fallback: ') + e.sub[0] : e.sub[LANG==='en'?1:0], onClick: () => this.setCfg({ engine:e.id }) })),
+      qualityItems: [['std', V('Tiêu chuẩn · nhanh','Standard · fast')], ['hq', V('Cao · 1152×1536','High · 1152×1536')]].map(q => { const on = (cfg.quality || 'std') === q[0]; return { name:q[1], active:on, bg: on ? C.ink : 'transparent', fg: on ? C.ivory : C.ink, onClick: () => this.setCfg({ quality:q[0] }) }; }),
+      hfNote: V('Ảnh được chuẩn hóa về khung 3:4 trước khi gửi. ' + byId(GARMENTS,g.id).name + ' được dựng ở chế độ ' + (GARMENT_CAT[g.id]==='dress' ? '“váy/áo dài toàn thân”' : '“áo thân trên”') + '. GPU miễn phí có thể phải xếp hàng; HF token giúp tăng quota.','Photos are normalised to 3:4 before sending. ' + g.name + ' is rendered in ' + (GARMENT_CAT[g.id]==='dress' ? '“full-length dress”' : '“upper-body”') + ' mode. Free GPUs may queue; an HF token raises your quota.'),
+      baMode: st.baMode && hasOutput && st.showOutput, baPos: st.baPos, baLeft: st.baPos + '%', onBa: e => this.setState({ baPos:+e.target.value }), outClip: st.baMode ? 'inset(0 0 0 ' + st.baPos + '%)' : 'none',
+      baAria: V('So sánh trước và sau','Compare before and after'), toggleBa: () => this.setState({ baMode: !st.baMode, baPos:50 }), baLabel: st.baMode ? V('Tắt trước/sau','Hide before/after') : V('Trước / sau','Before / after'),
+      regenerate: () => this.startTryon(true), regenLabel: V('Biến thể mới ↻','New variation ↻'),
+      providerLabel: pv==='hf' ? (tr.engine && hasOutput ? tr.engine + ' · Hugging Face' : V('Engine: ','Engine: ') + ((cfg.engine||'auto')==='auto' ? 'Auto' : byId(ENGINES,cfg.engine).name) + ' · Hugging Face') : pv==='fashn' ? V('FASHN Try-On Max · trực tiếp','FASHN Try-On Max · direct') : V('FASHN Try-On Max · qua máy chủ','FASHN Try-On Max · via server'),
+      providerItems: PROV.map(p => ({ ...tog(p.id===pv), name:p.name, sub:p.sub, onClick: () => { this.setCfg({ provider:p.id }); if (!busy) this.setTry({ status: tr.dataUri ? 'selected' : 'idle', error:'' }); } })),
+      cfg, isHf: pv==='hf', isFashn: pv==='fashn', isServer: pv==='server',
+      onHfSpace: e => this.setCfg({ hfSpace:e.target.value }), onHfToken: e => this.setCfg({ hfToken:e.target.value }), onFashnKey: e => this.setCfg({ fashnKey:e.target.value }), onServer: e => this.setCfg({ server:e.target.value }),
+      notConfigured, noProduct, noProductText: V(`${g.name} chưa có ảnh sản phẩm tách nền trên máy chủ (mặc nhiều lớp). Try-On qua máy chủ tạm tắt cho trang phục này.`,`${g.name} has no isolated product image on the server (it is layered). Server Try-On is disabled for this garment.`),
+      needGarmentImg, previewBg: tr.preview ? `url("${tr.preview}")` : 'none', garmentBg: prod ? `url("${prod}")` : 'none',
+      up1Mark: tr.preview ? '' : '+', up2Mark: prod ? '' : '+', upBd1: tr.preview ? C.jade : 'rgba(24,23,21,.3)', upBd2: prod ? C.jade : 'rgba(24,23,21,.3)',
+      uploadTitle: tr.preview ? tr.fileName : V('Upload ảnh toàn thân','Upload a full-body photo'), uploadSub: tr.preview ? V('Bấm để đổi ảnh','Click to replace') : V('JPEG/PNG/WEBP · ≤10MB · ảnh dọc','JPEG/PNG/WEBP · ≤10MB · portrait'),
+      garmentUpTitle: prod ? st.garmentImg.name : V(`Ảnh ${g.name} tách nền`,`${g.name} product photo`), garmentUpSub: prod ? (st.garmentImg.source === 'lib' ? V('Từ thư viện · bấm để dùng ảnh riêng','From library · click to use your own') : V('Bấm để đổi ảnh','Click to replace')) : V('Chính diện, nền trơn, ít che khuất','Front-facing, plain background'),
+      onFile: e => this.onFile(e), onGarmentFile: e => this.onGarmentFile(e), startTryon: () => this.startTryon(),
+      hasWarnings: tr.warnings.length > 0 && tr.status !== 'invalid', tryWarnings: tr.warnings.map(warnText),
+      tryDisabled, tryBtnBg: tryDisabled ? '#A39C90' : C.lacquer, tryCursor: tryDisabled ? 'not-allowed' : 'pointer', tryBtnLabel: busy ? V('Đang xử lý…','Processing…') : 'Generate Try-On',
+      statusText: sm[0], statusDot: sm[1], statusFg: sm[2], canRetry: ['failed','timeout'].includes(tr.status) && !!tr.dataUri && !notConfigured,
+      wx, onWxQuery: e => this.onWxQuery(e), useLocation: () => this.useLocation(),
+      hasSuggestions: wx.suggestions.length > 0, wxSuggestions: wx.suggestions.map(c => ({ label:[c.name, c.admin, c.country].filter(Boolean).filter((v,i,arr) => arr.indexOf(v)===i).join(', '), onClick: () => this.loadWeather(c) })),
+      wxMsg: wx.msg, wxMsgFg: wx.status==='error' ? C.lacquer : '#5E5A53', hasWx: !!wx.data, wxRecs: weatherRecs(wx.data, sel),
+      wxLine: wx.data ? V(`${wc ? wc[0] : '—'} · Cảm giác ${wx.data.apparentTemperature}°C · Ẩm ${wx.data.humidity}%`,`${wc ? wc[1] : '—'} · Feels like ${wx.data.apparentTemperature}°C · Humidity ${wx.data.humidity}%`) : '',
+      openStory: () => { this.setState({ storyOpen:true, storyId:g.id }); this.track('culture_story_opened',{ id:g.id }); },
+      storyOpen: st.storyOpen, closeStory: () => this.setState({ storyOpen:false }),
+      story: { name:story.name, nameUpper:story.name.toUpperCase(), description:tx(story,'description'), region:tx(story,'region'), period:tx(story,'period'), contextText:tx(story,'context').join(' · '),
+        accText: story.known.map(id => tx(byId(ACCS,id),'name')).join(', '), construction:tx(story,'construction'), modern:tx(story,'modern'), misconceptions:tx(story,'misconceptions'),
+        sources: story.sources.map((k,i) => { const s = SRC[k]; return { n:i+1, ...s, statusLabel: s.status==='primary' ? V('Tư liệu gốc · cần trích dẫn trang','Primary source · page citation needed') : V('Chờ biên tập viên xác minh','Pending editor verification'), stFg: s.status==='primary' ? '#3F5549' : '#6B5530' }; }) },
+      compareOpen: !!st.compare, closeCompare: () => this.setState({ compare:null }), cmpCols: this.compareCols(), cmpInset: mobile ? '8px' : '4vh 6vw',
+      savedItems: st.saved.map(l => { const lg = byId(GARMENTS,l.garment), la = assessLook(l);
+        return { name:this.lookName(l), slotId:`g-${lg.id}-0`, gName:lg.name, ...this.coverOf(lg.id), hasOutput: !!l.tryOnResultUrl, noOutput: !l.tryOnResultUrl, outBg: l.tryOnResultUrl ? `url("${l.tryOnResultUrl}")` : 'none', color:la.color, glyph:la.glyph, label:la.label,
+          meta:`${lg.name} · ${tx(byId(EVENTS,l.event),'name')} · ${tx(byId(PALETTES,l.palette),'name')} · ${l.remix}%`, date:new Date(l.createdAt).toLocaleDateString(LANG==='en' ? 'en-GB' : 'vi-VN'),
+          onView: () => { this.persist({ garment:l.garment, event:l.event, style:l.style, palette:l.palette, acc:l.acc.slice(), remix:l.remix, look:l.presetId || null }); this.go('studio'); },
+          onCompare: () => { this.setState({ compare:{ a:{ ...l, out:l.tryOnResultUrl }, aHead:this.lookName(l).toUpperCase(), b:groundedAlt(l) } }); this.track('look_compared'); },
+          onDup: () => { this.writeSaved([{ ...l, id:'lk_' + Date.now().toString(36), presetId:null, customName:this.lookName(l) + V(' (bản sao)',' (copy)'), createdAt:new Date().toISOString() }, ...st.saved]); this.flash(V('Đã nhân bản look','Look duplicated')); },
+          onDel: () => { this.writeSaved(st.saved.filter(x => x.id !== l.id)); this.flash(V('Đã xóa look','Look deleted')); } }; }),
+      showSticky: mobile && st.view==='studio' && !st.compare && !st.storyOpen, scrollToTryon: () => this.scrollTo(this.tryonRef),
+      toast: st.toast, toastBottom: mobile && st.view==='studio' ? '84px' : '24px'
+    };
+  }
+}
+</script>
+</body>
+</html>
