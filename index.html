@@ -593,7 +593,7 @@ image-slot[data-cr=lb]::part(credit){top:44px;right:14px;max-width:calc(100% - 1
           <div style="display:flex;gap:6px;flex-wrap:wrap">
             <sc-for list="{{ gq.chips }}" as="c" hint-placeholder-count="3"><button type="button" onClick="{{ c.onClick }}" style="background:none;border:1px solid rgba(242,236,225,.3);color:#E4DCCD;border-radius:999px;padding:5px 11px;font-size:12px;cursor:pointer;text-align:left" style-hover="border-color:#F2ECE1">{{ c.q }}</button></sc-for>
           </div>
-          <sc-if value="{{ gq.loading }}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size:13px;color:#B79A65">✦ {{ t.gemLoading }}</span></sc-if>
+          <sc-if value="{{ gq.loading }}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size:13px;color:#B79A65">✦ {{ t.gemAnswering }}</span></sc-if>
           <sc-if value="{{ gq.err }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px;color:#F0B4BF">{{ gq.err }}</span></sc-if>
           <sc-if value="{{ gq.has }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(242,236,225,.15);padding-top:12px">
@@ -805,7 +805,7 @@ const T = {
   consentBody:['Chúng tôi muốn ghi nhận ẩn danh cách bạn dùng ứng dụng (ví dụ trang phục bạn chọn, look bạn lưu) để cải thiện sản phẩm. Không thu ảnh của bạn, không bán dữ liệu.','We would like to record, anonymously, how you use the app (for example which garments you pick and which looks you save) to improve it. We never collect your photos or sell data.'],
   consentYes:['Đồng ý','Accept'], consentNo:['Từ chối','Decline'], dataSettings:['Cài đặt dữ liệu','Data settings'],
   syncHint:['Đăng nhập để lưu Lookbook lên tài khoản','Sign in to save your Lookbook to your account'],
-  gemAsk:['Hỏi Gemini Stylist','Ask Gemini Stylist'], gemAgain:['Gợi ý khác','Another take'], gemLoading:['Gemini đang phối đồ…','Gemini is styling…'],
+  gemAsk:['Hỏi Gemini Stylist','Ask Gemini Stylist'], gemAgain:['Gợi ý khác','Another take'], gemLoading:['Gemini đang phối đồ…','Gemini is styling…'], gemAnswering:['Gemini đang trả lời…','Gemini is answering…'],
   gemHint:['Gemini gợi ý cách phối dựa trên lựa chọn của bạn và dữ liệu văn hóa đã biên soạn — không thay đổi nhãn phân loại.','Gemini suggests styling from your choices and the curated cultural data — it never changes the cultural label.'],
   gemTag:['GEMINI · dựa trên dữ liệu biên soạn','GEMINI · grounded in curated data'], gemCaption:['Caption chia sẻ','Share caption'], gemCopy:['Sao chép','Copy'], gemCopied:['Đã sao chép caption','Caption copied'],
   gemAskTitle:['Hỏi Gemini về','Ask Gemini about'], gemAskPh:['Ví dụ: Mặc trang phục này đi chùa cần lưu ý gì?','e.g. What should I keep in mind wearing this to a pagoda?'], gemSend:['Hỏi','Ask'],
